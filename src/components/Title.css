@@ -1,0 +1,29 @@
+
+.title-cont{
+    height: 700px;
+    align-items: center;
+    justify-items: center;
+}
+
+.image{
+    width: 95%;
+    height: 95%;
+    margin: 20px;
+}
+
+.image-style{
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+}
+
+.title-box{
+    width: 30%;
+    height: 16%;
+    position: absolute;
+    text-align: center;
+    align-content: center;
+    font-size: 80px;
+    background-color: white;
+    border-bottom-right-radius: 50px;
+}
