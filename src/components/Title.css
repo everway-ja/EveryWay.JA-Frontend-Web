@@ -1,6 +1,6 @@
 
 .title-cont{
-    height: 700px;
+    height: 750px;
     align-items: center;
     justify-items: center;
 }
@@ -15,7 +15,8 @@
     width: 100%;
     height: 100%;
     border-radius: 00px;
-    /*clip-path: polygon(35% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 20%, 35% 20%);*/
+    /*clip-path: polygon(33% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 14%, 30% 14%);*/
+    clip-path: url(#rounded-clip);
 }
 
 .title-box{
@@ -27,4 +28,76 @@
     font-size: 80px;
     background-color: white;
     border-bottom-right-radius: 50px;
+}
+
+@media screen and (max-width: 1400px){
+    .title-box{
+        font-size: 70px;
+    }
+
+    .title-cont{
+        height: 700px;
+    }
+
+;
+}
+
+@media screen and (max-width: 1200px){
+    .title-box{
+        font-size: 60px;
+    }
+    .image-style{
+        clip-path: url(#rounded-clip2);
+    }
+    .title-cont{
+        height: 550px;
+    }
+}
+
+@media screen and (max-width: 992px){
+    .title-box{
+        font-size: 55px;
+    }
+    .image-style{
+        clip-path: url(#rounded-clip3);
+    }
+    .title-cont{
+        height: 450px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .title-box{
+        font-size: 55px;
+        position: relative;
+        width: 100%;
+
+    }
+    .image-style{
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        border-radius: 40px;
+        width: 100%;
+    }
+
+    .title-cont{
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 576px){
+    .title-box{
+        font-size: 55px;
+        position: relative;
+        width: 100%;
+
+    }
+    .image-style{
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        border-radius: 40px;
+        width: 100%;
+    }
+
+    .title-cont{
+        height: 100%;
+    }
 }

@@ -25,9 +25,13 @@ function NavBar(){
 
             {/* Pulsanti desktop */}
             <div className="hidden md:flex gap-4">
-                <Button variant="secondary">QWERTY</Button>
-                <Button variant="secondary">Ciao</Button>
-                <Button variant="secondary">Ciao</Button>
+                <Button variant="secondary">Home</Button>
+                <Button variant="secondary">Mappa</Button>
+                <Button variant="secondary">Itinerari</Button>
+                <Button variant="secondary">Feedback</Button>
+                <Button variant="secondary">About Us</Button>
+                <Button variant="secondary">Info</Button>
+                <Button variant="secondary">Log In</Button>
             </div>
 
             {/* Burger Menu */}

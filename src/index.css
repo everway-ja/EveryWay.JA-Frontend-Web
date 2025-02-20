@@ -41,18 +41,17 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 7px 20px;
+  border-radius: 5px;
+  border-color: #9de1dd;
+  cursor: pointer;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #81979A;
 }
 button:focus,
 button:focus-visible {
