@@ -31,4 +31,41 @@ nav a {
 
 nav a:hover {
     border-radius: 5px;
+
+}
+
+.blocco-b{
+    display: flex;
+    flex-direction: column;
+}
+
+.blocco-sup{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 0;
+    height: 20px;
+    color: black;
+}
+
+.blocco-sup a {
+    font-size: 10px; /* Modifica la dimensione del testo */
+    font-weight: normal; /* Facoltativo: rende il testo più visibile */
+    color: black; /* Assicurati che sia ben visibile */
+    margin-left: 15px; /* Aggiunge spazio tra i link */
+}
+
+.blocco-inf{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px 0;
+    height: 55px;
+}
+
+.blocco-inf a {
+    font-size: 36px;
+    font-weight: normal; /* Facoltativo: rende il testo più visibile */
+    color: black; /* Assicurati che sia ben visibile */
+    margin-left: 15px;
 }

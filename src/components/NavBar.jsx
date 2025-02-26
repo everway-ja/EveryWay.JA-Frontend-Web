@@ -2,8 +2,8 @@ import './NavBar.css'
 import "./Link"
 import Link from './Link'
 import { useState } from "react";
-import { Menu } from "lucide-react";
-import Button from './Button';
+import Button from "./Button.jsx";
+import ButtonRotondos from "./ButtonRotondos.jsx";
 
 function NavBar(){
     const img = "foca"
@@ -12,38 +12,32 @@ function NavBar(){
     console.log("isOpen state:", isOpen);
 
     return (
-        <nav className="flex items-center justify-between px-6  text-white" style={{ height: "70px", padding: "10px" }}>
+        <nav className="flex items-center justify-between px-6 text-white" style={{ height: "75px", padding: "10px" }}>
             {/* Logo a sinistra */}
-            <Link>
+            <Link link="google.com">
                 <img
-                    style={{ height: "50px", borderRadius: "10px" }}
+                    style={{ height: "60px", borderRadius: "10px" }}
                     src={`/${img}.svg`}
                     alt="Logo"
                     className={`transform transition-transform duration-300 ease-in-out hover:scale-110`}
                 />
             </Link>
 
-            {/* Pulsanti desktop */}
-            <div className="hidden md:flex gap-4">
-                <Button variant="secondary">Home</Button>
-                <Button variant="secondary">Mappa</Button>
-                <Button variant="secondary">Itinerari</Button>
-                <Button variant="secondary">Feedback</Button>
-                <Button variant="secondary">About Us</Button>
-                <Button variant="secondary">Info</Button>
-                <Button variant="secondary">Log In</Button>
-            </div>
-
-            {/* Burger Menu */}
-            <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-                <Menu size={32} />
-            </button>
-
-            {/* Menu mobile */}
-            <div className={`absolute top-full right-0 w-48 bg-neutral-800 text-white p-4 flex flex-col gap-2 md:hidden z-50 transition-all duration-300 ease-in-out ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}>
-                <Link>QWERTY</Link>
-                <Link>Ciao</Link>
-                <Link>Ciao</Link>
+            <div className="blocco-b">
+                <div className="blocco-sup">
+                    <Link link="https://www.instagram.com/everyway.ja">Instagram</Link>
+                    <Link link="mailto:info@every-way.it">E-Mail</Link>
+                    <Link link="#">Contact</Link>
+                    <Link link="#">Partner</Link>
+                </div>
+                <div className="blocco-inf">
+                    <Button>Home</Button>
+                    <Button>Mappa</Button>
+                    <Button>Itinerari</Button>
+                    <Button>Feedback</Button>
+                    <Button>About us</Button>
+                    <ButtonRotondos>Log In</ButtonRotondos>
+                </div>
             </div>
         </nav>
     )
