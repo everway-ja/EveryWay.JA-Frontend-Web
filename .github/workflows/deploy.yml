@@ -24,4 +24,4 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           source: "./dist/"
-          target: "/kunden/homepages/32/d4298811792/htdocs//build/"
+          target: "/build/"
