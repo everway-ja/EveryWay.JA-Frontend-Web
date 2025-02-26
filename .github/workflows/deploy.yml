@@ -17,14 +17,10 @@ jobs:
           npm install
           npm run build  # Adjust based on your project setup
 
-      - name: Deploy via SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SFTP_HOST }}
-          username: ${{ secrets.SFTP_USERNAME }}
-          password: ${{ secrets.SFTP_PASSWORD }}
-          port: 22
-          source: "dist/*"
-          target: "/build/"
-          strip_components: 1
-          overwrite: true
+      - name: Deploy via SFTP
+        run: |
+          sudo apt-get install -y sshpass
+          sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }} <<EOF
+            mkdir -p /build
+            put -r dist/* /build/
+          EOF
