@@ -27,7 +27,7 @@ function App() {
                 <br/>
                 <Mappa></Mappa>
                 <Carosello title={"Carosello"}></Carosello>
-                <Feedback></Feedback>
+                <Feedback title={"Feedback"}></Feedback>
 
                 <br/>
                 About Us
