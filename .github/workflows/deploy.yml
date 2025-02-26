@@ -23,5 +23,5 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./build/  # Change this to your build output folder
-          server-dir: /  # Adjust based on your IONOS setup
+          local-dir: ./build/
+          server-dir: /
