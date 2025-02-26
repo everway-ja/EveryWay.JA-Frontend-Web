@@ -18,12 +18,13 @@ jobs:
           npm run build  # Adjust based on your project setup
 
       - name: Deploy via SFTP
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/sftp-action@v0.1.3
         with:
           host: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: 22
-          source: "./dist/"
+          source: "dist/*"
           target: "/build/"
-          debug: true
+          strip_components: 1
+          overwrite: true
