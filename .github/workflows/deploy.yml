@@ -1,0 +1,27 @@
+name: Deploy to IONOS Webspace
+
+on:
+  push:
+    branches:
+      - main  # Change this to match your deployment branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies and Build
+        run: |
+          npm install
+          npm run build  # Adjust based on your project setup
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./build/  # Change this to your build output folder
+          server-dir: /  # Adjust based on your IONOS setup
