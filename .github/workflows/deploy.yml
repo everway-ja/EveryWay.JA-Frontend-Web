@@ -17,13 +17,11 @@ jobs:
           npm install
           npm run build  # Adjust based on your project setup
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy via SFTP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_HOST }}
+          host: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: "ftps"
-          port: 21
-          local-dir: ./dist/
-          server-dir: /build/
+          source: "./dist/"
+          target: "/build/"
