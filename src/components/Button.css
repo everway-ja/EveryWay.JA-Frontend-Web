@@ -5,12 +5,14 @@
     border-radius: 0px;
     height: 55px;
     width: 125px;
+    transition: color 0.2s ease-in-out;
 }
 
 .button-q:hover{
     color: #4f7270;
     border-bottom-color: #9de1dd;
     border-bottom-width: 1.5px;
+    transition: border-bottom-width 0.1s ease-in-out;
 }
 
 .button-log{

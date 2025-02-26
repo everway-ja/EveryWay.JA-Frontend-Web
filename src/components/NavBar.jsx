@@ -6,7 +6,7 @@ import Button from "./Button.jsx";
 import ButtonRotondos from "./ButtonRotondos.jsx";
 
 function NavBar(){
-    const img = "foca"
+    const img = "focaRound"
     const [isOpen, setIsOpen] = useState(false);
 
     console.log("isOpen state:", isOpen);
@@ -17,7 +17,7 @@ function NavBar(){
             <Link link="google.com">
                 <img
                     style={{ height: "60px", borderRadius: "10px" }}
-                    src={`/${img}.svg`}
+                    src={`/${img}.png`}
                     alt="Logo"
                     className={`transform transition-transform duration-300 ease-in-out hover:scale-110`}
                 />

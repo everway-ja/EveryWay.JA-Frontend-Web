@@ -3,14 +3,33 @@ import './Footer.css'
 import Link from './Link'
 
 function Footer() {
+    const img = "instagram"
+    const img2 = "email"
+
     return (
-        <footer className=" bottom-0 w-full h-[60px] bg-neutral-800 text-white flex items-center justify-between px-4">
-            <p>&copy; 2025 EveryWay. Tutti i diritti riservati.</p>
-            <ul className="flex space-x-4">
-                <Link>LINK1</Link>
-                <Link>LINK2</Link>
-                <Link>LINK3</Link>
-            </ul>
+        <footer className="">
+
+            <ul>
+
+                <Link>
+                    <img
+                    style={{ height: "14px", borderRadius: "0px" }}
+                    src={`/${img}.png`}
+                    alt="instagram"
+                    className="iconLogo"
+                    />Instagram
+                </Link>
+                <Link>
+                    <img
+                        style={{ height: "14px", borderRadius: "0px" }}
+                        src={`/${img2}.png`}
+                        alt="instagram"
+                        className="iconLogo"
+                    />
+                    Mail
+                </Link>
+                <Link>LINK</Link>
+            </ul><p>&copy; 2025 EveryWay</p>
 
         </footer>
     );
