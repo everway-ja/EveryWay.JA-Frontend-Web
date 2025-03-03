@@ -5,6 +5,7 @@ import { useState } from "react";
 import Button from "./Button.jsx";
 import ButtonRotondos from "./ButtonRotondos.jsx";
 
+
 function NavBar(){
     const img = "focaRound"
     const [isOpen, setIsOpen] = useState(false);
@@ -27,16 +28,16 @@ function NavBar(){
                 <div className="blocco-sup">
                     <Link link="https://www.instagram.com/everyway.ja">Instagram</Link>
                     <Link link="mailto:info@every-way.it">E-Mail</Link>
-                    <Link link="#">Contact</Link>
-                    <Link link="#">Partner</Link>
+                    <Link link={"/contact"}>Contact</Link>
+                    <Link link={"/partners"}>Partner</Link>
                 </div>
                 <div className="blocco-inf">
-                    <Button>Home</Button>
-                    <Button>Mappa</Button>
-                    <Button>Itinerari</Button>
-                    <Button>Feedback</Button>
-                    <Button>About us</Button>
-                    <ButtonRotondos>Log In</ButtonRotondos>
+                    <Button to={"/"}>Home</Button>
+                    <Button to={"/map"}>Mappa</Button>
+                    <Button to={"/itinerari"}>Itinerari</Button>
+                    <Button to={"/feedback"}>Feedback</Button>
+                    <Button to={"/about"}>About us</Button>
+                    <ButtonRotondos to={"/login"}>Log In</ButtonRotondos>
                 </div>
             </div>
         </nav>
