@@ -46,14 +46,14 @@ nav a:hover {
     padding: 10px 0;
     height: 20px;
     color: black;
-    margin-right: 28px;
+    margin-right: 15px;
 }
 
 .blocco-sup a {
     font-size: 14px; /* Modifica la dimensione del testo */
     font-weight: normal; /* Facoltativo: rende il testo più visibile */
     color: black; /* Assicurati che sia ben visibile */
-    margin-left: 15px; /* Aggiunge spazio tra i link */
+    margin-left: 10px; /* Aggiunge spazio tra i link */
 }
 
 .blocco-inf{
@@ -62,4 +62,52 @@ nav a:hover {
     justify-content: flex-end;
     padding: 10px 0;
     height: 55px;
+}
+
+.hidden{
+    display: none;
+}
+
+.ordine{
+    display: none;
+}
+
+.nascondino{
+    display: none;
+}
+
+@media screen and (max-width: 992px){
+    .blocco-b{
+        display: none;
+    }
+    .hidden{
+        display: block;
+    }
+
+    .nascondino{
+        display: block;
+    }
+
+    .ordine{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ordina-link{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .dimensione-icon{
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    nav a{
+        font-size: 15px;
+    }
 }

@@ -13,6 +13,8 @@ import Feedback from "./pages/Feedback.jsx";
 import Contact from "./pages/Contact.jsx";
 import Partners from "./pages/Partners.jsx";
 import Login from "./pages/Login.jsx";
+import NavBar from "./components/NavBar.jsx";
+import Footer from "./components/Footer.jsx";
 
 const router = createBrowserRouter([
     {
@@ -53,7 +55,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
+        <NavBar></NavBar>
         <RouterProvider router={router}/>
+        <Footer></Footer>
     </Provider>
   </StrictMode>,
 )

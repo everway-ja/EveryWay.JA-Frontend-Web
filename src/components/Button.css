@@ -28,3 +28,17 @@
     background-color: #9de1dd;
     color: #535bf2;
 }
+
+@media screen and (max-width: 992px){
+    .button-q{
+        text-align: center;
+        margin: 0px 20px;
+    }
+
+    .button-log{
+        text-align: center;
+        width: 100%;
+        border-radius: 0px;
+        margin: 0px;
+    }
+}
