@@ -28,9 +28,9 @@ function Footer() {
                     <div>
                         <h4 className="font-bold mb-4">Contatti</h4>
                         <ul className="space-y-2">
-                            <li className="text-gray-300">Via Roma 123, Milano</li>
-                            <li className="text-gray-300">+39 02 1234567</li>
-                            <li className="text-gray-300">info@everyway.it</li>
+                            <li className="text-gray-300">Via Rivolta 10, Lecco</li>
+                            <li className="text-gray-300">0341 365339</li>
+                            <li className="text-gray-300">info@every-way.it</li>
                         </ul>
                     </div>
                     <div>

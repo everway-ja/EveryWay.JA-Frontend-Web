@@ -16,16 +16,18 @@ function App() {
     const [count, setCount] = useState(0);
 
 
-
+    // <div className="container bg-gradient-to-br from-blue-100 to-purple-100">
     return (
         <ProvaContext.Provider value={{count, setCount}}>
 
+
             <div className="container">
+
                 <Title imageSrc={"https://images.unsplash.com/photo-1499591934245-40b55745b905?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
                        title="EveryWay"></Title>
                 <br/>
                 <Mappa></Mappa>
-                <Carosello title={"Carosello"}></Carosello>
+                <Carosello title={"Itinerari"}></Carosello>
                 <Feedback title={"Feedback"}></Feedback>
                 <AboutUs
                     title="About Us"
@@ -34,8 +36,8 @@ function App() {
                 />
                 <ContactUs
                     title="Contact Us"
-                    address="1234 Street Name, City, Country"
-                    phone="(123) 456-7890"
+                    address="Via Rivolta 10, Lecco Italy 🇮🇹"
+                    phone="0341 365339"
                     email="info@every-way.it"
                 />
 
