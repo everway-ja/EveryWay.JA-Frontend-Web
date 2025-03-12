@@ -1,7 +1,5 @@
 footer {
-    background-color: #222;
-    color: white;
-    text-align: center;
+    background-color: #213547;
     color: white;
     width: 100%;
     padding: 20px;
@@ -13,20 +11,20 @@ footer {
 
 footer ul {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 footer ul li {
     display: inline;
-    margin: 0 0px;
+    margin: 0 0;
 }
 
 footer a {
-    color: white !important;
     margin: 0 10px 0 10px !important;
 }
 
 footer a:hover {
-    color: #81979A !important;
     transition: color 0.2s ease-in-out;
 }
 
