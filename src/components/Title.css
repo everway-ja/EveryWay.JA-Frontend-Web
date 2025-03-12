@@ -26,11 +26,11 @@
     text-align: center;
     align-content: center;
     font-size: 80px;
-    background-color: white;
+    background-color: transparent;
     border-bottom-right-radius: 50px;
 }
 
-@media screen and (max-width: 1600px){
+@media screen and (max-width: 1700px){
     .title-box{
         font-size: 80px;
     }
