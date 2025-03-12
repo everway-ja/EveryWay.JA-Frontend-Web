@@ -59,6 +59,23 @@ const Title = ({ imageSrc, title }) => {
                             Z
                         " />
                     </clipPath>
+                    <clipPath id="rounded-clip4" clipPathUnits="objectBoundingBox">
+                        <path d="
+                            M 0.45 0
+                            Q 0.41 -0.0, 0.41 0.06
+                            V 0.12
+                            Q 0.41 0.21, 0.33 0.21
+                            H 0.04
+                            Q 0.00 0.21, 0.0 0.27
+                            V 0.82
+                            Q 0.00 0.90, 0.05 0.90
+                            H 0.95
+                            Q 1.0 0.90, 1.00 0.82
+                            V 0.05
+                            Q 1.00 0.00, 0.95 0.00
+                            Z
+                        " />
+                    </clipPath>
                 </defs>
             </svg>
             <div className="title-cont">

@@ -30,16 +30,28 @@
     border-bottom-right-radius: 50px;
 }
 
+@media screen and (max-width: 1600px){
+    .title-box{
+        font-size: 80px;
+    }
+    .image-style{
+        clip-path: url(#rounded-clip);
+        background-color: red;
+    }
+    .title-cont{
+        height: 850px;
+    }
+}
 @media screen and (max-width: 1400px){
     .title-box{
-        font-size: 70px;
+        font-size: 75px;
     }
-
+    .image-style{
+        clip-path: url(#rounded-clip2);
+    }
     .title-cont{
         height: 700px;
     }
-
-;
 }
 
 @media screen and (max-width: 1200px){
@@ -65,6 +77,7 @@
         height: 450px;
     }
 }
+
 
 @media screen and (max-width: 768px){
     .title-box{
