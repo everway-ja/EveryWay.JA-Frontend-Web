@@ -5,21 +5,21 @@ const Carosello = ({title}) => {
 
     const cardsData = [
         {
-            title: "LINK",
+            title: "Mountain",
             image: "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            description: "lorem ipsum dolor sit amet."
+            description: "Un panorama mozzafiato."
         },
         {
-            title: "LINK",
+            title: "Sea",
             image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            description: "lorem ipsum dolor sit amet."
+            description: "Una spiaggia incontaminata."
         },
         {
-            title: "Foresta",
+            title: "Forest",
             image: "https://plus.unsplash.com/premium_photo-1664300792059-863ccfe55932?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             description: "Un sentiero immerso nella natura." },
         {
-            title: "Città",
+            title: "City",
             image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=3044&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             description: "Una metropoli piena di vita."
         }

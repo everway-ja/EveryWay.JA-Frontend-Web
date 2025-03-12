@@ -15,6 +15,7 @@ import Partners from "./pages/Partners.jsx";
 import Login from "./pages/Login.jsx";
 import NavBar from "./components/NavBar.jsx";
 import Footer from "./components/Footer.jsx";
+import Register from "./pages/Register.jsx";
 
 const router = createBrowserRouter([
     {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
     {
         path: '/partners',
         element: <Partners></Partners>,
+    },
+    {
+        path: '/register',
+        element: <Register></Register>,
     },
     {
         path: '/login',

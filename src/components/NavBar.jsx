@@ -12,7 +12,7 @@ function NavBar(){
     console.log("isOpen state:", isOpen);
 
     return (
-        <nav className="flex items-center justify-between px-6 text-white" style={{ height: "75px", padding: "10px" }}>
+        <nav className="flex items-center justify-between px-6 text-white " style={{ height: "75px", padding: "10px" }}>
             {/* Logo a sinistra */}
             <Link link="/">
                 <img
