@@ -16,6 +16,9 @@ const Mappa = ({title}) => {
                     <div className="image-2">
 
                     </div>
+                    <div className="box-title">
+                        <h2 className="text-style">Mappa</h2>
+                    </div>
                 </div>
                 <div className="blocco-b1">
                     <div className="image-3">
@@ -29,6 +32,9 @@ const Mappa = ({title}) => {
             <div className="blocco-ordina">
                 <div className="blocco-c">
                     <div className="image-5">
+
+                    </div>
+                    <div className="image-6">
 
                     </div>
                 </div>
