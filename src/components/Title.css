@@ -19,7 +19,16 @@
     clip-path: url(#rounded-clip);
 }
 
-.title-box{
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/src/assets/fonts/PermanentMarker-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Applica il font alla classe title-box */
+.title-box {
+    font-family: 'CustomFont', sans-serif;
     width: 30%;
     height: 16%;
     position: absolute;
@@ -50,7 +59,7 @@
         clip-path: url(#rounded-clip2);
     }
     .title-cont{
-        height: 700px;
+        height: 800px;
     }
 }
 
