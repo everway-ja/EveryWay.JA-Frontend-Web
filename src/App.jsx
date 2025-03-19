@@ -31,8 +31,8 @@ function App() {
                 <Feedback title={"Feedback"}></Feedback>
                 <AboutUs
                     title="About Us"
-                    description="We are a passionate team dedicated to creating amazing experiences. Our mission is to deliver high-quality products that make a positive impact."
-                    image="https://images.unsplash.com/photo-1634482899780-6ac6b92c656e?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    description="Siamo un team di giovani studenti appassionati di informatica. Il nostro obiettivo è rendere piacevoli e facili i viaggi abbattendo ogni difficoltà per tutti, con le foche come guida."
+                    image="/focaRound.png"
                 />
                 <ContactUs
                     title="Contact Us"
