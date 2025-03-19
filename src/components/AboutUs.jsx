@@ -1,4 +1,5 @@
 import React from 'react';
+import './AboutUs.css';
 
 const AboutUs = ({ title, description, image }) => {
     return (
@@ -11,7 +12,7 @@ const AboutUs = ({ title, description, image }) => {
             <div className="flex justify-center mb-8">
                 <img src={image} alt={title} className="rounded-full w-32 h-32 object-cover" />
             </div>
-            <p className="text-center text-lg text-gray-600 px-80">
+            <p className="text-center text-lg text-gray-600 px-80 custom-font2">
                 {description}
             </p>
         </div>

@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'CustomFont2';
+    src: url('/src/assets/fonts/Philosopher-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.custom-font2 {
+    font-family: 'CustomFont2', sans-serif;
+    font-size: 1.4rem;
+}
