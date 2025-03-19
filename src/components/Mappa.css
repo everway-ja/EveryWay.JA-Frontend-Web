@@ -20,7 +20,7 @@
     margin: 5px;
 }
 
-.blocco-b{
+.blocco-b1{
     height: 550px;
     width: 40%;
     margin: 5px;
@@ -76,7 +76,12 @@
 }
 
 .image-6{
-
+    background-color: #6d96bf;
+    width: 81.6%;
+    height: 100%;
+    position: relative;
+    left: 18.4%;
+    border-radius: 30px;
 }
 
 .box-title{

@@ -17,7 +17,7 @@ const Mappa = ({title}) => {
 
                     </div>
                 </div>
-                <div className="blocco-b">
+                <div className="blocco-b1">
                     <div className="image-3">
 
                     </div>
