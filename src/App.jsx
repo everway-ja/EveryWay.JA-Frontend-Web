@@ -26,7 +26,8 @@ function App() {
                 <Title imageSrc={"https://images.unsplash.com/photo-1499591934245-40b55745b905?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
                        title="EveryWay"></Title>
                 <br/>
-                <Mappa></Mappa>
+                <a href="/map"><Mappa></Mappa></a>
+
                 <Carosello title={"Itinerari"}></Carosello>
                 <Feedback title={"Feedback"}></Feedback>
                 <AboutUs
