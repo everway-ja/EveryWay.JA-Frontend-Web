@@ -47,16 +47,6 @@
     border-radius: 30px;
 }
 
-.image-2{
-    background-color: #4f7270;
-    width: 50%;
-    height: 35%;
-    border-radius: 30px;
-    position: relative;
-    top: -176%;
-    left: 75%;
-}
-
 .image-3{
     background-color: #81979A;
     width: 100%;
@@ -67,38 +57,28 @@
 .image-4{
     background-color: #3f5b6c;
     width: 30%;
-    height: 126%;
-    position: relative;
-    top: -35%;
+    height: 90%;
+    margin: 5px;
     border-radius: 30px;
 }
 
 .image-5{
     background-color: #6d96af;
-    width: 81.6%;
+    width: 81%;
     height: 100%;
     position: relative;
-    left: 18.4%;
+    left: 19%;
     border-radius: 30px;
 }
 
-.image-6{
-    background-color: #5b6670;
-    width: 30%;
-    height: 130%;
-    position: relative;
-    left: 70%;
-    top: -175%;
-    border-radius: 30px;
-}
 
 .box-title{
     width: 100%;
     height: 25%;
     text-align: left;
     position: relative;
-    top: -153%;
-    left: 40%;
+    top: -83%;
+    left: 42%;
 }
 
 .text-style{
