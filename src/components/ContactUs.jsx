@@ -2,7 +2,8 @@ import React from 'react';
 
 const ContactUs = ({ title, address, phone, email }) => {
     return (
-        <div style={{ backgroundColor: "#9DE1DD", borderRadius: "50px", paddingTop: "40px", paddingBottom: "100px", position: "relative", top: "-25px" }}>
+        <div style={{ backgroundColor: "white", borderRadius: "50px",
+            paddingTop: "40px", paddingBottom: "100px", position: "relative", top: "-25px" }}>
             <h1 className="text-center text-4xl font-bold" style={{ paddingTop: "10px", paddingBottom: "10px" }}>
                 {title}
             </h1>

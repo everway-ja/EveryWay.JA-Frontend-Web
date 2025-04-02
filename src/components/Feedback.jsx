@@ -28,7 +28,7 @@ const Feedback = ({title}) => {
         <>
 
 
-            <div style={{ backgroundColor: "#81979A",
+            <div style={{ backgroundColor: "#7FD8BE",
                         borderTopRightRadius: "50px",
                         borderTopLeftRadius: "50px",
                         paddingTop: "40px",

@@ -27,7 +27,7 @@ const Carosello = ({title}) => {
 
     return(
         <>
-            <div style={{ backgroundColor: "#a5b6b8",
+            <div style={{ backgroundColor: "#FFE08A",
                         borderTopRightRadius: "50px",
                         borderTopLeftRadius: "50px",
                         paddingTop: "40px",

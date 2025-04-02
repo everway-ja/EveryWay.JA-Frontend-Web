@@ -9,7 +9,7 @@ function About() {
                     About Us
                 </h1>
                 <div className="flex justify-center mb-8">
-                    <img src={"/focaRound.png"} alt={"About us"} className="rounded-full w-32 h-32 object-cover" />
+                    <img src={"/logo.svg"} alt={"About us"} className="rounded-xl h-32 object-cover" />
                 </div>
                 <p className="text-center text-lg text-gray-600 px-80 custom-font2">
                     Siamo un team di giovani programmatori, web-developer e sistemisti che amano il proprio lavoro. Il nostro obiettivo è rendere piacevoli e facili i viaggi abbattendo ogni difficoltà per tutti, con le foche come guida.
