@@ -45,7 +45,7 @@
     }
     .image-style{
         clip-path: url(#rounded-clip);
-        background-color: red;
+        background-color: #3f5b6c;
     }
     .title-cont{
         height: 850px;
@@ -63,7 +63,7 @@
     }
 }
 
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1199px){
     .title-box{
         font-size: 60px;
     }
