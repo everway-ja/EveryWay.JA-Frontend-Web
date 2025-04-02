@@ -4,19 +4,15 @@ import { FaUser, FaLock, FaEnvelope, FaCalendar, FaMapMarkerAlt, FaVenusMars, Fa
 function Register() {
     const [formData, setFormData] = useState({
         name: "",
+        surname: "",
+        username: "",
+        language: "",
         email: "",
         password: "",
         confirmPassword: "",
         birthDate: "",
-        birthPlace: "",
-        address: "",
-        gender: "",
-        otherGender: "",
-        disability: "",
-        otherDisability: "",
-        cardNumber: "",
-        expiryDate: "",
-        cvv: "",
+        disabilities: [],
+        image: "",
         acceptTerms: false,
     });
 
@@ -26,6 +22,32 @@ function Register() {
             ...formData,
             [name]: type === "checkbox" ? checked : value,
         });
+    };
+
+    const disabilityOptions = [
+        { name: "visiva", label: "Disabilità Visiva" },
+        { name: "motoria", label: "Disabilità Motoria" },
+        { name: "uditiva", label: "Disabilità Uditiva" },
+        { name: "alimentare", label: "Disturbo Alimentare" },
+        { name: "altro", label: "Altro" },
+    ];
+
+    const handleChangeB = (e) => {
+        const { name, value, type, checked } = e.target;
+
+        if (type === "checkbox" && disabilityOptions.some(dis => dis.name === name)) {
+            setFormData((prevData) => {
+                const updatedDisabilities = checked
+                    ? [...prevData.disabilities, { name }]
+                    : prevData.disabilities.filter(dis => dis.name !== name);
+                return { ...prevData, disabilities: updatedDisabilities };
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: type === "checkbox" ? checked : value,
+            });
+        }
     };
 
     return (
@@ -38,6 +60,18 @@ function Register() {
                     <label className="text-gray-700 font-medium">Nome</label>
                     <input type="text" name="name" value={formData.name} onChange={handleChange} className="border p-3 rounded-lg" placeholder="Inserisci il tuo nome" />
 
+                    {/* Cognome */}
+                    <label className="text-gray-700 font-medium">Cognome</label>
+                    <input type="text" name="surname" value={formData.surname} onChange={handleChange} className="border p-3 rounded-lg" placeholder="Inserisci il tuo cognome" />
+
+                    {/* Username */}
+                    <label className="text-gray-700 font-medium">Username</label>
+                    <input type="text" name="username" value={formData.username} onChange={handleChange} className="border p-3 rounded-lg" placeholder="Inserisci il tuo username" />
+
+                    {/* Linagua */}
+                    <label className="text-gray-700 font-medium">Lingua Preferenziale</label>
+                    <input type="text" name="language" value={formData.language} onChange={handleChange} className="border p-3 rounded-lg" placeholder="Inserisci la lingua preferenziale" />
+
                     {/* Email */}
                     <label className="text-gray-700 font-medium">Email</label>
                     <input type="email" name="email" value={formData.email} onChange={handleChange} className="border p-3 rounded-lg" placeholder="Inserisci la tua email" />
@@ -46,57 +80,14 @@ function Register() {
                     <label className="text-gray-700 font-medium">Data di nascita</label>
                     <input type="date" name="birthDate" value={formData.birthDate} onChange={handleChange} className="border p-3 rounded-lg" />
 
-                    {/* Luogo di nascita */}
-                    <label className="text-gray-700 font-medium">Luogo di nascita</label>
-                    <input type="text" name="birthPlace" value={formData.birthPlace} onChange={handleChange} className="border p-3 rounded-lg" placeholder="Inserisci il luogo di nascita" />
-
-                    {/* Indirizzo */}
-                    <label className="text-gray-700 font-medium">Indirizzo</label>
-                    <input type="text" name="address" value={formData.address} onChange={handleChange} className="border p-3 rounded-lg" placeholder="Inserisci il tuo indirizzo" />
-
-                    {/* Sesso con Combo Box */}
-                    <label className="text-gray-700 font-medium">Sesso</label>
-                    <select name="gender" value={formData.gender} onChange={handleChange} className="border p-3 rounded-lg">
-                        <option value="">Seleziona</option>
-                        <option value="maschio">Maschio</option>
-                        <option value="femmina">Femmina</option>
-                        <option value="altro">Altro</option>
-                    </select>
-                    {formData.gender === "altro" && (
-                        <input type="text" name="otherGender" value={formData.otherGender} onChange={handleChange} className="border p-3 rounded-lg" placeholder="Specifica il tuo genere" />
-                    )}
-
-                    {/* Disabilità con Combo Box */}
+                    {/* Lista di disabilità*/}
                     <label className="text-gray-700 font-medium">Disabilità</label>
-                    <select name="disability" value={formData.disability} onChange={handleChange} className="border p-3 rounded-lg">
-                        <option value="">Seleziona</option>
-                        <option value="nessuna">Nessuna</option>
-                        <option value="motoria">Motoria</option>
-                        <option value="uditiva">Uditiva</option>
-                        <option value="visiva">Visiva</option>
-                        <option value="altro">Altro</option>
-                    </select>
-                    {formData.disability === "altro" && (
-                        <input type="text" name="otherDisability" value={formData.otherDisability} onChange={handleChange} className="border p-3 rounded-lg" placeholder="Specifica la disabilità" />
-                    )}
-
-                    {/* Carta di credito */}
-                    <label className="text-gray-700 font-medium">Numero Carta di Credito</label>
-                    <input type="text" name="cardNumber" value={formData.cardNumber} onChange={handleChange} className="border p-3 rounded-lg" placeholder="Inserisci il numero della carta" />
-
-                    <div className="flex gap-4">
-                        {/* Data di scadenza */}
-                        <div className="flex-1">
-                            <label className="text-gray-700 font-medium">Data di scadenza</label>
-                            <input type="month" name="expiryDate" value={formData.expiryDate} onChange={handleChange} className="border p-3 rounded-lg w-full" />
+                    {disabilityOptions.map((dis) => (
+                        <div className="flex items-center" key={dis.name}>
+                            <input type="checkbox" name={dis.name} checked={formData.disabilities.some(d => d.name === dis.name)} onChange={handleChangeB} className="w-5 h-5 mr-2" />
+                            <label className="text-gray-700 text-sm">{dis.label}</label>
                         </div>
-
-                        {/* CVV */}
-                        <div className="flex-1">
-                            <label className="text-gray-700 font-medium">CVV</label>
-                            <input type="text" name="cvv" value={formData.cvv} onChange={handleChange} className="border p-3 rounded-lg w-full" placeholder="CVV" />
-                        </div>
-                    </div>
+                    ))}
 
                     {/* Password */}
                     <label className="text-gray-700 font-medium">Password</label>
