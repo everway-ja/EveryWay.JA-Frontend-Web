@@ -1,10 +1,8 @@
 import "./Link"
 import './Footer.css'
-import Link from './Link'
 
 function Footer() {
-    const img = "instagram"
-    const img2 = "email"
+
 
     return (
         <footer className="text-white py-12 ">
