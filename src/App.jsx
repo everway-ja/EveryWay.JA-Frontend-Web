@@ -32,7 +32,7 @@ function App() {
                 <Feedback title={"Feedback"}></Feedback>
                 <AboutUs
                     title="About Us"
-                    description="Siamo un team di giovani studenti appassionati di informatica. Il nostro obiettivo è rendere piacevoli e facili i viaggi abbattendo ogni difficoltà per tutti, con le foche come guida."
+                    description="Siamo un team di giovani programmatori, web-developer e sistemisti che amano il proprio lavoro. Il nostro obiettivo è rendere piacevoli e facili i viaggi abbattendo ogni difficoltà per tutti, con le foche come guida."
                     image="/focaRound.png"
                 />
                 <ContactUs
