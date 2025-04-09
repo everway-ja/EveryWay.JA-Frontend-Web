@@ -1,4 +1,4 @@
-import CardUser from "../../ui/CardUser/CardUser";
+import CardUser from "../../ui/MemberCard/MemberCard";
 
 const Feedback = ({title}) => {
     const feedbackData = [
