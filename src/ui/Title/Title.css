@@ -1,15 +1,18 @@
+/* Main container for the title section */
 .title-cont{
     height: 750px;
     align-items: center;
     justify-items: center;
 }
 
+/* Image container styling */
 .image{
     width: 95%;
     height: 95%;
     margin: 20px;
 }
 
+/* Image styling with clip-path for unique shape */
 .image-style{
     width: 100%;
     height: 100%;
@@ -18,14 +21,15 @@
     clip-path: url(#rounded-clip);
 }
 
+/* Custom font definition for the title text */
 @font-face {
     font-family: 'CustomFont';
-    src: url('/src/assets/fonts/PermanentMarker-Regular.ttf') format('truetype');
+    src: url('/src/assets/fonts/FunnelDisplay-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
-/* Applica il font alla classe title-box */
+/* Title box styling with custom font */
 .title-box {
     font-family: 'CustomFont', sans-serif;
     width: 30%;
@@ -38,6 +42,7 @@
     border-bottom-right-radius: 50px;
 }
 
+/* Responsive styling for large screens (up to 1700px) */
 @media screen and (max-width: 1700px){
     .title-box{
         font-size: 80px;
@@ -50,6 +55,8 @@
         height: 850px;
     }
 }
+
+/* Responsive styling for medium-large screens (up to 1400px) */
 @media screen and (max-width: 1400px){
     .title-box{
         font-size: 75px;
@@ -62,6 +69,7 @@
     }
 }
 
+/* Responsive styling for medium screens (up to 1199px) */
 @media screen and (max-width: 1199px){
     .title-box{
         font-size: 60px;
@@ -74,6 +82,7 @@
     }
 }
 
+/* Responsive styling for small screens (up to 992px) */
 @media screen and (max-width: 992px){
     .title-box{
         font-size: 55px;
@@ -86,7 +95,7 @@
     }
 }
 
-
+/* Responsive styling for mobile screens (up to 768px) */
 @media screen and (max-width: 768px){
     .title-box{
         font-size: 55px;
@@ -105,6 +114,7 @@
     }
 }
 
+/* Responsive styling for small mobile screens (up to 576px) */
 @media screen and (max-width: 576px){
     .title-box{
         font-size: 55px;

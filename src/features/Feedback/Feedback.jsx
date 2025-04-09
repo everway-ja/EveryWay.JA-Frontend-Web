@@ -1,6 +1,17 @@
 import CardUser from "../../ui/MemberCard/MemberCard";
 
+/**
+ * Feedback Component
+ * 
+ * A section displaying user feedback and testimonials using the CardUser component.
+ * Features a custom background color and styling.
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.title - Section title
+ * @returns {JSX.Element} Feedback section with user testimonial cards
+ */
 const Feedback = ({title}) => {
+    // Sample feedback data for display
     const feedbackData = [
         {
             title: "Alexander",
@@ -25,6 +36,7 @@ const Feedback = ({title}) => {
 
     return(
         <>
+            {/* Feedback section with custom styling */}
             <div style={{ backgroundColor: "#7FD8BE",
                         borderTopRightRadius: "50px",
                         borderTopLeftRadius: "50px",
@@ -32,8 +44,11 @@ const Feedback = ({title}) => {
                         paddingBottom: "80px",
                         position: "relative",
                         top: "-50px"}}>
+                {/* Section title */}
                 <h1 className="text-center text-4xl font-bold"
                     style={{ paddingTop: "10px", paddingBottom: "10px"}}>{title}</h1>
+                
+                {/* Feedback cards grid */}
                 <div className={`flex flex-wrap gap-4 justify-center p-6 w-100%`}>
                     {feedbackData.map((card, index) => (
                         <CardUser key={index} title={card.title} image={card.image} description={card.description}/>

@@ -1,9 +1,8 @@
 @font-face {
     font-family: 'CustomFont2';
-    src: url('/src/assets/fonts/Philosopher-Regular.ttf') format('truetype');
+    src: url('/src/assets/fonts/FunnelDisplay-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-
 }
 
 .custom-font2 {

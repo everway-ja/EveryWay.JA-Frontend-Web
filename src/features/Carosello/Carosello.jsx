@@ -1,8 +1,18 @@
 import "../../ui/Link/Link";
 import Card from "../../ui/Card/Card";
 
+/**
+ * Carosello Component (Carousel/Gallery)
+ * 
+ * A component displaying a collection of cards in a gallery-like layout.
+ * Features a custom yellow background with rounded corners.
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.title - Section title
+ * @returns {JSX.Element} Gallery component with cards showing destinations
+ */
 const Carosello = ({title}) => {
-
+    // Sample card data for destinations
     const cardsData = [
         {
             title: "Mountain",
@@ -27,16 +37,18 @@ const Carosello = ({title}) => {
 
     return(
         <>
+            {/* Carousel section with custom styling */}
             <div style={{ backgroundColor: "#FFE08A",
                         borderTopRightRadius: "50px",
                         borderTopLeftRadius: "50px",
                         paddingTop: "40px",
                         paddingBottom: "100px" }}>
+                {/* Section title */}
                 <h1 className="text-center text-4xl font-bold"
                     style={{ paddingTop: "10px", paddingBottom: "10px"}}>{title}</h1>
-                <div
-
-                    className={`flex flex-wrap gap-4 justify-center p-6 w-100%`}>
+                
+                {/* Cards grid */}
+                <div className={`flex flex-wrap gap-4 justify-center p-6 w-100%`}>
                     {cardsData.map((card, index) => (
                         <Card key={index} title={card.title} image={card.image} description={card.description}/>
                     ))}

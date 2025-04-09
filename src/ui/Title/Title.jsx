@@ -2,12 +2,24 @@ import '../Link/Link'
 import './Title.css'
 import Link from '../Link/Link'
 
-// eslint-disable-next-line react/prop-types
+/**
+ * Title Component
+ * 
+ * A custom title component that displays an image with a styled title overlay.
+ * Uses SVG clip paths to create a unique shape around the image.
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.imageSrc - URL of the image to display
+ * @param {string} props.title - Text to display as the title
+ * @returns {JSX.Element} Title component with image and text
+ */
 const Title = ({ imageSrc, title }) => {
     return (
         <>
+            {/* SVG definitions for clip paths used in different screen sizes */}
             <svg width="0" height="0">
                 <defs>
+                    {/* Desktop clip path - applied to largest screen sizes */}
                     <clipPath id="rounded-clip" clipPathUnits="objectBoundingBox">
                         <path d="
                             M 0.33 0
@@ -25,6 +37,8 @@ const Title = ({ imageSrc, title }) => {
                             Z
                         " />
                     </clipPath>
+                    
+                    {/* Mid-size screens clip path */}
                     <clipPath id="rounded-clip2" clipPathUnits="objectBoundingBox">
                         <path d="
                             M 0.40 0
@@ -42,6 +56,8 @@ const Title = ({ imageSrc, title }) => {
                             Z
                         " />
                     </clipPath>
+                    
+                    {/* Small screens clip path */}
                     <clipPath id="rounded-clip3" clipPathUnits="objectBoundingBox">
                         <path d="
                             M 0.45 0
@@ -59,6 +75,8 @@ const Title = ({ imageSrc, title }) => {
                             Z
                         " />
                     </clipPath>
+                    
+                    {/* Mobile screens clip path */}
                     <clipPath id="rounded-clip4" clipPathUnits="objectBoundingBox">
                         <path d="
                             M 0.45 0
@@ -78,10 +96,14 @@ const Title = ({ imageSrc, title }) => {
                     </clipPath>
                 </defs>
             </svg>
+            
+            {/* Main container for the title and image */}
             <div className="title-cont">
                 <div className="image">
+                    {/* Title text overlay */}
                     <div className="title-box">{title}</div>
 
+                    {/* Image container with clip-path applied via CSS */}
                     <div>
                         <img src={imageSrc} className="image-style"/>
                     </div>

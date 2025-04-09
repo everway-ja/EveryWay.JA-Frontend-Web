@@ -1,9 +1,13 @@
+/* 
+ * Link component styling
+ * Provides a consistent look for links throughout the application
+ */
 .a-link{
     background-color: transparent;
     text-decoration: none;
     color: black;
     margin: 0 20px;
-    transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out; /* Smooth color transition on hover */
     display: flex;
     flex-direction: row;
 }

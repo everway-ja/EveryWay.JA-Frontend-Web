@@ -1,3 +1,9 @@
+/* 
+ * Button Styles
+ * These styles define the appearance of different button variants
+ */
+
+/* Default square button style (button-q) */
 .button-q{
     background: white;
     color: black;
@@ -7,6 +13,7 @@
     transition: color 0.2s ease-in-out;
 }
 
+/* Hover effect for default button */
 .button-q:hover{
     color: #0E2315;
     border-bottom-color: #fffb82;
@@ -14,6 +21,7 @@
     transition: border-bottom-width 0.1s ease-in-out;
 }
 
+/* Rounded button style (button-log) */
 .button-log{
     height: 45px;
     width: 85px;
@@ -23,21 +31,25 @@
     transition: background-color 0.5s ease-in-out;
 }
 
+/* Hover effect for rounded button */
 .button-log:hover {
     background-color: #9de1dd;
     color: #535bf2;
 }
 
+/* Responsive styles for tablet and mobile */
 @media screen and (max-width: 992px){
+    /* Adjust default button for mobile */
     .button-q{
         text-align: center;
         margin: 0px 20px;
     }
 
+    /* Adjust rounded button for mobile */
     .button-log{
         text-align: center;
         width: 100%;
-        border-radius: 0px;
+        border-radius: 0px; /* Make it rectangular on mobile */
         margin: 0px;
     }
 }
