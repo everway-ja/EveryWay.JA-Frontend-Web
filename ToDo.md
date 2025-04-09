@@ -1,0 +1,12 @@
+- Redesign UI
+    - New Layout
+    - New Styles
+    - New Palette
+- Implement Redesigned UI
+    - New Layout
+    - New Styles
+    - New Palette
+- Link New UI to Backend
+    - New Layout
+    - New Styles
+    - New Palette
