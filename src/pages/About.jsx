@@ -1,5 +1,5 @@
 import "react";
-import CardUser from "../components/CardUser.jsx";
+import CardUser from "../ui/CardUser/CardUser";
 
 function About() {
     return (

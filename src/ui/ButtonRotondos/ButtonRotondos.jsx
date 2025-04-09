@@ -1,4 +1,4 @@
-import  './Button.css'
+import './Button.css'
 
 function ButtonRotondos({ children, to }) {
     const handleClick = () => {

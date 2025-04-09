@@ -1,4 +1,4 @@
-import "./Link"
+import "../../ui/Link/Link"
 import './Mappa.css'
 
 const Mappa = ({title}) => {
@@ -40,6 +40,5 @@ const Mappa = ({title}) => {
             </div>
         </div>
     )
-
 };
 export default Mappa;

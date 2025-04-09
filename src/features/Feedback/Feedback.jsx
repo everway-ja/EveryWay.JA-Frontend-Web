@@ -1,5 +1,4 @@
-import "./Link"
-import CardUser from "./CardUser.jsx";
+import CardUser from "../../ui/CardUser/CardUser";
 
 const Feedback = ({title}) => {
     const feedbackData = [
@@ -26,8 +25,6 @@ const Feedback = ({title}) => {
 
     return(
         <>
-
-
             <div style={{ backgroundColor: "#7FD8BE",
                         borderTopRightRadius: "50px",
                         borderTopLeftRadius: "50px",
@@ -40,10 +37,10 @@ const Feedback = ({title}) => {
                 <div className={`flex flex-wrap gap-4 justify-center p-6 w-100%`}>
                     {feedbackData.map((card, index) => (
                         <CardUser key={index} title={card.title} image={card.image} description={card.description}/>
-                    ))}                </div>
+                    ))}                
+                </div>
             </div>
         </>
     )
-
 };
 export default Feedback;

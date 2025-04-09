@@ -13,8 +13,8 @@ import Feedback from "./pages/Feedback.jsx";
 import Contact from "./pages/Contact.jsx";
 import Partners from "./pages/Partners.jsx";
 import Login from "./pages/Login.jsx";
-import NavBar from "./components/NavBar.jsx";
-import Footer from "./components/Footer.jsx";
+import NavBar from "./layout/NavBar/NavBar.jsx";
+import Footer from "./layout/Footer/Footer.jsx";
 import Register from "./pages/Register.jsx";
 
 const router = createBrowserRouter([
@@ -54,7 +54,6 @@ const router = createBrowserRouter([
         path: '/login',
         element: <Login></Login>,
     }
-
 ])
 
 createRoot(document.getElementById('root')).render(

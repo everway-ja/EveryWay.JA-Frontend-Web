@@ -1,6 +1,6 @@
-import "./Link"
+import '../Link/Link'
 import './Title.css'
-import Link from './Link'
+import Link from '../Link/Link'
 
 // eslint-disable-next-line react/prop-types
 const Title = ({ imageSrc, title }) => {

@@ -1,5 +1,5 @@
-import "./Link"
-import Card from "./Card.jsx";
+import "../../ui/Link/Link";
+import Card from "../../ui/Card/Card";
 
 const Carosello = ({title}) => {
 

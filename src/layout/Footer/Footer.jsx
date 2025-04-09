@@ -1,9 +1,7 @@
-import "./Link"
-import './Footer.css'
+import "./Footer.css"
+import Link from "../../ui/Link/Link"
 
 function Footer() {
-
-
     return (
         <footer className="text-white py-12 ">
             <div className="max-w-7xl mx-auto px-4">

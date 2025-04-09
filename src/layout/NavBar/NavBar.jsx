@@ -1,9 +1,8 @@
 import './NavBar.css'
-import "./Link"
-import Link from './Link'
+import Link from '../../ui/Link/Link'
 import { useState } from "react";
-import Button from "./Button.jsx";
-import ButtonRotondos from "./ButtonRotondos.jsx";
+import Button from "../../ui/Button/Button";
+import ButtonRotondos from "../../ui/ButtonRotondos/ButtonRotondos";
 
 function NavBar(){
     const img = "logo";
