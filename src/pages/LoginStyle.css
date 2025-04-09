@@ -1,0 +1,19 @@
+.buttonLogin{
+    background: #0E2315;
+}
+
+.buttonLogin:hover{
+    background: #9de1dd;
+    color: #535bf2;
+    transition: background-color, color  0.5s ease-in-out;
+}
+
+.buttonRegister{
+    background: #0E2315;
+}
+
+.buttonRegister:hover{
+    background: #9de1dd;
+    color: #535bf2;
+    transition: background-color, color  0.5s ease-in-out;
+}

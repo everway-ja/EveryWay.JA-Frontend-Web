@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { FaUser, FaLock, FaEnvelope, FaCalendar, FaMapMarkerAlt, FaVenusMars, FaCreditCard, FaIdCard } from "react-icons/fa";
+import  './LoginStyle.css'
+
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -29,9 +31,9 @@ function Register() {
     };
 
     return (
-        <div className="flex items-center justify-center w-screen bg-gradient-to-br from-blue-100 to-purple-100 p-6"
+        <div className="flex items-center justify-center w-screen bg-transparent p-6"
              style={{ height: "calc(200vh)" }}>
-            <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
+            <div className="bg-white p-8 rounded-2xl drop-shadow-2xl w-full max-w-md">
                 <h2 className="text-4xl font-bold text-center text-gray-800 mb-6">Registrati</h2>
                 <form className="flex flex-col gap-4">
                     {/* Nome */}
@@ -113,7 +115,7 @@ function Register() {
                     </div>
 
                     {/* Pulsante Registrati */}
-                    <button type="button" className="w-full bg-purple-500 text-white py-3 rounded-lg font-semibold text-xl hover:bg-purple-600 transition duration-300">Registrati</button>
+                    <button type="button" className=" buttonRegister w-full  text-white py-3 rounded-lg font-semibold text-xl">Registrati</button>
                 </form>
             </div>
         </div>
