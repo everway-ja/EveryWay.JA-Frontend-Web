@@ -14,7 +14,6 @@ const Mappa = ({title}) => {
                     <div className="image-4 implosion">
                         <img src={"https://images.unsplash.com/photo-1608022989714-e1fd968552c5?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
                              alt={"test"} className="img"></img>
-
                     </div>
                     <div className="box-title">
                         <h2 className="text-style">mappa</h2>
@@ -24,7 +23,6 @@ const Mappa = ({title}) => {
                     <div className="image-3 implosion">
                         <img src={"https://plus.unsplash.com/premium_photo-1690474614774-a7d16ee9f2dd?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
                              alt={"test"} className="img"></img>
-
                     </div>
                 </div>
             </div>
@@ -33,9 +31,7 @@ const Mappa = ({title}) => {
                     <div className="image-5">
                         <img src={"https://images.unsplash.com/photo-1706631519116-6607d09107b2?q=80&w=3131&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
                              alt={"test"} className="img"></img>
-
                     </div>
-
                 </div>
             </div>
         </div>
