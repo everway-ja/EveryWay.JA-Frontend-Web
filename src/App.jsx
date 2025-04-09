@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import './App.css'
-import {ProvaContext} from './contexts/ProvaContext'
+import {ProvaContext} from './contexts/CountContext.jsx'
 import Title from './ui/Title/Title'
 import Carosello from "./features/Carosello/Carosello.jsx";
 import Mappa from "./features/Mappa/Mappa.jsx";

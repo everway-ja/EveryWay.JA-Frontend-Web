@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import { ProvaContext } from '../../contexts/ProvaContext';
+import { ProvaContext } from '../../contexts/CountContext';
 
 /**
  * Card Component
