@@ -2,7 +2,7 @@ import './NavBar.css'
 import Link from '../../ui/Link/Link'
 import { useState } from "react";
 import Button from "../../ui/Button/Button";
-import ButtonRotondos from "../../ui/ButtonRotondos/ButtonRotondos";
+import ButtonRotondos from "../../ui/Button/ButtonRotondos/ButtonRotondos";
 
 function NavBar(){
     const img = "logo";
