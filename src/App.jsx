@@ -5,7 +5,7 @@ import Title from './ui/Title/Title'
 import Carosello from "./features/Carosello/Carosello.jsx";
 import Mappa from "./features/Mappa/Mappa.jsx";
 import Feedback from "./features/Feedback/Feedback.jsx";
-import AboutUs from "./features/AboutUs/AboutUs.jsx";
+import AboutUs from "./features/About/About.jsx";  // Updated import path
 import ContactUs from "./features/ContactUs/ContactUs.jsx";
 
 /**
