@@ -1,4 +1,4 @@
-import CardUser from '../components/CardUser';
+import CardUser from '../ui/UserCard/UserCard';
 
 function Feedback() {
     const feedbacks = [
