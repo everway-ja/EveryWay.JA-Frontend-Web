@@ -1,4 +1,4 @@
-import CardUser from '../ui/UserCard/UserCard';
+import UserCard from '../ui/UserCard/UserCard';
 
 function Feedback() {
     const feedbacks = [
@@ -39,7 +39,7 @@ function Feedback() {
             <p className="text-lg mb-8 text-center">Send us your feedback</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full">
                 {feedbacks.map(feedback => (
-                    <CardUser
+                    <UserCard
                         key={feedback.id}
                         title={feedback.title}
                         image={feedback.image}
