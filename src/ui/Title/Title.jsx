@@ -1,4 +1,4 @@
-import "../Links/Links";
+import "../Link/Link";
 import "./Title.css";
 
 // eslint-disable-next-line react/prop-types
