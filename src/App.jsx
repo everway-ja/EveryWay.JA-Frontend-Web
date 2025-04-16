@@ -22,10 +22,12 @@ function App() {
 
     return (
         <ProvaContext.Provider value={{count, setCount}}>
+
             <div className="container">
-                {/* Hero section with large title and image */}
-                <Title imageSrc={"https://images.unsplash.com/photo-1499591934245-40b55745b905?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
-                       title="EveryWay"></Title>
+
+                <Title imageSrc={"https://images.unsplash.com/photo-1461263895214-7761d3a942de?q=80&w=1510&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
+                       title="EveryWay"
+                logoSrc={`/logo.svg`}></Title>
                 <br/>
                 
                 {/* Map section with link to full map page */}

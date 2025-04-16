@@ -16,7 +16,7 @@
 /* Hover effect for default button */
 .button-q:hover{
     color: #0E2315;
-    border-bottom-color: #fffb82;
+    border-bottom-color: #7FD8BE;
     border-bottom-width: 1.5px;
     transition: border-bottom-width 0.1s ease-in-out;
 }
@@ -26,7 +26,7 @@
     height: 45px;
     width: 85px;
     margin: 0 25px;
-    background: #535bf2;
+    background: #0E2315;
     border-radius: 100px;
     transition: background-color 0.5s ease-in-out;
 }
