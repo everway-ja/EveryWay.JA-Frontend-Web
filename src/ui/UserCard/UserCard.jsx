@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * CardUser Component (MemberCard)
+ * UserCard Component (MemberCard)
  * 
  * Displays a team member's information in a card format with a circular image,
  * name title, and role/description. Uses Tailwind CSS for styling.
@@ -12,7 +12,7 @@ import React from 'react';
  * @param {string} props.description - Role or description of the team member
  * @returns {JSX.Element} Card component with member information
  */
-function CardUser({ title, image, description }) {
+function UserCard({ title, image, description }) {
     return (
         <div className="w-64 h-70 rounded-2xl overflow-hidden shadow-lg bg-white p-4 transform transition-transform duration-300 hover:scale-105 flex flex-col items-center relative">
             {/* Circular profile image */}
@@ -27,4 +27,4 @@ function CardUser({ title, image, description }) {
     );
 }
 
-export default CardUser;
+export default UserCard;

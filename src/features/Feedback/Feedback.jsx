@@ -1,4 +1,4 @@
-import CardUser from "../../ui/MemberCard/MemberCard";
+import UserCard from "../../ui/UserCard/UserCard";
 
 /**
  * Feedback Component
@@ -51,7 +51,7 @@ const Feedback = ({title}) => {
                 {/* Feedback cards grid */}
                 <div className={`flex flex-wrap gap-4 justify-center p-6 w-100%`}>
                     {feedbackData.map((card, index) => (
-                        <CardUser key={index} title={card.title} image={card.image} description={card.description}/>
+                        <UserCard key={index} title={card.title} image={card.image} description={card.description}/>
                     ))}                
                 </div>
             </div>
