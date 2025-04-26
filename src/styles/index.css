@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'FunnelDisplay';
+  src: url('/assets/fonts/FunnelDisplay/FunnelDisplay-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer base {
   /* Light mode (default) */
   :root {
@@ -22,10 +29,11 @@
   }
   
   body {
-    font-family: 'FunnelDisplay', sans-serif;
+    Font-family: 'FunnelDisplay';
     @apply bg-[rgb(var(--color-background))] text-[rgb(var(--color-text))];
     transition: background-color 0.3s, color 0.3s;
   }
+
 }
 
 /* Additional utility classes for theme transition */
@@ -46,16 +54,10 @@
   box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.1);
   width: 100%;
   z-index: 10;
-  overflow: hidden;
+  height: 120px; /* Fixed height */
 }
 
 /* Add spacing to main content to account for fixed header */
 .main-content {
-  padding-top: 120px;
-  transition: padding-top 0.3s ease;
-}
-
-/* Adjusted main content when header is expanded */
-.header-expanded .main-content {
-  padding-top: 320px;
+  padding-top: 120px; /* Always the same padding regardless of menu state */
 }
