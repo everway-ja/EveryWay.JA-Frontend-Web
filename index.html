@@ -2,10 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg"/>
+    <link rel="icon" type="image/svg+xml" id="favicon" href="/assets/images/logoSeal-black.svg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EveryWay</title>
+    <title>EveryWay.JA</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Load Funnel Display font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
       .container{
         width: 100%;
@@ -13,9 +17,36 @@
         justify-content: center;
         flex-direction: column;
       }
+      
+      body {
+        font-family: 'Funnel Display', sans-serif;
+        color: #000000;
+        background-color: #ffffff;
+      }
     </style>
+    <script>
+      // Function to update favicon based on color scheme
+      function updateFavicon() {
+        const darkModeOn = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const favicon = document.getElementById('favicon');
+        
+        if (darkModeOn) {
+          favicon.href = '/assets/images/logoSeal-white.svg';
+        } else {
+          favicon.href = '/assets/images/logoSeal-black.svg';
+        }
+      }
+      
+      // Set favicon on page load
+      updateFavicon();
+      
+      // Listen for changes in color scheme preference
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
+      }
+    </script>
   </head>
-  <body>
+  <body class="bg-white text-black">
     <div id="root">
     </div>
     <script type="module" src="/src/main.jsx"></script>

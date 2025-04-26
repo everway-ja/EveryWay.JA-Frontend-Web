@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Light mode (default) */
+  :root {
+    --color-background: 255, 255, 255; /* white */
+    --color-text: 0, 0, 0; /* black */
+    --color-primary: 59, 130, 246; /* blue-500 */
+    --color-secondary: 107, 114, 128; /* gray-500 */
+    --color-overlay: 0, 0, 0; /* black overlay for light mode */
+  }
+  
+  /* Dark mode */
+  .dark {
+    --color-background: 18, 18, 18; /* very dark gray */
+    --color-text: 243, 244, 246; /* gray-100 */
+    --color-primary: 96, 165, 250; /* blue-400 */
+    --color-secondary: 156, 163, 175; /* gray-400 */
+    --color-overlay: 255, 255, 255; /* white overlay for dark mode */
+  }
+  
+  body {
+    font-family: 'FunnelDisplay', sans-serif;
+    @apply bg-[rgb(var(--color-background))] text-[rgb(var(--color-text))];
+    transition: background-color 0.3s, color 0.3s;
+  }
+}
+
+/* Additional utility classes for theme transition */
+.theme-transition {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 300ms;
+}
+
+/* Page header with glassy effect */
+.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(var(--color-overlay), 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(var(--color-overlay), 0.3);
+  box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.1);
+  width: 100%;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Add spacing to main content to account for fixed header */
+.main-content {
+  padding-top: 120px;
+  transition: padding-top 0.3s ease;
+}
+
+/* Adjusted main content when header is expanded */
+.header-expanded .main-content {
+  padding-top: 320px;
+}
