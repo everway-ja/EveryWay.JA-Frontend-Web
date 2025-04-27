@@ -47,17 +47,25 @@
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(var(--color-overlay), 0.25);
+  background: rgba(var(--color-overlay), 0.15); /* More transparent */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(var(--color-overlay), 0.3);
+  border-bottom: 1px solid rgba(var(--color-overlay), 0.2);
   box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.1);
   width: 100%;
-  z-index: 10;
+  z-index: 100; /* Increased z-index to ensure it stays on top */
   height: 120px; /* Fixed height */
 }
 
-/* Add spacing to main content to account for fixed header */
+/* Remove padding from main content to allow it to start at the top */
 .main-content {
-  padding-top: 120px; /* Always the same padding regardless of menu state */
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  z-index: 1; /* Lower z-index than header */
+}
+
+/* Add content padding class for pages where we want some space from the top */
+.content-padding {
+  padding-top: 120px;
 }

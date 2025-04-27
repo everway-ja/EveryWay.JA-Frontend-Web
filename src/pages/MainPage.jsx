@@ -40,8 +40,28 @@ const MainPage = () => {
         currentPath={currentPath}
       />
       
-      <div className="main-content p-4">
-        <h1>Main Page Content</h1>
+      <div className="main-content">
+        {/* Hero section that starts at the top of the page */}
+        <div className="h-screen flex items-center justify-center relative">
+          <div className="text-center px-4">
+            <img 
+              src="/assets/images/logos/logo.svg" 
+              alt="EveryWay.JA Logo" 
+              className="mx-auto mb-8 w-56 h-56 md:w-72 md:h-72 rounded-3xl shadow-lg"
+            />
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">EveryWay.JA</h1>
+            <p className="text-xl mb-8">
+              La vita è già difficile, non deve esserlo di più.<br/> 
+              EveryWay.JA : tutti, ovunque, per sempre.
+            </p>
+          </div>
+        </div>
+        
+        {/* Content after the hero section */}
+        <div className="p-4">
+          <h1>Main Page Content</h1>
+          {/* Rest of the page content */}
+        </div>
       </div>
     </div>
   )

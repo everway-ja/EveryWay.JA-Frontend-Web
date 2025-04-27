@@ -15,14 +15,14 @@ const PageHeader = ({
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Switch logo based on theme - inverse relationship (white logo for light theme)
-  const logoSrc = isDarkMode ? '/assets/images/logoSeal-black.svg' : '/assets/images/logoSeal-white.svg';
+  // Switch logo based on theme - use white logo for dark theme
+  const logoSrc = isDarkMode ? '/assets/images/logos/logoSeal-white.svg' : '/assets/images/logos/logoSeal-black.svg';
   
-  // Title color - black for dark theme, white for light theme
-  const titleColorClass = isDarkMode ? 'text-black' : 'text-white';
+  // Title color - white for dark theme, black for light theme
+  const titleColorClass = isDarkMode ? 'text-white' : 'text-black';
   
-  // Icon color for menu button - black for dark theme, white for light theme
-  const iconColor = isDarkMode ? '#000000' : '#ffffff';
+  // Icon color for menu button - white for dark theme, black for light theme
+  const iconColor = isDarkMode ? '#ffffff' : '#000000';
   
   // Handle menu state
   const handleMenuClick = () => {
@@ -44,8 +44,12 @@ const PageHeader = ({
   return (
     <>
       {/* Page Header with expandable menu */}
-      <div className={`page-header relative ${className} transition-all duration-300 ease-in-out`}
-        style={{ height: menuOpen ? 'auto' : '120px', minHeight: menuOpen ? '320px' : '120px' }}
+      <div 
+        className={`page-header relative ${className} transition-all duration-300 ease-in-out`}
+        style={{ 
+          height: menuOpen ? '425px' : '120px',
+          overflow: 'hidden'
+        }}
       >
         {/* Fixed height container for header title and buttons */}
         <div className="h-[120px] relative">
@@ -121,20 +125,27 @@ const PageHeader = ({
         
         {/* Menu content - appears when header is expanded */}
         <div 
-          className={`w-full transition-all duration-300 ease-in-out overflow-hidden ${
-            menuOpen ? 'max-h-[800px] opacity-100 py-4' : 'max-h-0 opacity-0'
+          className={`w-full transition-opacity duration-300 ease-in-out absolute top-[120px] left-0 right-0 ${
+            menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
+          style={{
+            padding: '1rem 0',
+            willChange: 'opacity',
+            transition: 'opacity 300ms ease-in-out'
+          }}
         >
           {/* Three equally sized columns centered horizontally */}
-          <div className="grid grid-cols-3 w-3/4 mx-auto">
+          <div className="grid grid-cols-3 w-3/4 mx-auto pb-6">
             {/* Column 1 */}
-            <div className="border-r border-[rgba(var(--color-overlay),0.2)] p-4">
+            <div className="relative p-4">
+              <div className="absolute top-0 right-0 bottom-6 w-px bg-[rgba(var(--color-overlay),0.2)]"></div>
               <h3 className={`font-semibold text-lg mb-3 ${titleColorClass} text-center`}>Other Pages</h3>
               {/* Column 1 content */}
             </div>
             
             {/* Column 2 */}
-            <div className="border-r border-[rgba(var(--color-overlay),0.2)] p-4">
+            <div className="relative p-4">
+              <div className="absolute top-0 right-0 bottom-6 w-px bg-[rgba(var(--color-overlay),0.2)]"></div>
               <h3 className={`font-semibold text-lg mb-3 ${titleColorClass} text-center`}>In This Page</h3>
               {/* Column 2 content */}
             </div>

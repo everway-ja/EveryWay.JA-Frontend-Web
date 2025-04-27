@@ -25,8 +25,14 @@ const LoginPage = () => {
         currentPath="Login"
       />
       
-      <div className="main-content p-4">
-        {/* Login content will go here */}
+      <div className="main-content">
+        {/* Full height container with centered content */}
+        <div className="h-screen flex items-center justify-center p-4">
+          <div className="bg-[rgba(var(--color-overlay),0.05)] backdrop-blur-sm p-8 rounded-lg w-full max-w-md">
+            <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+            {/* Login form would go here */}
+          </div>
+        </div>
       </div>
     </div>
   );

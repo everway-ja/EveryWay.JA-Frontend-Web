@@ -25,8 +25,19 @@ const CertificationsPage = () => {
         currentPath="Our Certifications"
       />
       
-      <div className="main-content p-4">
-        {/* Certifications content will go here */}
+      <div className="main-content">
+        {/* Hero section with background image */}
+        <div className="h-screen flex items-center justify-center relative">
+          <div className="text-center px-4 z-10 relative">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">Our Certifications</h1>
+            <p className="text-xl mb-8">Quality assured by industry standards</p>
+          </div>
+        </div>
+        
+        {/* Content after the hero section */}
+        <div className="p-4">
+          {/* Certifications content would go here */}
+        </div>
       </div>
     </div>
   );
