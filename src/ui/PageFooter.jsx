@@ -19,17 +19,26 @@ const PageFooter = () => {
         <div className="flex flex-col md:flex-row justify-between items-center min-h-[150px]">
           {/* JA Impresa in Azione Logo - Left Side */}
           <div className="md:w-1/3 flex justify-start items-center">
-            <img 
-              src="/assets/images/logoJaImpresaInAzione.webp" 
-              alt="JA Impresa in Azione Logo" 
-              className="h-20 object-contain"
-            />
+            <a 
+              href="https://www.jaitalia.org" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="transition-opacity hover:opacity-80"
+            >
+              <img 
+                src="/assets/images/logoJaImpresaInAzione.webp" 
+                alt="JA Impresa in Azione Logo" 
+                className="h-20 object-contain cursor-pointer"
+              />
+            </a>
           </div>
           
           {/* Logo and Company Info - Center */}
           <div className="mt-6 md:mt-0 flex flex-col items-center md:w-1/3">
-            <img src={logoSrc} alt="EveryWay.JA Logo" className="w-24 h-24 mb-4" />
-            <h3 className={`text-2xl font-semibold ${textColorClass}`}>EveryWay.JA</h3>
+            <a href="/" className="flex flex-col items-center transition-opacity hover:opacity-80">
+              <img src={logoSrc} alt="EveryWay.JA Logo" className="w-24 h-24 mb-4" />
+              <h3 className={`text-2xl font-semibold ${textColorClass}`}>EveryWay.JA</h3>
+            </a>
           </div>
           
           {/* Contact Information - Right Side */}

@@ -17,8 +17,8 @@
     --color-primary: 59, 130, 246; /* blue-500 */
     --color-secondary: 107, 114, 128; /* gray-500 */
     --color-overlay: 0, 0, 0; /* black overlay for light mode */
-    --color-certification: 132, 0, 255; /* consistent purple for certification page */
-    --color-partner: 254, 208, 101; /* gold color for partner page */
+    --color-certification: 108, 22, 188; /* consistent purple for certification page */
+    --color-partner: 187, 157, 88; /* gold color for partner page */
   }
   
   /* Dark mode */
@@ -28,8 +28,8 @@
     --color-primary: 96, 165, 250; /* blue-400 */
     --color-secondary: 156, 163, 175; /* gray-400 */
     --color-overlay: 255, 255, 255; /* white overlay for dark mode */
-    --color-certification: 132, 0, 255; /* consistent purple for certification page */
-    --color-partner: 254, 208, 101; /* gold color for partner page */
+    --color-certification: 108, 22, 188; /* consistent purple for certification page */
+    --color-partner: 187, 157, 88; /* gold color for partner page */
   }
   
   /* Hide scrollbar for all browsers */
@@ -50,7 +50,6 @@
     @apply bg-[rgb(var(--color-background))] text-[rgb(var(--color-text))];
     transition: background-color 0.3s, color 0.3s;
   }
-
 }
 
 /* Additional utility classes for theme transition */
@@ -59,28 +58,29 @@
   transition-duration: 300ms;
 }
 
-/* Page header with glassy effect - Improved layout consistency */
+/* Page header with glassy effect - Enhanced fixed positioning */
 .page-header {
-  position: fixed;
+  position: fixed !important; /* Force fixed positioning */
   top: 0;
   left: 0;
   background: rgba(var(--color-overlay), 0.10); /* More transparent */
-  backdrop-filter: blur(15px); /* Increased blur from 10px to 15px */
-  -webkit-backdrop-filter: blur(15px); /* Also update for WebKit browsers */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.1);
   width: 100%;
-  z-index: 100;
+  z-index: 1000; /* Increased z-index to ensure it stays on top */
   height: 120px;
   text-align: center;
+  transition: height 0.3s ease-in-out, background 0.3s ease-in-out;
+  will-change: height, background;
 }
 
-/* Certification page header with bright purple background */
+/* Certification page header with more transparent purple background and enhanced blur */
 .certification-header {
   position: relative;
   overflow: hidden;
 }
 
-/* Animation mask element that wipes from left to right */
 .certification-header::before {
   content: '';
   position: absolute;
@@ -88,18 +88,19 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: rgb(var(--color-certification));
+  background: rgba(var(--color-certification), 0.65); /* More transparent purple */
+  backdrop-filter: blur(20px); /* Enhanced blur effect */
+  -webkit-backdrop-filter: blur(20px);
   animation: wipeRightAnimation 0.8s ease-out forwards;
   z-index: -1;
 }
 
-/* Partner page header with gold background */
+/* Partner page header with more transparent gold background and enhanced blur */
 .partner-header {
   position: relative;
   overflow: hidden;
 }
 
-/* Animation mask element that wipes from left to right for partner page */
 .partner-header::before {
   content: '';
   position: absolute;
@@ -107,7 +108,9 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: rgb(var(--color-partner));
+  background: rgba(var(--color-partner), 0.65); /* More transparent gold */
+  backdrop-filter: blur(20px); /* Enhanced blur effect */
+  -webkit-backdrop-filter: blur(20px);
   animation: wipeRightAnimation 0.8s ease-out forwards;
   z-index: -1;
 }
@@ -122,17 +125,33 @@
   }
 }
 
-/* Remove padding from main content to allow it to start at the top */
+/* Main content with proper spacing for fixed header */
 .main-content {
   min-height: 100vh;
   width: 100%;
   position: relative;
   z-index: 1; /* Lower z-index than header */
-  display: flex; /* Add flex display */
-  flex-direction: column; /* Stack children vertically */
+  display: flex;
+  flex-direction: column;
+  padding-top: 120px; /* Match the header height */
+}
+
+/* For expanded header, keep content in place */
+.header-expanded .main-content {
+  /* Do not change padding when header expands */
+  padding-top: 120px;
 }
 
 /* Add content padding class for pages where we want some space from the top */
 .content-padding {
   padding-top: 120px;
+}
+
+/* Make sure the expanded header menu stays on top of content */
+.header-menu-expanded {
+  position: fixed !important;
+  top: 120px;
+  left: 0;
+  width: 100%;
+  z-index: 999;
 }

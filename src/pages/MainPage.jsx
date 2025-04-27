@@ -1,6 +1,6 @@
 import PageHeader from '@ui/PageHeader';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const MainPage = () => {
   // Set this to false to disable the header
@@ -8,6 +8,17 @@ const MainPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [headerExpanded, setHeaderExpanded] = useState(false);
+  const [animationStarted, setAnimationStarted] = useState(false);
+  
+  // Trigger animation after component mounts
+  useEffect(() => {
+    // Short delay before starting animation
+    const timer = setTimeout(() => {
+      setAnimationStarted(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
   
   // Format the current path for display
   const formatPathForDisplay = (path) => {
@@ -44,13 +55,31 @@ const MainPage = () => {
         {/* Hero section that starts at the top of the page */}
         <div className="h-screen flex items-center justify-center relative">
           <div className="text-center px-4">
-            <img 
-              src="/assets/images/logos/logo.svg" 
-              alt="EveryWay.JA Logo" 
-              className="mx-auto mb-8 w-56 h-56 md:w-72 md:h-72 rounded-3xl"
-            />
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">EveryWay.JA</h1>
-            <p className="text-xl mb-8">
+            <div 
+              className={`transition-all duration-700 ease-out ${
+                animationStarted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
+              }`}
+            >
+              <img 
+                src="/assets/images/logos/logo.svg" 
+                alt="EveryWay.JA Logo" 
+                className="mx-auto mb-8 w-56 h-56 md:w-72 md:h-72 rounded-3xl"
+              />
+            </div>
+            
+            <h1 
+              className={`text-4xl md:text-6xl font-bold mb-6 transition-all duration-700 delay-200 ease-out ${
+                animationStarted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
+              }`}
+            >
+              EveryWay.JA
+            </h1>
+            
+            <p 
+              className={`text-xl mb-8 transition-all duration-700 delay-300 ease-out ${
+                animationStarted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
+              }`}
+            >
               Life is hard already, it doesn't have to be harder.
             </p>
           </div>

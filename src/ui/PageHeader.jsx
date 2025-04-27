@@ -58,8 +58,8 @@ const PageHeader = ({
   return (
     <>
       {/* Page Header with expandable menu */}
-      <div 
-        className={`page-header relative ${headerClass} ${className} transition-all duration-300 ease-in-out`}
+      <header 
+        className={`page-header ${headerClass} ${className} transition-all duration-300 ease-in-out`}
         style={{ 
           height: menuOpen ? '425px' : '120px',
           overflow: 'hidden'
@@ -139,14 +139,20 @@ const PageHeader = ({
             <img src={logoSrc} alt="Logo" className="w-28 h-28" />
           </button>
 
-          {/* JA Impresa in Azione Logo - repositioned further left and made smaller */}
-          <div className="absolute top-[1.5rem] right-52 h-16 flex items-center justify-center z-20">
+          {/* JA Impresa in Azione Logo - now a clickable link */}
+          <a 
+            href="https://www.impresainazione.it"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute top-[1.5rem] right-52 h-16 flex items-center justify-center z-20 hover:opacity-80 transition-opacity"
+            aria-label="Visit JA Impresa in Azione website"
+          >
             <img 
               src="/assets/images/logoImpresaInAzione.webp" 
               alt="JA Impresa in Azione Logo" 
               className="h-8 object-contain" 
             />
-          </div>
+          </a>
           
           {/* Centered EveryWay.JA text with path below - Improved positioning */}
           <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col items-center justify-center z-10">
@@ -170,7 +176,7 @@ const PageHeader = ({
         {/* Menu content - appears when header is expanded */}
         <div 
           className={`w-full transition-opacity duration-300 ease-in-out absolute top-[120px] left-0 right-0 ${
-            menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            menuOpen ? 'opacity-100 header-menu-expanded' : 'opacity-0 pointer-events-none'
           }`}
           style={{
             padding: '1rem 0',
@@ -244,7 +250,7 @@ const PageHeader = ({
         </div>
         
         {children}
-      </div>
+      </header>
     </>
   );
 };
