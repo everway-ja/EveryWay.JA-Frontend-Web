@@ -15,19 +15,20 @@ const PageHeader = ({
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Check if we're on the certifications page
+  // Check if we're on the certifications page or partners page
   const isCertificationsPage = currentPath === 'Our Certifications';
+  const isPartnersPage = currentPath === 'Our Partners';
   
-  // Switch logo based on theme - use white logo for dark theme or certification page
-  const logoSrc = isDarkMode || isCertificationsPage 
+  // Switch logo based on theme - use white logo for dark theme, certification page, or partners page
+  const logoSrc = isDarkMode || isCertificationsPage || isPartnersPage
     ? '/assets/images/logos/logoSeal-white.svg' 
     : '/assets/images/logos/logoSeal-black.svg';
   
-  // Title color - white for dark theme or certification page, black for light theme
-  const titleColorClass = isDarkMode || isCertificationsPage ? 'text-white' : 'text-black';
+  // Title color - white for dark theme, certification page, or partner page, black for light theme
+  const titleColorClass = isDarkMode || isCertificationsPage || isPartnersPage ? 'text-white' : 'text-black';
   
-  // Icon color for menu button - white for dark theme or certification page, black for light theme
-  const iconColor = isDarkMode || isCertificationsPage ? '#ffffff' : '#000000';
+  // Icon color for menu button - white for dark theme, certification page, or partner page, black for light theme
+  const iconColor = isDarkMode || isCertificationsPage || isPartnersPage ? '#ffffff' : '#000000';
   
   // Handle menu state
   const handleMenuClick = () => {
@@ -46,8 +47,13 @@ const PageHeader = ({
   
   if (!enabled) return null;
   
-  // Determine header class based only on current page (no exit animation)
-  const headerClass = isCertificationsPage ? 'certification-header' : '';
+  // Determine header class based on current page
+  let headerClass = '';
+  if (isCertificationsPage) {
+    headerClass = 'certification-header';
+  } else if (isPartnersPage) {
+    headerClass = 'partner-header';
+  }
   
   return (
     <>
@@ -132,6 +138,15 @@ const PageHeader = ({
           >
             <img src={logoSrc} alt="Logo" className="w-28 h-28" />
           </button>
+
+          {/* JA Impresa in Azione Logo - repositioned further left and made smaller */}
+          <div className="absolute top-[1.5rem] right-52 h-16 flex items-center justify-center z-20">
+            <img 
+              src="/assets/images/logoImpresaInAzione.webp" 
+              alt="JA Impresa in Azione Logo" 
+              className="h-8 object-contain" 
+            />
+          </div>
           
           {/* Centered EveryWay.JA text with path below - Improved positioning */}
           <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col items-center justify-center z-10">
@@ -204,27 +219,24 @@ const PageHeader = ({
                   </span>
                   <span className="ml-2">Registration</span>
                 </a>
-                <a 
-                  href="https://www.instagram.com/everyway.ja/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}
-                >
-                  <span className="inline-flex justify-center items-center w-6">
-                    <i className="fab fa-instagram text-lg"></i>
-                  </span>
-                  <span className="ml-2">Instagram</span>
-                </a>
                 
                 {/* Separator */}
                 <div className={`border-t border-[rgba(var(--color-overlay),0.3)] mx-4 my-1`}></div>
                 
-                {/* Our Certifications button - Fixed syntax error with proper tag nesting */}
-                <a href="/certifications" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
+                {/* Our Certifications button - with conditional color based on current page */}
+                <a href="/certifications" className={`flex items-center ${isCertificationsPage ? titleColorClass : 'text-[rgb(132,0,255)]'} hover:opacity-80 transition-opacity pl-4`}>
                   <span className="inline-flex justify-center items-center w-6">
                     <i className="fas fa-certificate"></i>
                   </span>
                   <span className="ml-2">Our Certifications</span>
+                </a>
+                
+                {/* Our Partners button - with conditional color based on current page */}
+                <a href="/partners" className={`flex items-center ${isPartnersPage ? titleColorClass : 'text-[#fed065]'} hover:opacity-80 transition-opacity pl-4`}>
+                  <span className="inline-flex justify-center items-center w-6">
+                    <i className="fas fa-handshake"></i>
+                  </span>
+                  <span className="ml-2">Our Partners</span>
                 </a>
               </div>
             </div>

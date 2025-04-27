@@ -3,7 +3,7 @@ import PageHeader from '@ui/PageHeader';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '@contexts/ThemeContext';
 
-const CertificationsPage = () => {
+const PartnersPage = () => {
   const showHeader = true;
   const navigate = useNavigate();
   const location = useLocation();
@@ -12,14 +12,14 @@ const CertificationsPage = () => {
   
   // Log when component mounts to help with debugging
   useEffect(() => {
-    console.log('Certifications page mounted');
+    console.log('Partners page mounted');
     return () => {
-      console.log('Certifications page unmounted');
+      console.log('Partners page unmounted');
     };
   }, []);
   
   const handleLogoClick = () => {
-    console.log('Logo clicked from certifications page');
+    console.log('Logo clicked from partners page');
     navigate('/');
   };
   
@@ -29,7 +29,7 @@ const CertificationsPage = () => {
 
   // Use text color based on theme
   const textColorClass = isDarkMode ? 'text-white' : 'text-[rgb(var(--color-text))]';
-  const certificationColor = '#8400ff'; // Gold color for certifications
+  const partnerColor = '#fed065'; // Gold color for partners
 
   return (
     <div className={headerExpanded ? 'header-expanded' : ''}>
@@ -37,28 +37,32 @@ const CertificationsPage = () => {
         enabled={showHeader}
         onLogoClick={handleLogoClick}
         onMenuClick={handleMenuClick}
-        currentPath="Our Certifications"
+        currentPath="Our Partners"
       />
       
       <div className="main-content">
-        {/* Hero section with background image */}
+        {/* Hero section with background */}
         <div className="h-screen flex items-center justify-center relative">
           <div className="text-center px-4 z-10 relative">
-            <h1 className={`text-4xl md:text-6xl font-bold mb-6 ${textColorClass}`}
-              style={{color: certificationColor}}>
-              Our Certifications
+            <h1 className={`text-4xl md:text-6xl font-bold mb-6 ${textColorClass}`} 
+                style={{color: partnerColor}}>
+              Our Partners
             </h1>
-            <p className={`text-xl mb-8 ${textColorClass}`}>Quality assured by industry standards</p>
+            <p className={`text-xl mb-8 ${textColorClass}`}>
+              Partners who make our work possible
+            </p>
           </div>
         </div>
         
-        {/* Content after the hero section */}
-        <div className="p-4">
-          {/* Certifications content would go here */}
+        {/* Partners content */}
+        <div className="container mx-auto p-4 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default CertificationsPage;
+export default PartnersPage;

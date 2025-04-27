@@ -51,15 +51,13 @@ const MainPage = () => {
             />
             <h1 className="text-4xl md:text-6xl font-bold mb-6">EveryWay.JA</h1>
             <p className="text-xl mb-8">
-              Life is hard already, it doesn't have to be worse.<br/> 
-              EveryWay.JA : everbody, everywhere, always.
+              Life is hard already, it doesn't have to be harder.
             </p>
           </div>
         </div>
         
         {/* Content after the hero section */}
         <div className="p-4">
-          <h1>Main Page Content</h1>
           {/* Rest of the page content */}
         </div>
       </div>

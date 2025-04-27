@@ -5,6 +5,7 @@ import LoginPage from '@pages/LoginPage'
 import RegistrationPage from '@pages/RegistrationPage'
 import CertificationsPage from '@pages/CertificationsPage'
 import { ThemeProvider } from '@contexts/ThemeContext'
+import PartnersPage from './pages/PartnersPage'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/certifications" element={<CertificationsPage />} />
+          <Route path="/partners" element={<PartnersPage />} />
           {/* Add more routes here as needed */}
         </Route>
       </Routes>
