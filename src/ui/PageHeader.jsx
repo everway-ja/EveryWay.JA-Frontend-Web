@@ -10,19 +10,24 @@ const PageHeader = ({
   onMenuClick = () => {},
   currentPath = 'Home' // Default path
 }) => {
-  const { isDarkMode } = useTheme();
+  const { isDarkMode, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Switch logo based on theme - use white logo for dark theme
-  const logoSrc = isDarkMode ? '/assets/images/logos/logoSeal-white.svg' : '/assets/images/logos/logoSeal-black.svg';
+  // Check if we're on the certifications page
+  const isCertificationsPage = currentPath === 'Our Certifications';
   
-  // Title color - white for dark theme, black for light theme
-  const titleColorClass = isDarkMode ? 'text-white' : 'text-black';
+  // Switch logo based on theme - use white logo for dark theme or certification page
+  const logoSrc = isDarkMode || isCertificationsPage 
+    ? '/assets/images/logos/logoSeal-white.svg' 
+    : '/assets/images/logos/logoSeal-black.svg';
   
-  // Icon color for menu button - white for dark theme, black for light theme
-  const iconColor = isDarkMode ? '#ffffff' : '#000000';
+  // Title color - white for dark theme or certification page, black for light theme
+  const titleColorClass = isDarkMode || isCertificationsPage ? 'text-white' : 'text-black';
+  
+  // Icon color for menu button - white for dark theme or certification page, black for light theme
+  const iconColor = isDarkMode || isCertificationsPage ? '#ffffff' : '#000000';
   
   // Handle menu state
   const handleMenuClick = () => {
@@ -41,11 +46,14 @@ const PageHeader = ({
   
   if (!enabled) return null;
   
+  // Determine header class based only on current page (no exit animation)
+  const headerClass = isCertificationsPage ? 'certification-header' : '';
+  
   return (
     <>
       {/* Page Header with expandable menu */}
       <div 
-        className={`page-header relative ${className} transition-all duration-300 ease-in-out`}
+        className={`page-header relative ${headerClass} ${className} transition-all duration-300 ease-in-out`}
         style={{ 
           height: menuOpen ? '425px' : '120px',
           overflow: 'hidden'
@@ -97,6 +105,25 @@ const PageHeader = ({
             </div>
           </button>
           
+          {/* Theme toggle button placed next to hamburger menu */}
+          <button
+            onClick={toggleTheme}
+            className="absolute top-[-0.5rem] left-40 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20"
+            aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            type="button"
+          >
+            {/* Lightbulb/Moon icon for theme toggle */}
+            <div className="flex items-center justify-center w-8 h-8">
+              {isDarkMode ? (
+                // Lightbulb for dark mode (clicking switches to light)
+                <i className="fas fa-lightbulb text-2xl" style={{ color: iconColor }}></i>
+              ) : (
+                // Moon icon for light mode (clicking switches to dark)
+                <i className="fas fa-moon text-2xl" style={{ color: iconColor }}></i>
+              )}
+            </div>
+          </button>
+          
           {/* Logo button in top right corner */}
           <button 
             onClick={onLogoClick}
@@ -106,20 +133,22 @@ const PageHeader = ({
             <img src={logoSrc} alt="Logo" className="w-28 h-28" />
           </button>
           
-          {/* Centered EveryWay.JA text with path below */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <button 
-              onClick={onLogoClick}
-              className="bg-transparent border-none focus:outline-none cursor-pointer"
-              aria-label="Return to home page"
-            >
-              <h1 className={`text-3xl font-bold ${titleColorClass}`}>EveryWay.JA</h1>
-            </button>
-            
-            {/* Path display - simplified without arrows */}
-            <p className={`text-base ${titleColorClass} mt-3 opacity-80 italic`}>
-              {currentPath}
-            </p>
+          {/* Centered EveryWay.JA text with path below - Improved positioning */}
+          <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col items-center justify-center z-10">
+            <div className="w-full text-center">
+              <button 
+                onClick={onLogoClick}
+                className="bg-transparent border-none focus:outline-none cursor-pointer mx-auto block"
+                aria-label="Return to home page"
+              >
+                <h1 className={`text-3xl font-bold ${titleColorClass}`}>EveryWay.JA</h1>
+              </button>
+              
+              {/* Path display - simplified without arrows */}
+              <p className={`text-base ${titleColorClass} mt-3 opacity-80 italic`}>
+                {currentPath}
+              </p>
+            </div>
           </div>
         </div>
         
@@ -190,7 +219,7 @@ const PageHeader = ({
                 {/* Separator */}
                 <div className={`border-t border-[rgba(var(--color-overlay),0.3)] mx-4 my-1`}></div>
                 
-                {/* Our Certifications button */}
+                {/* Our Certifications button - Fixed syntax error with proper tag nesting */}
                 <a href="/certifications" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
                   <span className="inline-flex justify-center items-center w-6">
                     <i className="fas fa-certificate"></i>

@@ -24,27 +24,6 @@
         background-color: #ffffff;
       }
     </style>
-    <script>
-      // Function to update favicon based on color scheme
-      function updateFavicon() {
-        const darkModeOn = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const favicon = document.getElementById('favicon');
-        
-        if (darkModeOn) {
-          favicon.href = '/assets/images/logos/logoSeal-white.svg';
-        } else {
-          favicon.href = '/assets/images/logos/logoSeal-black.svg';
-        }
-      }
-      
-      // Set favicon on page load
-      updateFavicon();
-      
-      // Listen for changes in color scheme preference
-      if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
-      }
-    </script>
   </head>
   <body class="bg-white text-black">
     <div id="root">

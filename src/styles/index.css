@@ -17,6 +17,7 @@
     --color-primary: 59, 130, 246; /* blue-500 */
     --color-secondary: 107, 114, 128; /* gray-500 */
     --color-overlay: 0, 0, 0; /* black overlay for light mode */
+    --color-certification: 132, 0, 255; /* consistent purple for certification page */
   }
   
   /* Dark mode */
@@ -26,6 +27,20 @@
     --color-primary: 96, 165, 250; /* blue-400 */
     --color-secondary: 156, 163, 175; /* gray-400 */
     --color-overlay: 255, 255, 255; /* white overlay for dark mode */
+    --color-certification: 132, 0, 255; /* consistent purple for certification page */
+  }
+  
+  /* Hide scrollbar for all browsers */
+  html, body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    overflow-y: auto; /* Allow vertical scrolling */
+  }
+  
+  /* Hide WebKit scrollbar (Chrome, Safari, Opera) */
+  html::-webkit-scrollbar, 
+  body::-webkit-scrollbar {
+    display: none;
   }
   
   body {
@@ -42,7 +57,7 @@
   transition-duration: 300ms;
 }
 
-/* Page header with glassy effect */
+/* Page header with glassy effect - Improved layout consistency */
 .page-header {
   position: fixed;
   top: 0;
@@ -50,11 +65,40 @@
   background: rgba(var(--color-overlay), 0.15); /* More transparent */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(var(--color-overlay), 0.2);
   box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.1);
   width: 100%;
   z-index: 100; /* Increased z-index to ensure it stays on top */
   height: 120px; /* Fixed height */
+  text-align: center; /* Ensure text centering */
+}
+
+/* Certification page header with bright purple background */
+.certification-header {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animation mask element that wipes from left to right */
+.certification-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgb(var(--color-certification));
+  animation: wipeRightAnimation 0.8s ease-out forwards;
+  z-index: -1;
+}
+
+/* Wipe animation from left to right */
+@keyframes wipeRightAnimation {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 0;
+  }
 }
 
 /* Remove padding from main content to allow it to start at the top */

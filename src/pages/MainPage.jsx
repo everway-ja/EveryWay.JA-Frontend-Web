@@ -47,12 +47,12 @@ const MainPage = () => {
             <img 
               src="/assets/images/logos/logo.svg" 
               alt="EveryWay.JA Logo" 
-              className="mx-auto mb-8 w-56 h-56 md:w-72 md:h-72 rounded-3xl shadow-lg"
+              className="mx-auto mb-8 w-56 h-56 md:w-72 md:h-72 rounded-3xl"
             />
             <h1 className="text-4xl md:text-6xl font-bold mb-6">EveryWay.JA</h1>
             <p className="text-xl mb-8">
-              La vita è già difficile, non deve esserlo di più.<br/> 
-              EveryWay.JA : tutti, ovunque, per sempre.
+              Life is hard already, it doesn't have to be worse.<br/> 
+              EveryWay.JA : everbody, everywhere, always.
             </p>
           </div>
         </div>

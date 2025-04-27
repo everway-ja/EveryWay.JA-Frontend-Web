@@ -5,59 +5,34 @@ const ThemeContext = createContext();
 export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
-  // Function to get current system theme preference
-  const getSystemThemePreference = () => {
+  // Get saved theme from localStorage or use browser preference
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    // If user has previously set a preference, use that
+    if (savedTheme !== null) {
+      return savedTheme === 'dark';
+    }
+    // Otherwise use browser/OS preference
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  };
-  
-  // Initialize state based on system preference
-  const [isDarkMode, setIsDarkMode] = useState(getSystemThemePreference());
+  });
 
-  // Function to update theme based on system preference
-  const updateThemeBasedOnSystemPreference = () => {
-    setIsDarkMode(getSystemThemePreference());
-  };
-
-  // Toggle function (can be used for manual control if needed)
+  // Toggle function for manual control
   const toggleTheme = () => {
     setIsDarkMode(prev => !prev);
   };
 
-  // Update when system preference changes
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    // Set initial theme
-    updateThemeBasedOnSystemPreference();
-    
-    // Add listener for theme changes
-    const handleChange = () => updateThemeBasedOnSystemPreference();
-    
-    // Modern browsers
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleChange);
-    } 
-    // Older browsers
-    else if (mediaQuery.addListener) {
-      mediaQuery.addListener(handleChange);
-    }
-
-    // Cleanup
-    return () => {
-      if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener('change', handleChange);
-      } else if (mediaQuery.removeListener) {
-        mediaQuery.removeListener(handleChange);
-      }
-    };
-  }, []);
-
-  // Apply theme to document
+  // Update document and save preference when theme changes
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      // Update favicon for dark mode
+      document.getElementById('favicon').href = '/assets/images/logos/logoSeal-white.svg';
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      // Update favicon for light mode
+      document.getElementById('favicon').href = '/assets/images/logos/logoSeal-black.svg';
     }
   }, [isDarkMode]);
 
