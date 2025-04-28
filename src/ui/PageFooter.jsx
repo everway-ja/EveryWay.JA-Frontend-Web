@@ -1,27 +1,43 @@
 import React from 'react';
 import { useTheme } from '@contexts/ThemeContext';
 
-const PageFooter = () => {
+const PageFooter = ({ pageName = '' }) => {
     const { isDarkMode } = useTheme();
     const currentYear = new Date().getFullYear();
     
+    // Check if we're on the certifications or partners page
+    const isCertificationsPage = pageName === 'Our Certifications';
+    const isPartnersPage = pageName === 'Our Partners';
+    
     // Logo source based on theme
-    const logoSrc = isDarkMode
+    const logoSrc = isDarkMode || isCertificationsPage || isPartnersPage
         ? '/assets/images/logos/logoSeal-white.svg'
         : '/assets/images/logos/logoSeal-black.svg';
     
     // Text color class based on theme
-    const textColorClass = isDarkMode ? 'text-white' : 'text-black';
+    const textColorClass = isDarkMode || isCertificationsPage || isPartnersPage ? 'text-white' : 'text-black';
+    
+    // Determine footer class based on current page
+    let footerClass = '';
+    if (isCertificationsPage) {
+        footerClass = 'certification-footer';
+    } else if (isPartnersPage) {
+        footerClass = 'partner-footer';
+    }
     
     return (
-        <footer className={`mt-auto py-8 ${textColorClass} backdrop-blur-md`} style={{
-            background: isDarkMode 
-                ? 'rgba(var(--color-overlay), 0.20)' // Dark mode - match header opacity
-                : 'rgba(var(--color-overlay), 0.15)', // Light mode - match header opacity
-            borderTop: '1px solid rgba(var(--color-overlay),0.1)',
-            boxShadow: '0 -4px 30px rgba(var(--color-overlay), 0.1)'
-        }}>
-            <div className="container mx-auto px-4">
+        <footer 
+            className={`mt-auto py-8 ${textColorClass} backdrop-blur-md ${footerClass} relative overflow-hidden`} 
+            style={{
+                background: isDarkMode 
+                    ? 'rgba(var(--color-overlay), 0.20)' // Dark mode - match header opacity
+                    : 'rgba(var(--color-overlay), 0.15)', // Light mode - match header opacity
+                boxShadow: '0 -4px 30px rgba(var(--color-overlay), 0.1)',
+                position: 'relative',
+                zIndex: 1
+            }}
+        >
+            <div className="container mx-auto px-4 relative z-10">
                 <div className="flex flex-col md:flex-row justify-between items-center min-h-[150px]">
                     {/* JA Impresa in Azione Logo - Left Side */}
                     <div className="md:w-1/3 flex justify-start items-center">
@@ -33,7 +49,7 @@ const PageFooter = () => {
                         >
                             <img 
                                 src="/assets/images/logoJaImpresaInAzione.webp" 
-                                alt="JA Impresa in Azione Logo" 
+                                alt="JA Impresa in Zione Logo" 
                                 className="h-20 object-contain cursor-pointer"
                             />
                         </a>

@@ -141,6 +141,31 @@ html {
     background: rgba(var(--color-certification), 0.80);
 }
 
+/* Certification page footer with matching animation */
+.certification-footer {
+    position: relative;
+    overflow: hidden;
+}
+
+.certification-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--color-certification), 0.70); /* Match header transparency */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    animation: wipeRightAnimation 0.8s ease-out forwards;
+    z-index: -1;
+}
+
+/* Dark mode keeps previous opacity for certification footer */
+.dark .certification-footer::before {
+    background: rgba(var(--color-certification), 0.80);
+}
+
 /* Partner page header with adjusted transparency for light mode */
 .partner-header {
     position: relative;
@@ -161,8 +186,29 @@ html {
     z-index: -1;
 }
 
-/* Dark mode keeps previous opacity for partner header */
-.dark .partner-header::before {
+/* Partner page footer with matching animation */
+.partner-footer {
+    position: relative;
+    overflow: hidden;
+}
+
+.partner-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--color-partner), 0.70); /* Match header transparency */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    animation: wipeRightAnimation 0.8s ease-out forwards;
+    z-index: -1;
+}
+
+/* Dark mode keeps previous opacity for partner header and footer */
+.dark .partner-header::before,
+.dark .partner-footer::before {
     background: rgba(var(--color-partner), 0.80);
 }
 

@@ -131,13 +131,24 @@ const PageHeader = ({
                         </div>
                     </button>
                     
-                    {/* Logo button in top right corner */}
+                    {/* Logo button in top right corner with centered icon */}
                     <button 
                         onClick={onLogoClick}
                         className="absolute top-[-0.5rem] right-4 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none z-20"
                         aria-label="Logo"
                     >
-                        <img src={logoSrc} alt="Logo" className="w-28 h-28" />
+                        <img 
+                            src={logoSrc} 
+                            alt="Logo" 
+                            className="w-28 h-28" 
+                            style={{
+                                objectFit: 'contain',
+                                position: 'absolute',
+                                top: '52%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)'
+                            }}
+                        />
                     </button>
 
                     {/* JA Impresa in Azione Logo - now a clickable link */}
@@ -260,7 +271,7 @@ const PageHeader = ({
                                 </a>
                                 
                                 {/* Our Partners button - with conditional color based on current page */}
-                                <a href="/partners" className={`flex items-center ${isPartnersPage ? titleColorClass : 'text-[#fed065]'} hover:opacity-80 transition-opacity pl-4`}>
+                                <a href="/partners" className={`flex items-center ${isPartnersPage ? titleColorClass : 'text-[rgb(173,148,93)]'} hover:opacity-80 transition-opacity pl-4`}>
                                     <span className="inline-flex justify-center items-center w-6">
                                         <i className="fas fa-handshake"></i>
                                     </span>
@@ -270,7 +281,6 @@ const PageHeader = ({
                         </div>
                     </div>
                 </div>
-                
                 {children}
             </header>
         </>
