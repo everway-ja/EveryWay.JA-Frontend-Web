@@ -10,17 +10,11 @@ const PartnersPage = () => {
     const [headerExpanded, setHeaderExpanded] = useState(false);
     const { isDarkMode } = useTheme();
     const [animationStarted, setAnimationStarted] = useState(false);
-    const [titleAnimationStarted, setTitleAnimationStarted] = useState(false);
     
     // Trigger animation after component mounts
     useEffect(() => {
         const timer = setTimeout(() => {
             setAnimationStarted(true);
-            
-            // Add a slight delay before starting the dash animation
-            setTimeout(() => {
-                setTitleAnimationStarted(true);
-            }, 800);
         }, 100);
         
         return () => clearTimeout(timer);
@@ -60,9 +54,9 @@ const PartnersPage = () => {
                     <div className="text-center px-4 z-10 relative">
                         <div className="text-center">
                             <h1 
-                                className={`text-4xl md:text-6xl font-bold mb-6 ${textColorClass} transition-all duration-700 ease-out title-dash-animation ${
+                                className={`text-4xl md:text-6xl font-bold mb-6 ${textColorClass} transition-all duration-700 ease-out ${
                                     animationStarted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
-                                } ${titleAnimationStarted ? 'animate' : ''}`}
+                                }`}
                                 style={{color: partnerColor}}
                             >
                                 Our Partners

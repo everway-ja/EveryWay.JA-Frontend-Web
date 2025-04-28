@@ -8,17 +8,11 @@ const RegistrationPage = () => {
     const location = useLocation();
     const [headerExpanded, setHeaderExpanded] = useState(false);
     const [animationStarted, setAnimationStarted] = useState(false);
-    const [titleAnimationStarted, setTitleAnimationStarted] = useState(false);
     
     // Trigger animation after component mounts
     useEffect(() => {
         const timer = setTimeout(() => {
             setAnimationStarted(true);
-            
-            // Add a slight delay before starting the dash animation
-            setTimeout(() => {
-                setTitleAnimationStarted(true);
-            }, 800);
         }, 100);
         
         return () => clearTimeout(timer);
@@ -50,7 +44,7 @@ const RegistrationPage = () => {
                         }`}
                     >
                         <div className="text-center">
-                            <h1 className={`text-3xl md:text-4xl font-bold title-dash-animation ${titleAnimationStarted ? 'animate' : ''}`}>
+                            <h1 className="text-3xl md:text-4xl font-bold">
                                 Registration
                             </h1>
                         </div>

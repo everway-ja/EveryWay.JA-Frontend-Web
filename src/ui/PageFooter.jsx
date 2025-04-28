@@ -14,7 +14,13 @@ const PageFooter = () => {
     const textColorClass = isDarkMode ? 'text-white' : 'text-black';
     
     return (
-        <footer className="mt-auto py-8 border-t border-[rgba(var(--color-overlay),0.1)]">
+        <footer className={`mt-auto py-8 ${textColorClass} backdrop-blur-md`} style={{
+            background: isDarkMode 
+                ? 'rgba(var(--color-overlay), 0.20)' // Dark mode - match header opacity
+                : 'rgba(var(--color-overlay), 0.15)', // Light mode - match header opacity
+            borderTop: '1px solid rgba(var(--color-overlay),0.1)',
+            boxShadow: '0 -4px 30px rgba(var(--color-overlay), 0.1)'
+        }}>
             <div className="container mx-auto px-4">
                 <div className="flex flex-col md:flex-row justify-between items-center min-h-[150px]">
                     {/* JA Impresa in Azione Logo - Left Side */}

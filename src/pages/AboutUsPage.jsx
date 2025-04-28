@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PageHeader from '@ui/PageHeader';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const AboutUsPage = () => {
     const showHeader = true;
     const navigate = useNavigate();
-    const location = useLocation();
     const [headerExpanded, setHeaderExpanded] = useState(false);
     const [animationStarted, setAnimationStarted] = useState(false);
     
@@ -32,7 +31,7 @@ const LoginPage = () => {
                 enabled={showHeader}
                 onLogoClick={handleLogoClick}
                 onMenuClick={handleMenuClick}
-                currentPath="Login"
+                currentPath="About Us"
             />
             
             <div className="main-content">
@@ -45,10 +44,10 @@ const LoginPage = () => {
                     >
                         <div className="text-center">
                             <h1 className="text-3xl md:text-4xl font-bold">
-                                Login
+                                About Us
                             </h1>
                         </div>
-                        {/* Login form would go here */}
+                        {/* Content will be added later */}
                     </div>
                 </div>
             </div>
@@ -56,4 +55,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default AboutUsPage;

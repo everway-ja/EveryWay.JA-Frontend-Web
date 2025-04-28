@@ -9,18 +9,12 @@ const MainPage = () => {
     const location = useLocation();
     const [headerExpanded, setHeaderExpanded] = useState(false);
     const [animationStarted, setAnimationStarted] = useState(false);
-    const [titleAnimationStarted, setTitleAnimationStarted] = useState(false);
     
     // Trigger animation after component mounts
     useEffect(() => {
         // Short delay before starting animation
         const timer = setTimeout(() => {
             setAnimationStarted(true);
-            
-            // Add a slight delay before starting the dash animation
-            setTimeout(() => {
-                setTitleAnimationStarted(true);
-            }, 800);
         }, 100);
         
         return () => clearTimeout(timer);
@@ -75,9 +69,9 @@ const MainPage = () => {
                         
                         <div className="text-center">
                             <h1 
-                                className={`text-4xl md:text-6xl font-bold mb-6 transition-all duration-700 delay-200 ease-out text-rendering-optimized title-dash-animation ${
+                                className={`text-4xl md:text-6xl font-bold mb-6 transition-all duration-700 delay-200 ease-out text-rendering-optimized ${
                                     animationStarted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
-                                } ${titleAnimationStarted ? 'animate' : ''}`}
+                                }`}
                                 style={{lineHeight: '1.3', paddingBottom: '0.15em'}}
                             >
                                 EveryWay.JA

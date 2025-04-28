@@ -9,6 +9,11 @@
     font-style: normal;
 }
 
+/* Apply base theme immediately to prevent flash */
+html {
+    color: rgb(var(--color-text));
+}
+
 @layer base {
     /* Light mode (default) */
     :root {
@@ -37,6 +42,9 @@
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* IE and Edge */
         overflow-y: auto; /* Allow vertical scrolling */
+        min-height: 100vh; /* Ensure full viewport height */
+        margin: 0;
+        padding: 0;
     }
     
     /* Hide WebKit scrollbar (Chrome, Safari, Opera) */
@@ -47,9 +55,11 @@
     
     body {
         Font-family: 'FunnelDisplay';
-        @apply bg-[rgb(var(--color-background))] text-[rgb(var(--color-text))];
-        transition: background-color 0.3s, color 0.3s;
+        color: rgb(var(--color-text));
+        transition: color 0.3s;
         line-height: 1.5; /* Base line height for better text rendering */
+        position: relative; /* Ensure proper positioning for background */
+        min-height: 100vh; /* Full viewport height */
     }
 
     /* Improved text rendering for all headings */
@@ -58,82 +68,30 @@
         margin-bottom: 0.5em; /* Add bottom margin to prevent trimming */
         padding-bottom: 0.1em; /* Extra padding at bottom */
     }
+    
+    /* Ensure #root covers the full page */
+    #root {
+        min-height: 100vh;
+        position: relative;
+        z-index: 1;
+    }
 }
 
 /* Additional utility classes for theme transition */
 .theme-transition {
-    transition-property: background-color, border-color, color, fill, stroke;
+    transition-property: color, fill, stroke;
     transition-duration: 300ms;
 }
 
-/* Title dash animation - shining light effect from left to right */
-.title-dash-animation {
+/* Make content have proper z-index to be above random background */
+.main-content {
+    min-height: 100vh;
+    width: 100%;
     position: relative;
-    overflow: hidden;
-    display: inline-block; /* Make the element auto-size to content */
-    max-width: 100%; /* Ensure it doesn't overflow container */
-    padding: 0.1em 0.2em; /* Small padding around text for better animation visibility */
-    margin: 0 auto; /* Center if block-level parent */
-}
-
-.title-dash-animation::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.8) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
-    z-index: 1;
-    animation: none;
-}
-
-.title-dash-animation.animate::after {
-    animation: dashAnimation 1.2s ease-out forwards;
-}
-
-.dark .title-dash-animation::after {
-    background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.4) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
-}
-
-/* Custom colors for special pages */
-.certification-page .title-dash-animation::after {
-    background: linear-gradient(
-        to right,
-        rgba(92, 36, 144, 0) 0%,
-        rgba(92, 36, 144, 0.5) 50%,
-        rgba(92, 36, 144, 0) 100%
-    );
-}
-
-.partners-page .title-dash-animation::after {
-    background: linear-gradient(
-        to right,
-        rgba(144, 124, 79, 0) 0%,
-        rgba(144, 124, 79, 0.5) 50%,
-        rgba(144, 124, 79, 0) 100%
-    );
-}
-
-@keyframes dashAnimation {
-    0% {
-        left: -100%;
-        transform: skewX(-30deg);
-    }
-    100% {
-        left: 200%; 
-        transform: skewX(-30deg);
-    }
+    z-index: 1; /* Higher z-index than background */
+    display: flex;
+    flex-direction: column;
+    padding-top: 120px; /* Match the header height */
 }
 
 /* Page header with glassy effect - Enhanced fixed positioning */
@@ -141,7 +99,7 @@
     position: fixed !important; /* Force fixed positioning */
     top: 0;
     left: 0;
-    background: rgba(var(--color-overlay), 0.10); /* More transparent */
+    background: rgba(var(--color-overlay), 0.15); /* More transparent in light mode */
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.1);
@@ -153,7 +111,12 @@
     will-change: height, background;
 }
 
-/* Certification page header with more transparent purple background and enhanced blur */
+/* Dark mode keeps previous opacity */
+.dark .page-header {
+    background: rgba(var(--color-overlay), 0.20);
+}
+
+/* Certification page header with adjusted transparency for light mode */
 .certification-header {
     position: relative;
     overflow: hidden;
@@ -166,14 +129,19 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(var(--color-certification), 0.65); /* More transparent purple */
-    backdrop-filter: blur(20px); /* Enhanced blur effect */
+    background: rgba(var(--color-certification), 0.70); /* More transparent purple in light mode */
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     animation: wipeRightAnimation 0.8s ease-out forwards;
     z-index: -1;
 }
 
-/* Partner page header with more transparent gold background and enhanced blur */
+/* Dark mode keeps previous opacity for certification header */
+.dark .certification-header::before {
+    background: rgba(var(--color-certification), 0.80);
+}
+
+/* Partner page header with adjusted transparency for light mode */
 .partner-header {
     position: relative;
     overflow: hidden;
@@ -186,11 +154,16 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(var(--color-partner), 0.65); /* More transparent gold */
-    backdrop-filter: blur(20px); /* Enhanced blur effect */
+    background: rgba(var(--color-partner), 0.70); /* More transparent gold in light mode */
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     animation: wipeRightAnimation 0.8s ease-out forwards;
     z-index: -1;
+}
+
+/* Dark mode keeps previous opacity for partner header */
+.dark .partner-header::before {
+    background: rgba(var(--color-partner), 0.80);
 }
 
 /* Wipe animation from left to right */
@@ -201,17 +174,6 @@
     100% {
         left: 0;
     }
-}
-
-/* Main content with proper spacing for fixed header */
-.main-content {
-    min-height: 100vh;
-    width: 100%;
-    position: relative;
-    z-index: 1; /* Lower z-index than header */
-    display: flex;
-    flex-direction: column;
-    padding-top: 120px; /* Match the header height */
 }
 
 /* For expanded header, keep content in place */

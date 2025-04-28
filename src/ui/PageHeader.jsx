@@ -62,7 +62,7 @@ const PageHeader = ({
             <header 
                 className={`page-header ${headerClass} ${className} transition-all duration-300 ease-in-out`}
                 style={{ 
-                    height: menuOpen ? '480px' : '120px', // Increased height
+                    height: menuOpen ? '520px' : '120px', // Increased height
                     overflow: 'hidden'
                 }}
             >
@@ -157,7 +157,7 @@ const PageHeader = ({
                     
                     {/* Centered EveryWay.JA text with path below - Improved positioning */}
                     <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col items-center justify-center z-10">
-                        <div className="w-full text-center">
+                        <div className="w-full text-center mb-4">
                             <button 
                                 onClick={onLogoClick}
                                 className="bg-transparent border-none focus:outline-none cursor-pointer mx-auto block"
@@ -230,6 +230,14 @@ const PageHeader = ({
                                         <i className="fas fa-id-card"></i>
                                     </span>
                                     <span className="ml-2">Registration</span>
+                                </a>
+                                
+                                {/* About Us link - added above Feedback */}
+                                <a href="/about" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
+                                    <span className="inline-flex justify-center items-center w-6">
+                                        <i className="fas fa-info-circle"></i>
+                                    </span>
+                                    <span className="ml-2">About Us</span>
                                 </a>
                                 
                                 {/* Feedback link - no special color */}
