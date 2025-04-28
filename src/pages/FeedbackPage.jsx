@@ -87,7 +87,7 @@ const FeedbackPage = () => {
                     >
                         <div className="text-center">
                             <h1 className={`text-3xl md:text-4xl font-bold title-dash-animation ${titleAnimationStarted ? 'animate' : ''}`}>
-                                We Value Your Feedback
+                                EveryWay.JA Values Your Feedback
                             </h1>
                         </div>
                         {/* Feedback form */}

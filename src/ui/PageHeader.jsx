@@ -62,7 +62,7 @@ const PageHeader = ({
             <header 
                 className={`page-header ${headerClass} ${className} transition-all duration-300 ease-in-out`}
                 style={{ 
-                    height: menuOpen ? '475px' : '120px', // Increased height
+                    height: menuOpen ? '480px' : '120px', // Increased height
                     overflow: 'hidden'
                 }}
             >
@@ -167,7 +167,7 @@ const PageHeader = ({
                             </button>
                             
                             {/* Path display - simplified without arrows */}
-                            <p className={`text-base ${titleColorClass} mt-1 opacity-80 italic`}>
+                            <p className={`text-base ${titleColorClass} opacity-80 italic`}>
                                 {currentPath}
                             </p>
                         </div>
