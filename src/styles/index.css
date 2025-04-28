@@ -3,155 +3,248 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'FunnelDisplay';
-  src: url('/assets/fonts/FunnelDisplay/FunnelDisplay-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'FunnelDisplay';
+    src: url('/assets/fonts/FunnelDisplay/FunnelDisplay-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @layer base {
-  /* Light mode (default) */
-  :root {
-    --color-background: 255, 255, 255; /* white */
-    --color-text: 0, 0, 0; /* black */
-    --color-primary: 59, 130, 246; /* blue-500 */
-    --color-secondary: 107, 114, 128; /* gray-500 */
-    --color-overlay: 0, 0, 0; /* black overlay for light mode */
-    --color-certification: 108, 22, 188; /* consistent purple for certification page */
-    --color-partner: 187, 157, 88; /* gold color for partner page */
-  }
-  
-  /* Dark mode */
-  .dark {
-    --color-background: 18, 18, 18; /* very dark gray */
-    --color-text: 243, 244, 246; /* gray-100 */
-    --color-primary: 96, 165, 250; /* blue-400 */
-    --color-secondary: 156, 163, 175; /* gray-400 */
-    --color-overlay: 255, 255, 255; /* white overlay for dark mode */
-    --color-certification: 108, 22, 188; /* consistent purple for certification page */
-    --color-partner: 187, 157, 88; /* gold color for partner page */
-  }
-  
-  /* Hide scrollbar for all browsers */
-  html, body {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    overflow-y: auto; /* Allow vertical scrolling */
-  }
-  
-  /* Hide WebKit scrollbar (Chrome, Safari, Opera) */
-  html::-webkit-scrollbar, 
-  body::-webkit-scrollbar {
-    display: none;
-  }
-  
-  body {
-    Font-family: 'FunnelDisplay';
-    @apply bg-[rgb(var(--color-background))] text-[rgb(var(--color-text))];
-    transition: background-color 0.3s, color 0.3s;
-  }
+    /* Light mode (default) */
+    :root {
+        --color-background: 255, 255, 255; /* white */
+        --color-text: 0, 0, 0; /* black */
+        --color-primary: 59, 130, 246; /* blue-500 */
+        --color-secondary: 107, 114, 128; /* gray-500 */
+        --color-overlay: 0, 0, 0; /* black overlay for light mode */
+        --color-certification: 108, 22, 188; /* consistent purple for certification page */
+        --color-partner: 187, 157, 88; /* gold color for partner page */
+    }
+    
+    /* Dark mode */
+    .dark {
+        --color-background: 18, 18, 18; /* very dark gray */
+        --color-text: 243, 244, 246; /* gray-100 */
+        --color-primary: 96, 165, 250; /* blue-400 */
+        --color-secondary: 156, 163, 175; /* gray-400 */
+        --color-overlay: 255, 255, 255; /* white overlay for dark mode */
+        --color-certification: 108, 22, 188; /* consistent purple for certification page */
+        --color-partner: 187, 157, 88; /* gold color for partner page */
+    }
+    
+    /* Hide scrollbar for all browsers */
+    html, body {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        overflow-y: auto; /* Allow vertical scrolling */
+    }
+    
+    /* Hide WebKit scrollbar (Chrome, Safari, Opera) */
+    html::-webkit-scrollbar, 
+    body::-webkit-scrollbar {
+        display: none;
+    }
+    
+    body {
+        Font-family: 'FunnelDisplay';
+        @apply bg-[rgb(var(--color-background))] text-[rgb(var(--color-text))];
+        transition: background-color 0.3s, color 0.3s;
+        line-height: 1.5; /* Base line height for better text rendering */
+    }
+
+    /* Improved text rendering for all headings */
+    h1, h2, h3, h4, h5, h6 {
+        line-height: 1.3; /* More spacing for headings */
+        margin-bottom: 0.5em; /* Add bottom margin to prevent trimming */
+        padding-bottom: 0.1em; /* Extra padding at bottom */
+    }
 }
 
 /* Additional utility classes for theme transition */
 .theme-transition {
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-duration: 300ms;
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 300ms;
+}
+
+/* Title dash animation - shining light effect from left to right */
+.title-dash-animation {
+    position: relative;
+    overflow: hidden;
+    display: inline-block; /* Make the element auto-size to content */
+    max-width: 100%; /* Ensure it doesn't overflow container */
+    padding: 0.1em 0.2em; /* Small padding around text for better animation visibility */
+    margin: 0 auto; /* Center if block-level parent */
+}
+
+.title-dash-animation::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.8) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    z-index: 1;
+    animation: none;
+}
+
+.title-dash-animation.animate::after {
+    animation: dashAnimation 1.2s ease-out forwards;
+}
+
+.dark .title-dash-animation::after {
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+}
+
+/* Custom colors for special pages */
+.certification-page .title-dash-animation::after {
+    background: linear-gradient(
+        to right,
+        rgba(92, 36, 144, 0) 0%,
+        rgba(92, 36, 144, 0.5) 50%,
+        rgba(92, 36, 144, 0) 100%
+    );
+}
+
+.partners-page .title-dash-animation::after {
+    background: linear-gradient(
+        to right,
+        rgba(144, 124, 79, 0) 0%,
+        rgba(144, 124, 79, 0.5) 50%,
+        rgba(144, 124, 79, 0) 100%
+    );
+}
+
+@keyframes dashAnimation {
+    0% {
+        left: -100%;
+        transform: skewX(-30deg);
+    }
+    100% {
+        left: 200%; 
+        transform: skewX(-30deg);
+    }
 }
 
 /* Page header with glassy effect - Enhanced fixed positioning */
 .page-header {
-  position: fixed !important; /* Force fixed positioning */
-  top: 0;
-  left: 0;
-  background: rgba(var(--color-overlay), 0.10); /* More transparent */
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.1);
-  width: 100%;
-  z-index: 1000; /* Increased z-index to ensure it stays on top */
-  height: 120px;
-  text-align: center;
-  transition: height 0.3s ease-in-out, background 0.3s ease-in-out;
-  will-change: height, background;
+    position: fixed !important; /* Force fixed positioning */
+    top: 0;
+    left: 0;
+    background: rgba(var(--color-overlay), 0.10); /* More transparent */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.1);
+    width: 100%;
+    z-index: 1000; /* Increased z-index to ensure it stays on top */
+    height: 120px;
+    text-align: center;
+    transition: height 0.3s ease-in-out, background 0.3s ease-in-out;
+    will-change: height, background;
 }
 
 /* Certification page header with more transparent purple background and enhanced blur */
 .certification-header {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 .certification-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(var(--color-certification), 0.65); /* More transparent purple */
-  backdrop-filter: blur(20px); /* Enhanced blur effect */
-  -webkit-backdrop-filter: blur(20px);
-  animation: wipeRightAnimation 0.8s ease-out forwards;
-  z-index: -1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--color-certification), 0.65); /* More transparent purple */
+    backdrop-filter: blur(20px); /* Enhanced blur effect */
+    -webkit-backdrop-filter: blur(20px);
+    animation: wipeRightAnimation 0.8s ease-out forwards;
+    z-index: -1;
 }
 
 /* Partner page header with more transparent gold background and enhanced blur */
 .partner-header {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 .partner-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(var(--color-partner), 0.65); /* More transparent gold */
-  backdrop-filter: blur(20px); /* Enhanced blur effect */
-  -webkit-backdrop-filter: blur(20px);
-  animation: wipeRightAnimation 0.8s ease-out forwards;
-  z-index: -1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--color-partner), 0.65); /* More transparent gold */
+    backdrop-filter: blur(20px); /* Enhanced blur effect */
+    -webkit-backdrop-filter: blur(20px);
+    animation: wipeRightAnimation 0.8s ease-out forwards;
+    z-index: -1;
 }
 
 /* Wipe animation from left to right */
 @keyframes wipeRightAnimation {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 0;
-  }
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 0;
+    }
 }
 
 /* Main content with proper spacing for fixed header */
 .main-content {
-  min-height: 100vh;
-  width: 100%;
-  position: relative;
-  z-index: 1; /* Lower z-index than header */
-  display: flex;
-  flex-direction: column;
-  padding-top: 120px; /* Match the header height */
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 1; /* Lower z-index than header */
+    display: flex;
+    flex-direction: column;
+    padding-top: 120px; /* Match the header height */
 }
 
 /* For expanded header, keep content in place */
 .header-expanded .main-content {
-  /* Do not change padding when header expands */
-  padding-top: 120px;
+    /* Do not change padding when header expands */
+    padding-top: 120px;
 }
 
 /* Add content padding class for pages where we want some space from the top */
 .content-padding {
-  padding-top: 120px;
+    padding-top: 120px;
 }
 
 /* Make sure the expanded header menu stays on top of content */
 .header-menu-expanded {
-  position: fixed !important;
-  top: 120px;
-  left: 0;
-  width: 100%;
-  z-index: 999;
+    position: fixed !important;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    transform: translateY(0) !important;
+    opacity: 1;
+}
+
+/* Additional class for the closing menu animation */
+.header-menu-closing {
+    transform: translateY(0) !important;
+    transition: opacity 300ms ease-in-out !important;
+}
+
+/* Prevent text from being cut off by improving text rendering */
+.text-rendering-optimized {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

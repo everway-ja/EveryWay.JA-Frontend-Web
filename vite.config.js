@@ -13,19 +13,19 @@ import { resolve } from 'path'
  * - Optimization for development and production builds
  */
 export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    // Path aliases to simplify imports throughout the application
-    // Instead of relative paths like '../../../features', use '@features/...'
-    alias: {
-      '@': resolve(__dirname, './src'),            // Root source folder
-      '@ui': resolve(__dirname, './src/ui'),       // UI components
-      '@features': resolve(__dirname, './src/features'), // Feature components
-      '@layout': resolve(__dirname, './src/layout'),     // Layout components
-      '@pages': resolve(__dirname, './src/pages'),       // Page components
-      '@contexts': resolve(__dirname, './src/contexts'), // React contexts
-      '@redux': resolve(__dirname, './src/redux'),       // Redux store, slices, etc.
+    plugins: [react()],
+    resolve: {
+        // Path aliases to simplify imports throughout the application
+        // Instead of relative paths like '../../../features', use '@features/...'
+        alias: {
+            '@': resolve(__dirname, './src'),            // Root source folder
+            '@ui': resolve(__dirname, './src/ui'),       // UI components
+            '@features': resolve(__dirname, './src/features'), // Feature components
+            '@layout': resolve(__dirname, './src/layout'),     // Layout components
+            '@pages': resolve(__dirname, './src/pages'),       // Page components
+            '@contexts': resolve(__dirname, './src/contexts'), // React contexts
+            '@redux': resolve(__dirname, './src/redux'),       // Redux store, slices, etc.
+        }
     }
-  }
 })
 

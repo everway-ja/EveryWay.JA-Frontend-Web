@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import PageHeader from '@ui/PageHeader';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@contexts/ThemeContext';
 
-const LoginPage = () => {
+const FeedbackPage = () => {
     const showHeader = true;
     const navigate = useNavigate();
-    const location = useLocation();
     const [headerExpanded, setHeaderExpanded] = useState(false);
     const [animationStarted, setAnimationStarted] = useState(false);
     const [titleAnimationStarted, setTitleAnimationStarted] = useState(false);
+    const { isDarkMode } = useTheme();
+    
+    // Form state
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+    });
+    const [formStatus, setFormStatus] = useState(null);
     
     // Trigger animation after component mounts
     useEffect(() => {
@@ -31,6 +41,32 @@ const LoginPage = () => {
     const handleMenuClick = (isOpen) => {
         setHeaderExpanded(isOpen);
     };
+    
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Here you would typically send the data to a server
+        // For now we'll just simulate a successful submission
+        setFormStatus('success');
+        
+        // Reset form after 3 seconds
+        setTimeout(() => {
+            setFormStatus(null);
+            setFormData({
+                name: '',
+                email: '',
+                subject: '',
+                message: ''
+            });
+        }, 3000);
+    };
 
     return (
         <div className={headerExpanded ? 'header-expanded' : ''}>
@@ -38,7 +74,7 @@ const LoginPage = () => {
                 enabled={showHeader}
                 onLogoClick={handleLogoClick}
                 onMenuClick={handleMenuClick}
-                currentPath="Login"
+                currentPath="Feedback"
             />
             
             <div className="main-content">
@@ -51,10 +87,10 @@ const LoginPage = () => {
                     >
                         <div className="text-center">
                             <h1 className={`text-3xl md:text-4xl font-bold title-dash-animation ${titleAnimationStarted ? 'animate' : ''}`}>
-                                Login
+                                We Value Your Feedback
                             </h1>
                         </div>
-                        {/* Login form would go here */}
+                        {/* Feedback form */}
                     </div>
                 </div>
             </div>
@@ -62,4 +98,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default FeedbackPage;
