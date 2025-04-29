@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '@contexts/ThemeContext';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, redirect } from 'react-router-dom';
 
 const PageHeader = ({ 
     enabled = true, 
@@ -12,6 +12,9 @@ const PageHeader = ({
 }) => {
     const { isDarkMode, toggleTheme } = useTheme();
     const [menuOpen, setMenuOpen] = useState(false);
+    const [partnerLinkAnimated, setPartnerLinkAnimated] = useState(false);
+    const [certificationLinkAnimated, setCertificationLinkAnimated] = useState(false);
+    const headerRef = useRef(null);
     const navigate = useNavigate();
     const location = useLocation();
     
@@ -31,16 +34,60 @@ const PageHeader = ({
     // Icon color for menu button - white for dark theme, certification page, or partner page, black for light theme
     const iconColor = isDarkMode || isCertificationsPage || isPartnersPage ? '#ffffff' : '#000000';
     
+    // Function to select a random background image
+    const selectRandomBackground = () => {
+        const backgroundImages = [
+            '/assets/images/backgrounds/bg0.jpg',
+            '/assets/images/backgrounds/bg1.jpg',
+            '/assets/images/backgrounds/bg2.jpg',
+            '/assets/images/backgrounds/bg3.jpg',
+            '/assets/images/backgrounds/bg4.jpg',
+            '/assets/images/backgrounds/bg5.jpg',
+            '/assets/images/backgrounds/bg6.jpg',
+            '/assets/images/backgrounds/bg7.jpg',
+        ];
+        
+        const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+        const selectedImage = backgroundImages[randomIndex];
+        
+        // Find the background div and update it
+        const bgDiv = document.querySelector('[style*="backgroundImage"]');
+        if (bgDiv) {
+            bgDiv.style.backgroundImage = `url(${selectedImage})`;
+            console.log('Updated background image to:', selectedImage);
+        }
+    };
+    
     // Handle menu state
     const handleMenuClick = () => {
         setMenuOpen(prevState => !prevState);
         onMenuClick(!menuOpen);
+        
+        // Reset animation states when closing the menu
+        if (menuOpen) {
+            setPartnerLinkAnimated(false);
+            setCertificationLinkAnimated(false);
+        }
     };
     
     // Effect to toggle body class for proper content padding
     useEffect(() => {
         if (menuOpen) {
             document.body.classList.add('header-expanded');
+            
+            // Trigger animations with a small delay when menu opens
+            const partnerTimeout = setTimeout(() => {
+                setPartnerLinkAnimated(true);
+            }, 300);
+            
+            const certificationTimeout = setTimeout(() => {
+                setCertificationLinkAnimated(true);
+            }, 500);
+            
+            return () => {
+                clearTimeout(partnerTimeout);
+                clearTimeout(certificationTimeout);
+            };
         } else {
             document.body.classList.remove('header-expanded');
         }
@@ -60,18 +107,62 @@ const PageHeader = ({
         <>
             {/* Page Header with expandable menu */}
             <header 
+                ref={headerRef}
                 className={`page-header ${headerClass} ${className} transition-all duration-300 ease-in-out`}
                 style={{ 
-                    height: menuOpen ? '520px' : '120px', // Increased height
-                    overflow: 'hidden'
+                    height: menuOpen ? '520px' : '120px',
+                    overflow: 'hidden',
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    zIndex: 1000
                 }}
             >
                 {/* Fixed height container for header title and buttons */}
                 <div className="h-[140px] relative">  {/* Increased height */}
-                    {/* Hamburger menu button in top left corner */}
+                    {/* Home link with larger logo on the left side */}
+                    <a 
+                        href="/"
+                        onClick={(e) => {
+                            // Still change background when clicking the logo 
+                            selectRandomBackground();
+                            onLogoClick();
+                            // Let default navigation happen naturally
+                        }}
+                        className="absolute top-[-0.5rem] left-4 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20"
+                        aria-label="Go to home page"
+                    >
+                        <img 
+                            src={logoSrc} 
+                            alt="EveryWay.JA Logo" 
+                            className="w-16 h-16 transition-opacity hover:opacity-80"
+                        />
+                    </a>
+                    
+                    {/* Theme toggle button placed next to logo button */}
+                    <button
+                        onClick={toggleTheme}
+                        className="absolute top-[-0.5rem] left-36 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20"
+                        aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                        type="button"
+                    >
+                        {/* Lightbulb/Moon icon for theme toggle */}
+                        <div className="flex items-center justify-center w-8 h-8">
+                            {isDarkMode ? (
+                                // Lightbulb for dark mode (clicking switches to light)
+                                <i className="fas fa-lightbulb text-2xl" style={{ color: iconColor }}></i>
+                            ) : (
+                                // Moon icon for light mode (clicking switches to dark)
+                                <i className="fas fa-moon text-2xl" style={{ color: iconColor }}></i>
+                            )}
+                        </div>
+                    </button>
+                    
+                    {/* Hamburger menu button moved to right corner */}
                     <button 
                         onClick={handleMenuClick}
-                        className="absolute top-[-0.5rem] left-4 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20"
+                        className="absolute top-[-0.5rem] right-4 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20"
                         aria-label="Menu"
                         type="button"
                     >
@@ -112,73 +203,11 @@ const PageHeader = ({
                         </div>
                     </button>
                     
-                    {/* Theme toggle button placed next to hamburger menu */}
-                    <button
-                        onClick={toggleTheme}
-                        className="absolute top-[-0.5rem] left-40 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20"
-                        aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                        type="button"
-                    >
-                        {/* Lightbulb/Moon icon for theme toggle */}
-                        <div className="flex items-center justify-center w-8 h-8">
-                            {isDarkMode ? (
-                                // Lightbulb for dark mode (clicking switches to light)
-                                <i className="fas fa-lightbulb text-2xl" style={{ color: iconColor }}></i>
-                            ) : (
-                                // Moon icon for light mode (clicking switches to dark)
-                                <i className="fas fa-moon text-2xl" style={{ color: iconColor }}></i>
-                            )}
-                        </div>
-                    </button>
-                    
-                    {/* Logo button in top right corner with centered icon */}
-                    <button 
-                        onClick={onLogoClick}
-                        className="absolute top-[-0.5rem] right-4 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none z-20"
-                        aria-label="Logo"
-                    >
-                        <img 
-                            src={logoSrc} 
-                            alt="Logo" 
-                            className="w-28 h-28" 
-                            style={{
-                                objectFit: 'contain',
-                                position: 'absolute',
-                                top: '52%',
-                                left: '50%',
-                                transform: 'translate(-50%, -50%)'
-                            }}
-                        />
-                    </button>
-
-                    {/* JA Impresa in Azione Logo - now a clickable link */}
-                    <a 
-                        href="https://www.impresainazione.it"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="absolute top-[1.5rem] right-52 h-16 flex items-center justify-center z-20 hover:opacity-80 transition-opacity"
-                        aria-label="Visit JA Impresa in Azione website"
-                    >
-                        <img 
-                            src="/assets/images/logoImpresaInAzione.webp" 
-                            alt="JA Impresa in Azione Logo" 
-                            className="h-8 object-contain" 
-                        />
-                    </a>
-                    
-                    {/* Centered EveryWay.JA text with path below - Improved positioning */}
-                    <div className="absolute left-0 right-0 top-0 bottom-0 flex flex-col items-center justify-center z-10">
-                        <div className="w-full text-center mb-4">
-                            <button 
-                                onClick={onLogoClick}
-                                className="bg-transparent border-none focus:outline-none cursor-pointer mx-auto block"
-                                aria-label="Return to home page"
-                            >
-                                <h1 className={`text-3xl font-bold ${titleColorClass} mb-0`}>EveryWay.JA</h1>
-                            </button>
-                            
-                            {/* Path display - simplified without arrows */}
-                            <p className={`text-base ${titleColorClass} opacity-80 italic`}>
+                    {/* Centered path display - Improved centering and increased size */}
+                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                        <div className="text-center mb-6"> {/* Added bottom margin to move page indicator upwards */}
+                            {/* Path display with improved styling */}
+                            <p className={`text-2xl ${titleColorClass} font-semibold`}>
                                 {currentPath}
                             </p>
                         </div>
@@ -262,25 +291,96 @@ const PageHeader = ({
                                 {/* Separator */}
                                 <div className={`border-t border-[rgba(var(--color-overlay),0.3)] mx-4 my-1`}></div>
                                 
-                                {/* Our Certifications button - with conditional color based on current page */}
-                                <a href="/certifications" className={`flex items-center ${isCertificationsPage ? titleColorClass : 'text-[rgb(132,0,255)]'} hover:opacity-80 transition-opacity pl-4`}>
-                                    <span className="inline-flex justify-center items-center w-6">
-                                        <i className="fas fa-certificate"></i>
-                                    </span>
-                                    <span className="ml-2">Our Certifications</span>
-                                </a>
+                                {/* Our Partners button with light animation and persisting blur effect */}
+                                <div className="relative overflow-hidden">
+                                    <a href="/partners" className={`flex items-center ${isPartnersPage ? titleColorClass : 'text-[rgb(173,148,93)]'} hover:opacity-80 transition-opacity pl-4 relative z-10`}>
+                                        <span className="inline-flex justify-center items-center w-6">
+                                            <i className="fas fa-handshake"></i>
+                                        </span>
+                                        <span className="ml-2 font-semibold">Our Partners</span>
+                                    </a>
+                                    {/* Light animation overlay for Partners */}
+                                    <div 
+                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-50 z-0 transition-transform duration-1000 ease-in-out" 
+                                        style={{ 
+                                            transform: partnerLinkAnimated ? 'translateX(100%)' : 'translateX(-100%)',
+                                            opacity: isDarkMode ? '0.4' : '0.2'
+                                        }}
+                                    ></div>
+                                    {/* Radial blur effect that radiates from inside out */}
+                                    <div 
+                                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-1000 ease-in-out z-0" 
+                                        style={{ 
+                                            width: partnerLinkAnimated ? '100%' : '0%',
+                                            height: partnerLinkAnimated ? '200%' : '0%',
+                                            background: isDarkMode 
+                                                ? 'radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%)' 
+                                                : 'radial-gradient(circle, rgba(0, 0, 0, 0.15) 0%, transparent 70%)',
+                                            opacity: partnerLinkAnimated ? '1' : '0',
+                                            transitionDelay: partnerLinkAnimated ? '800ms' : '0ms',
+                                            backdropFilter: 'blur(2px)',
+                                            WebkitBackdropFilter: 'blur(2px)',
+                                            boxShadow: isDarkMode 
+                                                ? 'inset 0 0 10px rgba(255, 255, 255, 0.2)' 
+                                                : 'inset 0 0 10px rgba(0, 0, 0, 0.2)'
+                                        }}
+                                    ></div>
+                                </div>
                                 
-                                {/* Our Partners button - with conditional color based on current page */}
-                                <a href="/partners" className={`flex items-center ${isPartnersPage ? titleColorClass : 'text-[rgb(173,148,93)]'} hover:opacity-80 transition-opacity pl-4`}>
-                                    <span className="inline-flex justify-center items-center w-6">
-                                        <i className="fas fa-handshake"></i>
-                                    </span>
-                                    <span className="ml-2">Our Partners</span>
-                                </a>
+                                {/* Our Certifications button with light animation and persisting blur effect */}
+                                <div className="relative overflow-hidden">
+                                    <a href="/certifications" className={`flex items-center ${isCertificationsPage ? titleColorClass : 'text-[rgb(132,0,255)]'} hover:opacity-80 transition-opacity pl-4 relative z-10`}>
+                                        <span className="inline-flex justify-center items-center w-6">
+                                            <i className="fas fa-certificate"></i>
+                                        </span>
+                                        <span className="ml-2 font-semibold">Our Certifications</span>
+                                    </a>
+                                    {/* Light animation overlay for Certifications */}
+                                    <div 
+                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-50 z-0 transition-transform duration-1000 ease-in-out" 
+                                        style={{ 
+                                            transform: certificationLinkAnimated ? 'translateX(100%)' : 'translateX(-100%)',
+                                            opacity: isDarkMode ? '0.4' : '0.2'
+                                        }}
+                                    ></div>
+                                    {/* Radial blur effect that radiates from inside out */}
+                                    <div 
+                                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-1000 ease-in-out z-0" 
+                                        style={{ 
+                                            width: certificationLinkAnimated ? '100%' : '0%',
+                                            height: certificationLinkAnimated ? '200%' : '0%',
+                                            background: isDarkMode 
+                                                ? 'radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%)' 
+                                                : 'radial-gradient(circle, rgba(0, 0, 0, 0.15) 0%, transparent 70%)',
+                                            opacity: certificationLinkAnimated ? '1' : '0',
+                                            transitionDelay: certificationLinkAnimated ? '800ms' : '0ms',
+                                            backdropFilter: 'blur(2px)',
+                                            WebkitBackdropFilter: 'blur(2px)',
+                                            boxShadow: isDarkMode 
+                                                ? 'inset 0 0 10px rgba(255, 255, 255, 0.2)' 
+                                                : 'inset 0 0 10px rgba(0, 0, 0, 0.2)'
+                                        }}
+                                    ></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                {/* Gradient effect that appears from bottom - smaller when menu closed, full size when open */}
+                <div 
+                    className={`absolute left-0 right-0 bottom-0 w-full transition-all duration-500 ease-in-out`}
+                    style={{
+                        height: menuOpen ? '150px' : '50px', // Full height when open, smaller when closed
+                        opacity: menuOpen ? '1' : '0.7', // Full opacity when open, slightly transparent when closed
+                        background: isDarkMode 
+                            ? 'linear-gradient(to top, rgba(255, 255, 255, 0.15), transparent)' 
+                            : 'linear-gradient(to top, rgba(0, 0, 0, 0.15), transparent)',
+                        pointerEvents: 'none', // Make sure it doesn't interfere with clicks
+                        zIndex: 5
+                    }}
+                />
+                
                 {children}
             </header>
         </>

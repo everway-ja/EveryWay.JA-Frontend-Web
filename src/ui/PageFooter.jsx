@@ -37,6 +37,19 @@ const PageFooter = ({ pageName = '' }) => {
                 zIndex: 1
             }}
         >
+            {/* Gradient effect that appears from top towards bottom */}
+            <div 
+                className={`absolute left-0 right-0 top-0 w-full transition-opacity duration-500 ease-in-out opacity-100`}
+                style={{
+                    height: '150px',
+                    background: isDarkMode 
+                        ? 'linear-gradient(to bottom, rgba(255, 255, 255, 0.15), transparent)' 
+                        : 'linear-gradient(to bottom, rgba(0, 0, 0, 0.15), transparent)',
+                    pointerEvents: 'none', // Make sure it doesn't interfere with clicks
+                    zIndex: 2
+                }}
+            />
+
             <div className="container mx-auto px-4 relative z-10">
                 <div className="flex flex-col md:flex-row justify-between items-center min-h-[150px]">
                     {/* JA Impresa in Azione Logo - Left Side */}
