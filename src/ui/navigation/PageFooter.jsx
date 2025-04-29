@@ -1,6 +1,28 @@
+/**
+ * PageFooter.jsx
+ * 
+ * A responsive footer component for the EveryWay.JA application that adapts to
+ * different pages and themes.
+ * 
+ * This component:
+ * - Displays organization logos, contact information, and copyright notice
+ * - Adapts its appearance based on the current theme (dark/light)
+ * - Applies special styling for certification and partner pages
+ * - Provides links to social media and contact information
+ * - Maintains consistent branding with the rest of the application
+ * 
+ * @module PageFooter
+ */
 import React from 'react';
 import { useTheme } from '@contexts/ThemeContext';
 
+/**
+ * Page footer component that displays at the bottom of every page
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.pageName - The name of the current page for contextual styling
+ * @returns {JSX.Element} The rendered footer component
+ */
 const PageFooter = ({ pageName = '' }) => {
     const { isDarkMode } = useTheme();
     const currentYear = new Date().getFullYear();
@@ -30,20 +52,20 @@ const PageFooter = ({ pageName = '' }) => {
             className={`mt-auto py-8 ${textColorClass} backdrop-blur-md ${footerClass} relative overflow-hidden`} 
             style={{
                 background: isDarkMode 
-                    ? 'rgba(var(--color-overlay), 0.20)' // Dark mode - match header opacity
-                    : 'rgba(var(--color-overlay), 0.15)', // Light mode - match header opacity
+                    ? 'rgba(var(--color-overlay), 0.10)' // Reduced opacity for dark mode
+                    : 'rgba(var(--color-overlay), 0.15)', // Keep light mode opacity
                 boxShadow: '0 -4px 30px rgba(var(--color-overlay), 0.1)',
                 position: 'relative',
                 zIndex: 1
             }}
         >
-            {/* Gradient effect that appears from top towards bottom */}
+            {/* Gradient effect that appears from top towards bottom - Reduced for dark mode */}
             <div 
                 className={`absolute left-0 right-0 top-0 w-full transition-opacity duration-500 ease-in-out opacity-100`}
                 style={{
                     height: '150px',
                     background: isDarkMode 
-                        ? 'linear-gradient(to bottom, rgba(255, 255, 255, 0.15), transparent)' 
+                        ? 'linear-gradient(to bottom, rgba(255, 255, 255, 0.08), transparent)' // Less intense in dark mode
                         : 'linear-gradient(to bottom, rgba(0, 0, 0, 0.15), transparent)',
                     pointerEvents: 'none', // Make sure it doesn't interfere with clicks
                     zIndex: 2
@@ -73,6 +95,7 @@ const PageFooter = ({ pageName = '' }) => {
                         <a href="/" className="flex flex-col items-center transition-opacity hover:opacity-80">
                             <img src={logoSrc} alt="EveryWay.JA Logo" className="w-24 h-24 mb-4" />
                             <h3 className={`text-2xl font-semibold ${textColorClass}`}>EveryWay.JA</h3>
+                            <p className={`text-sm italic mt-1 ${textColorClass} opacity-80`}>Life is hard already, it doesn't have to be harder.</p>
                         </a>
                     </div>
                     

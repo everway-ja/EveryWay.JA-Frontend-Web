@@ -23,7 +23,7 @@ html {
         --color-secondary: 107, 114, 128; /* gray-500 */
         --color-overlay: 0, 0, 0; /* black overlay for light mode */
         --color-certification: 108, 22, 188; /* consistent purple for certification page */
-        --color-partner: 187, 157, 88; /* gold color for partner page */
+        --color-partner: 255, 45, 45; /* stronger, more vibrant red for partner page */
     }
     
     /* Dark mode */
@@ -34,7 +34,7 @@ html {
         --color-secondary: 156, 163, 175; /* gray-400 */
         --color-overlay: 255, 255, 255; /* white overlay for dark mode */
         --color-certification: 108, 22, 188; /* consistent purple for certification page */
-        --color-partner: 187, 157, 88; /* gold color for partner page */
+        --color-partner: 255, 45, 45; /* stronger, more vibrant red for partner page */
     }
     
     /* Hide scrollbar for all browsers */
@@ -99,10 +99,10 @@ html {
     position: fixed !important; /* Force fixed positioning */
     top: 0;
     left: 0;
-    background: rgba(var(--color-overlay), 0.15); /* More transparent in light mode */
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.1);
+    background: rgba(var(--color-overlay), 0.2); /* Increased transparency for more pronounced gradient */
+    backdrop-filter: blur(20px); /* Increased blur effect */
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.2); /* Stronger shadow */
     width: 100%;
     z-index: 1000; /* Increased z-index to ensure it stays on top */
     height: 120px;
@@ -111,9 +111,9 @@ html {
     will-change: height, background;
 }
 
-/* Dark mode keeps previous opacity */
+/* Dark mode keeps previous opacity but with reduced visibility */
 .dark .page-header {
-    background: rgba(var(--color-overlay), 0.20);
+    background: rgba(var(--color-overlay), 0.15); /* Reduced opacity for dark mode */
 }
 
 /* Certification page header with adjusted transparency for light mode */
@@ -129,16 +129,16 @@ html {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(var(--color-certification), 0.70); /* More transparent purple in light mode */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(var(--color-certification), 0.75); /* More vibrant purple in light mode */
+    backdrop-filter: blur(25px); /* Increased blur for more visual impact */
+    -webkit-backdrop-filter: blur(25px);
     animation: wipeRightAnimation 0.8s ease-out forwards;
     z-index: -1;
 }
 
-/* Dark mode keeps previous opacity for certification header */
+/* Dark mode certification header with more subtle background */
 .dark .certification-header::before {
-    background: rgba(var(--color-certification), 0.80);
+    background: rgba(var(--color-certification), 0.65); /* More subtle in dark mode */
 }
 
 /* Certification page footer with matching animation */
@@ -154,16 +154,16 @@ html {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(var(--color-certification), 0.70); /* Match header transparency */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(var(--color-certification), 0.75); /* Match header transparency */
+    backdrop-filter: blur(25px); /* Increased blur for more visual impact */
+    -webkit-backdrop-filter: blur(25px);
     animation: wipeRightAnimation 0.8s ease-out forwards;
     z-index: -1;
 }
 
-/* Dark mode keeps previous opacity for certification footer */
+/* Dark mode certification footer with more subtle background */
 .dark .certification-footer::before {
-    background: rgba(var(--color-certification), 0.80);
+    background: rgba(var(--color-certification), 0.65); /* More subtle in dark mode */
 }
 
 /* Partner page header with adjusted transparency for light mode */
@@ -179,9 +179,9 @@ html {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(var(--color-partner), 0.70); /* More transparent gold in light mode */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(var(--color-partner), 0.75); /* More vibrant gold in light mode */
+    backdrop-filter: blur(25px); /* Increased blur for more visual impact */
+    -webkit-backdrop-filter: blur(25px);
     animation: wipeRightAnimation 0.8s ease-out forwards;
     z-index: -1;
 }
@@ -199,23 +199,26 @@ html {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(var(--color-partner), 0.70); /* Match header transparency */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(var(--color-partner), 0.75); /* Match header transparency */
+    backdrop-filter: blur(25px); /* Increased blur for more visual impact */
+    -webkit-backdrop-filter: blur(25px);
     animation: wipeRightAnimation 0.8s ease-out forwards;
     z-index: -1;
 }
 
-/* Dark mode keeps previous opacity for partner header and footer */
+/* Dark mode keeps more subtle opacity for partner header and footer */
 .dark .partner-header::before,
 .dark .partner-footer::before {
-    background: rgba(var(--color-partner), 0.80);
+    background: rgba(var(--color-partner), 0.65); /* More subtle in dark mode */
 }
 
-/* Wipe animation from left to right */
+/* Wipe animation from left to right - Enhanced with subtle bounce */
 @keyframes wipeRightAnimation {
     0% {
         left: -100%;
+    }
+    90% {
+        left: -2%;
     }
     100% {
         left: 0;

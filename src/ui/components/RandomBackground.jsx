@@ -1,3 +1,20 @@
+/**
+ * RandomBackground.jsx
+ * 
+ * A component that provides dynamic, randomly selected background imagery for the EveryWay.JA application.
+ * 
+ * This component:
+ * - Randomly selects a background image from a predefined set
+ * - Preloads the image to ensure smooth appearance
+ * - Applies appropriate theme-specific overlays for readability
+ * - Includes fallback mechanisms if image loading fails
+ * - Handles transitions through CSS for smooth visual effects
+ * 
+ * The component renders fixed-position elements that span the entire viewport
+ * and use a negative z-index to ensure all other content remains visible on top.
+ * 
+ * @module RandomBackground
+ */
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '@contexts/ThemeContext';
 
@@ -8,6 +25,8 @@ import { useTheme } from '@contexts/ThemeContext';
  * and applies it with a gradient overlay to ensure content remains readable.
  * 
  * The gradient overlay adapts to the current theme (light/dark).
+ * 
+ * @returns {JSX.Element} The background component with image and overlay
  */
 const RandomBackground = () => {
     const { isDarkMode } = useTheme();
@@ -49,7 +68,13 @@ const RandomBackground = () => {
         img.src = selectedImage;
     }, []);
     
-    // Helper function to try loading images sequentially
+    /**
+     * Recursively attempts to load alternative background images if the primary choice fails
+     * 
+     * @param {number} index - Current index in the images array to try
+     * @param {string[]} images - Array of image paths
+     * @param {string} tried - The image path that was already attempted
+     */
     const tryNextImage = (index, images, tried) => {
         // Skip the one we already tried
         if (images[index] === tried) {

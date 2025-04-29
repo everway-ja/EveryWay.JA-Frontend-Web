@@ -1,7 +1,37 @@
+/**
+ * PageHeader.jsx
+ * 
+ * The main navigation header component for the EveryWay.JA application.
+ * 
+ * This component provides a responsive, animated header with:
+ * - Application logo and home navigation
+ * - Theme toggle (dark/light mode)
+ * - Current page indicator
+ * - Expandable menu with navigation links
+ * - Contextual styling based on current page
+ * - Background image randomization
+ * 
+ * The header adapts its appearance based on the current theme and page context,
+ * with special styling for partner and certification pages.
+ * 
+ * @module PageHeader
+ */
 import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '@contexts/ThemeContext';
-import { useNavigate, useLocation, redirect } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
+/**
+ * Page header component with expandable menu for navigation
+ * 
+ * @param {Object} props - Component props
+ * @param {boolean} props.enabled - Whether the header is enabled/visible
+ * @param {React.ReactNode} props.children - Additional content to render in the header
+ * @param {string} props.className - Additional CSS classes to apply
+ * @param {Function} props.onLogoClick - Callback function when logo is clicked
+ * @param {Function} props.onMenuClick - Callback function when menu is toggled, receives isOpen state
+ * @param {string} props.currentPath - Current page path for display
+ * @returns {JSX.Element|null} The rendered header or null if disabled
+ */
 const PageHeader = ({ 
     enabled = true, 
     children, 
@@ -12,6 +42,7 @@ const PageHeader = ({
 }) => {
     const { isDarkMode, toggleTheme } = useTheme();
     const [menuOpen, setMenuOpen] = useState(false);
+    const [userMenuOpen, setUserMenuOpen] = useState(false);
     const [partnerLinkAnimated, setPartnerLinkAnimated] = useState(false);
     const [certificationLinkAnimated, setCertificationLinkAnimated] = useState(false);
     const headerRef = useRef(null);
@@ -19,7 +50,7 @@ const PageHeader = ({
     const location = useLocation();
     
     // Check if we're on the certifications page, partners page, or feedback page
-    const isCertificationsPage = currentPath === 'Our Certifications';
+    const isCertificationsPage = currentPath === 'Get Our Certifications';
     const isPartnersPage = currentPath === 'Our Partners';
     const isFeedbackPage = currentPath === 'Feedback';
     
@@ -34,7 +65,23 @@ const PageHeader = ({
     // Icon color for menu button - white for dark theme, certification page, or partner page, black for light theme
     const iconColor = isDarkMode || isCertificationsPage || isPartnersPage ? '#ffffff' : '#000000';
     
-    // Function to select a random background image
+    /**
+     * Toggles the user menu open/closed state
+     */
+    const handleUserMenuToggle = () => {
+        setUserMenuOpen(prev => !prev);
+    };
+    
+    /**
+     * Closes the user menu
+     */
+    const handleUserMenuClose = () => {
+        setUserMenuOpen(false);
+    };
+    
+    /**
+     * Selects a random background image and applies a transition effect
+     */
     const selectRandomBackground = () => {
         const backgroundImages = [
             '/assets/images/backgrounds/bg0.jpg',
@@ -55,13 +102,40 @@ const PageHeader = ({
         if (bgDiv) {
             bgDiv.style.backgroundImage = `url(${selectedImage})`;
             console.log('Updated background image to:', selectedImage);
+            
+            // Add a brief flash effect when changing backgrounds
+            const flashEffect = document.createElement('div');
+            flashEffect.style.position = 'fixed';
+            flashEffect.style.top = '0';
+            flashEffect.style.left = '0';
+            flashEffect.style.width = '100%';
+            flashEffect.style.height = '100%';
+            flashEffect.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            flashEffect.style.zIndex = '5';
+            flashEffect.style.opacity = '0';
+            flashEffect.style.transition = 'opacity 0.5s ease-in-out';
+            document.body.appendChild(flashEffect);
+            
+            // Trigger the flash effect
+            setTimeout(() => { flashEffect.style.opacity = '0.5'; }, 50);
+            setTimeout(() => { 
+                flashEffect.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(flashEffect);
+                }, 500);
+            }, 250);
         }
     };
     
-    // Handle menu state
+    /**
+     * Handles clicks on the menu button and triggers appropriate state changes
+     */
     const handleMenuClick = () => {
         setMenuOpen(prevState => !prevState);
         onMenuClick(!menuOpen);
+        
+        // Close user menu when opening main menu
+        setUserMenuOpen(false);
         
         // Reset animation states when closing the menu
         if (menuOpen) {
@@ -110,7 +184,7 @@ const PageHeader = ({
                 ref={headerRef}
                 className={`page-header ${headerClass} ${className} transition-all duration-300 ease-in-out`}
                 style={{ 
-                    height: menuOpen ? '520px' : '120px',
+                    height: menuOpen ? '440px' : '120px',
                     overflow: 'hidden',
                     position: 'fixed',
                     top: 0,
@@ -120,7 +194,7 @@ const PageHeader = ({
                 }}
             >
                 {/* Fixed height container for header title and buttons */}
-                <div className="h-[140px] relative">  {/* Increased height */}
+                <div className="h-[140px] relative">
                     {/* Home link with larger logo on the left side */}
                     <a 
                         href="/"
@@ -158,6 +232,11 @@ const PageHeader = ({
                             )}
                         </div>
                     </button>
+                    
+                    {/* User menu button to the left of the hamburger menu */}
+                    <div className="absolute top-[-0.5rem] right-4 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20">
+
+                    </div>
                     
                     {/* Hamburger menu button moved to right corner */}
                     <button 
@@ -259,20 +338,7 @@ const PageHeader = ({
                                     <span className="ml-2">Home</span>
                                 </a>
                                 
-                                <a href="/login" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
-                                    <span className="inline-flex justify-center items-center w-6">
-                                        <i className="fas fa-sign-in-alt"></i>
-                                    </span>
-                                    <span className="ml-2">Login</span>
-                                </a>
-                                <a href="/register" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
-                                    <span className="inline-flex justify-center items-center w-6">
-                                        <i className="fas fa-id-card"></i>
-                                    </span>
-                                    <span className="ml-2">Registration</span>
-                                </a>
-                                
-                                {/* About Us link - added above Feedback */}
+                                {/* About Us link */}
                                 <a href="/about" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
                                     <span className="inline-flex justify-center items-center w-6">
                                         <i className="fas fa-info-circle"></i>
@@ -291,9 +357,9 @@ const PageHeader = ({
                                 {/* Separator */}
                                 <div className={`border-t border-[rgba(var(--color-overlay),0.3)] mx-4 my-1`}></div>
                                 
-                                {/* Our Partners button with light animation and persisting blur effect */}
+                                {/* Our Partners button with light animation */}
                                 <div className="relative overflow-hidden">
-                                    <a href="/partners" className={`flex items-center ${isPartnersPage ? titleColorClass : 'text-[rgb(173,148,93)]'} hover:opacity-80 transition-opacity pl-4 relative z-10`}>
+                                    <a href="/partners" className={`flex items-center ${isPartnersPage ? titleColorClass : 'text-[#ff2d2d]'} hover:opacity-80 transition-opacity pl-4 relative z-10`}>
                                         <span className="inline-flex justify-center items-center w-6">
                                             <i className="fas fa-handshake"></i>
                                         </span>
@@ -307,33 +373,15 @@ const PageHeader = ({
                                             opacity: isDarkMode ? '0.4' : '0.2'
                                         }}
                                     ></div>
-                                    {/* Radial blur effect that radiates from inside out */}
-                                    <div 
-                                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-1000 ease-in-out z-0" 
-                                        style={{ 
-                                            width: partnerLinkAnimated ? '100%' : '0%',
-                                            height: partnerLinkAnimated ? '200%' : '0%',
-                                            background: isDarkMode 
-                                                ? 'radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%)' 
-                                                : 'radial-gradient(circle, rgba(0, 0, 0, 0.15) 0%, transparent 70%)',
-                                            opacity: partnerLinkAnimated ? '1' : '0',
-                                            transitionDelay: partnerLinkAnimated ? '800ms' : '0ms',
-                                            backdropFilter: 'blur(2px)',
-                                            WebkitBackdropFilter: 'blur(2px)',
-                                            boxShadow: isDarkMode 
-                                                ? 'inset 0 0 10px rgba(255, 255, 255, 0.2)' 
-                                                : 'inset 0 0 10px rgba(0, 0, 0, 0.2)'
-                                        }}
-                                    ></div>
                                 </div>
                                 
-                                {/* Our Certifications button with light animation and persisting blur effect */}
+                                {/* Get Our Certifications button with light animation - Updated text */}
                                 <div className="relative overflow-hidden">
                                     <a href="/certifications" className={`flex items-center ${isCertificationsPage ? titleColorClass : 'text-[rgb(132,0,255)]'} hover:opacity-80 transition-opacity pl-4 relative z-10`}>
                                         <span className="inline-flex justify-center items-center w-6">
                                             <i className="fas fa-certificate"></i>
                                         </span>
-                                        <span className="ml-2 font-semibold">Our Certifications</span>
+                                        <span className="ml-2 font-semibold">Get Our Certifications</span>
                                     </a>
                                     {/* Light animation overlay for Certifications */}
                                     <div 
@@ -343,25 +391,16 @@ const PageHeader = ({
                                             opacity: isDarkMode ? '0.4' : '0.2'
                                         }}
                                     ></div>
-                                    {/* Radial blur effect that radiates from inside out */}
-                                    <div 
-                                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-1000 ease-in-out z-0" 
-                                        style={{ 
-                                            width: certificationLinkAnimated ? '100%' : '0%',
-                                            height: certificationLinkAnimated ? '200%' : '0%',
-                                            background: isDarkMode 
-                                                ? 'radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%)' 
-                                                : 'radial-gradient(circle, rgba(0, 0, 0, 0.15) 0%, transparent 70%)',
-                                            opacity: certificationLinkAnimated ? '1' : '0',
-                                            transitionDelay: certificationLinkAnimated ? '800ms' : '0ms',
-                                            backdropFilter: 'blur(2px)',
-                                            WebkitBackdropFilter: 'blur(2px)',
-                                            boxShadow: isDarkMode 
-                                                ? 'inset 0 0 10px rgba(255, 255, 255, 0.2)' 
-                                                : 'inset 0 0 10px rgba(0, 0, 0, 0.2)'
-                                        }}
-                                    ></div>
                                 </div>
+                                
+                                {/* User Account section in the main menu */}
+                                <div className={`border-t border-[rgba(var(--color-overlay),0.3)] mx-4 my-1`}></div>
+                                <a href="/login" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
+                                    <span className="inline-flex justify-center items-center w-6">
+                                        <i className="fas fa-user"></i>
+                                    </span>
+                                    <span className="ml-2">My Account</span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -372,9 +411,9 @@ const PageHeader = ({
                     className={`absolute left-0 right-0 bottom-0 w-full transition-all duration-500 ease-in-out`}
                     style={{
                         height: menuOpen ? '150px' : '50px', // Full height when open, smaller when closed
-                        opacity: menuOpen ? '1' : '0.7', // Full opacity when open, slightly transparent when closed
+                        opacity: menuOpen ? (isDarkMode ? '0.7' : '1') : (isDarkMode ? '0.4' : '0.7'), // Lower opacity in dark mode
                         background: isDarkMode 
-                            ? 'linear-gradient(to top, rgba(255, 255, 255, 0.15), transparent)' 
+                            ? 'linear-gradient(to top, rgba(255, 255, 255, 0.08), transparent)' // Reduced intensity for dark mode
                             : 'linear-gradient(to top, rgba(0, 0, 0, 0.15), transparent)',
                         pointerEvents: 'none', // Make sure it doesn't interfere with clicks
                         zIndex: 5

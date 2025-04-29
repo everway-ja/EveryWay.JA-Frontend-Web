@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import PageHeader from '@ui/PageHeader';
+import React, { useState } from 'react';
+import PageHeader from '@ui/navigation/PageHeader';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@contexts/ThemeContext';
+import PageTitleSection from '@ui/content/PageTitleSection';
+import PageContainerSection from '@ui/content/PageContainerSection';
 
 const FeedbackPage = () => {
     const showHeader = true;
     const navigate = useNavigate();
     const [headerExpanded, setHeaderExpanded] = useState(false);
-    const [animationStarted, setAnimationStarted] = useState(false);
     const { isDarkMode } = useTheme();
     
     // Form state
@@ -18,15 +19,6 @@ const FeedbackPage = () => {
         message: '',
     });
     const [formStatus, setFormStatus] = useState(null);
-    
-    // Trigger animation after component mounts
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setAnimationStarted(true);
-        }, 100);
-        
-        return () => clearTimeout(timer);
-    }, []);
     
     const handleLogoClick = () => {
         navigate('/');
@@ -72,21 +64,28 @@ const FeedbackPage = () => {
             />
             
             <div className="main-content">
-                {/* Full height container with centered content */}
-                <div className="h-screen flex flex-col items-center justify-center p-4">
-                    <div 
-                        className={`w-full flex-1 flex flex-col items-center justify-center transition-all duration-700 ease-out ${
-                            animationStarted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
-                        }`}
-                    >
-                        <div className="text-center">
-                            <h1 className="text-3xl md:text-4xl font-bold">
-                                EveryWay.JA Values Your Feedback
-                            </h1>
-                        </div>
-                        {/* Feedback form */}
+                {/* Title section using PageTitleSection */}
+                <PageTitleSection
+                    title="Feedback"
+                    description="We value your thoughts and suggestions"
+                    titleAnimation="bottom"
+                    descriptionAnimation="right"
+                />
+                
+                {/* Feedback form section using PageContainerSection */}
+                <PageContainerSection
+                    title="Share Your Experience"
+                    description="Your feedback helps us improve our services for everyone"
+                    titleAnimation="left"
+                    descriptionAnimation="right"
+                    contentAnimation="bottom"
+                    withBackground={true}
+                >
+                    {/* Feedback form would go here */}
+                    <div className="max-w-2xl mx-auto">
+                        {/* Form content goes here */}
                     </div>
-                </div>
+                </PageContainerSection>
             </div>
         </div>
     );

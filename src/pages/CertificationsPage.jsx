@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import PageHeader from '@ui/PageHeader';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import PageHeader from '@ui/navigation/PageHeader';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@contexts/ThemeContext';
+import PageTitleSection from '@ui/content/PageTitleSection';
+import PageContainerSection from '@ui/content/PageContainerSection';
+import Button from '@ui/components/Button';
+import Card from '@ui/components/Card';
 
 const CertificationsPage = () => {
     const showHeader = true;
     const navigate = useNavigate();
-    const location = useLocation();
     const [headerExpanded, setHeaderExpanded] = useState(false);
     const { isDarkMode } = useTheme();
-    const [animationStarted, setAnimationStarted] = useState(false);
     
-    // Trigger animation after component mounts
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setAnimationStarted(true);
-        }, 100);
-        
-        return () => clearTimeout(timer);
-    }, []);
+    // Certification color for consistency
+    const certificationColor = '#5c2490'; // Purple color for certifications
     
     const handleLogoClick = () => {
         console.log('Logo clicked from certifications page');
@@ -27,17 +23,14 @@ const CertificationsPage = () => {
     
     const handleMenuClick = (isOpen) => {
         setHeaderExpanded(isOpen);
-        // Add or remove header-expanded class from body to ensure proper content positioning
-        if (isOpen) {
-            document.body.classList.add('header-expanded');
-        } else {
-            document.body.classList.remove('header-expanded');
-        }
     };
 
-    // Use text color based on theme
-    const textColorClass = isDarkMode ? 'text-white' : 'text-[rgb(var(--color-text))]';
-    const certificationColor = '#5c2490'; // Purple color for certifications
+    // Handle certification request submission
+    const handleRequestCertification = (e) => {
+        e.preventDefault();
+        // In a real application, this would submit the form data
+        alert('Your certification request has been submitted!');
+    };
 
     return (
         <div className={`certification-page ${headerExpanded ? 'header-expanded' : ''}`}>
@@ -45,37 +38,69 @@ const CertificationsPage = () => {
                 enabled={showHeader}
                 onLogoClick={handleLogoClick}
                 onMenuClick={handleMenuClick}
-                currentPath="Our Certifications"
+                currentPath="Get Our Certifications"
             />
             
             <div className="main-content">
-                {/* Hero section with background image */}
-                <div className="h-screen flex items-center justify-center relative">
-                    <div className="text-center px-4 z-10 relative">
-                        <div className="text-center">
-                            <h1 
-                                className={`text-4xl md:text-6xl font-bold mb-6 ${textColorClass} transition-all duration-700 ease-out ${
-                                    animationStarted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
-                                }`}
-                                style={{color: certificationColor}}
-                            >
-                                Our Certifications
-                            </h1>
-                        </div>
-                        <p 
-                            className={`text-xl mb-8 ${textColorClass} transition-all duration-700 delay-200 ease-out ${
-                                animationStarted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
-                            }`}
-                        >
-                            Quality assured by industry standards
-                        </p>
-                    </div>
-                </div>
+                {/* Hero section using PageTitleSection */}
+                <PageTitleSection
+                    title="Get Our Certifications"
+                    description="Apply for quality certifications for your services and products"
+                    titleAnimation="bottom"
+                    descriptionAnimation="bottom"
+                    titleColor={certificationColor}
+                />
                 
-                {/* Content after the hero section - Added more content to test scrolling */}
-                <div className="p-4">
-                    
-                </div>
+                {/* Certification Benefits section */}
+                <PageContainerSection
+                    title="Benefits of Our Certifications"
+                    description="Our certifications help your business stand out by validating your commitment to accessibility and quality standards."
+                    titleAnimation="left"
+                    descriptionAnimation="right"
+                    contentAnimation="bottom"
+                    withBackground={true}
+                >
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-8">
+                        <Card
+                            title="Enhanced Credibility"
+                            description="Build trust with your customers by demonstrating your commitment to accessibility standards."
+                            className="backdrop-blur-sm"
+                            contentHeight="h-full"
+                            icon="fas fa-medal"
+                            iconColor={certificationColor}
+                            iconSize="text-5xl"
+                            iconPosition="top"
+                            titleStyle="text-center font-semibold text-lg"
+                            descriptionStyle="text-center mt-3"
+                        />
+                        
+                        <Card
+                            title="Wider Audience"
+                            description="Reach more customers by making your services accessible to people with different needs."
+                            className="backdrop-blur-sm"
+                            contentHeight="h-full"
+                            icon="fas fa-users"
+                            iconColor={certificationColor}
+                            iconSize="text-5xl"
+                            iconPosition="top"
+                            titleStyle="text-center font-semibold text-lg"
+                            descriptionStyle="text-center mt-3"
+                        />
+                        
+                        <Card
+                            title="Competitive Advantage"
+                            description="Stand out from competitors by showcasing your accessibility certifications."
+                            className="backdrop-blur-sm"
+                            contentHeight="h-full"
+                            icon="fas fa-chart-line"
+                            iconColor={certificationColor}
+                            iconSize="text-5xl"
+                            iconPosition="top"
+                            titleStyle="text-center font-semibold text-lg"
+                            descriptionStyle="text-center mt-3"
+                        />
+                    </div>
+                </PageContainerSection>
             </div>
         </div>
     );

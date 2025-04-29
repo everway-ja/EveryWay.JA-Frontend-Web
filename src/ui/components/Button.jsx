@@ -1,4 +1,21 @@
-    // filepath: c:\Users\loren\OneDrive\CodingProjects\+ EveryWay.JA Frontend\EveryWay.JA-Frontend-Web\src\ui\Button.jsx
+/**
+ * Button.jsx
+ * 
+ * A versatile, customizable button component for the EveryWay.JA application.
+ * 
+ * This component provides a unified approach to buttons throughout the application with:
+ * - Support for internal navigation (React Router) and external links
+ * - Customizable appearance with color, size, and style options
+ * - Optional icon support using FontAwesome
+ * - Outlined and filled styling variants
+ * - Responsive sizing and optional full-width layout
+ * - Disabled state handling
+ * 
+ * The component intelligently determines whether to render as a button element
+ * or an anchor tag based on the provided props.
+ * 
+ * @module Button
+ */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@contexts/ThemeContext';
@@ -6,7 +23,7 @@ import { useTheme } from '@contexts/ThemeContext';
 /**
  * Customizable Button component
  * 
- * @param {Object} props
+ * @param {Object} props - Component props
  * @param {string} props.text - The button text
  * @param {string} props.color - Custom color (CSS color value or tailwind class)
  * @param {string} props.bgColor - Custom background color (CSS color value or tailwind class)
@@ -20,6 +37,7 @@ import { useTheme } from '@contexts/ThemeContext';
  * @param {boolean} props.outlined - Whether button should have an outlined style
  * @param {string} props.icon - Optional icon class (for Font Awesome icons)
  * @param {boolean} props.disabled - Whether button is disabled
+ * @returns {JSX.Element} The rendered button or anchor element
  */
 const Button = ({
   text,
@@ -39,7 +57,11 @@ const Button = ({
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
   
-  // Handle navigation for internal links
+  /**
+   * Handles click events for the button, including navigation logic
+   * 
+   * @param {React.MouseEvent} e - The click event object
+   */
   const handleClick = (e) => {
     if (disabled) {
       e.preventDefault();
@@ -65,7 +87,11 @@ const Button = ({
   // Determine width class
   const widthClass = fullWidth ? 'w-full' : '';
   
-  // Determine style based on color props and outlined status
+  /**
+   * Generates the appropriate styles based on button configuration
+   * 
+   * @returns {Object} CSS style object for the button
+   */
   const getStyles = () => {
     if (outlined) {
       return {
@@ -94,7 +120,11 @@ const Button = ({
   
   const buttonStyles = getStyles();
   
-  // Compose the right type of element based on props
+  /**
+   * Renders the inner content of the button, including optional icon
+   * 
+   * @returns {JSX.Element} The button's inner content
+   */
   const ButtonContent = () => (
     <>
       {icon && (

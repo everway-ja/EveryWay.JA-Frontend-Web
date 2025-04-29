@@ -1,15 +1,43 @@
+/**
+ * MainLayout.jsx
+ * 
+ * Primary layout component for the EveryWay.JA application that serves as the 
+ * container for all pages.
+ * 
+ * This component:
+ * - Provides a consistent layout across all pages
+ * - Manages the random background image selection
+ * - Handles preloading of background images
+ * - Applies theme-appropriate styling overlays
+ * - Determines the current page name for use in the footer
+ * 
+ * The component uses nested routing via React Router's Outlet to render
+ * different page content while maintaining the consistent layout structure.
+ * 
+ * @module MainLayout
+ */
 import { Outlet, useLocation } from 'react-router-dom'
 import { useTheme } from '@contexts/ThemeContext'
-import PageFooter from '@ui/PageFooter'
+import PageFooter from '@ui/navigation/PageFooter'
 import { useState, useEffect } from 'react'
 
+/**
+ * Main layout component that wraps all pages in the application
+ * 
+ * @returns {JSX.Element} The main layout with nested content
+ */
 const MainLayout = () => {
     const { isDarkMode } = useTheme();
     const [backgroundImage, setBackgroundImage] = useState('');
     const [imagesPreloaded, setImagesPreloaded] = useState(false);
     const location = useLocation();
     
-    // Determine the current page name based on the pathname
+    /**
+     * Determines the current page name based on the URL pathname
+     * 
+     * @param {string} pathname - The current URL path
+     * @returns {string} Formatted page name for display
+     */
     const getPageName = (pathname) => {
         switch (pathname) {
             case '/':
@@ -56,7 +84,10 @@ const MainLayout = () => {
         // Create an array to hold references to the Image objects
         const preloadedImages = [];
         
-        // Function to handle when each image loads
+        /**
+         * Handler for image load events
+         * When all images are loaded, selects a random background
+         */
         const handleImageLoad = () => {
             loadedCount++;
             if (loadedCount === backgroundImages.length) {
@@ -122,7 +153,7 @@ const MainLayout = () => {
                 }}
             />
             
-            {/* Overlay div with adjusted transparency for light mode */}
+            {/* Overlay div with adjusted transparency for dark mode */}
             <div 
                 style={{
                     position: 'fixed',
@@ -131,8 +162,8 @@ const MainLayout = () => {
                     right: 0,
                     bottom: 0,
                     background: isDarkMode 
-                        ? 'linear-gradient(to bottom, rgba(18, 18, 18, 0.85), rgba(18, 18, 18, 0.90))' // Keep dark mode overlay opacity
-                        : 'linear-gradient(to bottom, rgba(255, 255, 255, 0.70), rgba(255, 255, 255, 0.75))', // More transparent light mode overlay
+                        ? 'linear-gradient(to bottom, rgba(18, 18, 18, 0.92), rgba(18, 18, 18, 0.97))' // More subtle dark mode gradient
+                        : 'linear-gradient(to bottom, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.82))', // Keep light mode gradient
                     zIndex: -5,
                 }}
             />

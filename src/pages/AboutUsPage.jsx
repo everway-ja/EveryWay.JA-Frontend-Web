@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import PageHeader from '@ui/PageHeader';
-import AnimatedCard from '@ui/AnimatedCard';
-import Button from '@ui/Button';
+import React, { useState } from 'react';
+import PageHeader from '@ui/navigation/PageHeader';
+import AnimatedCard from '@ui/components/AnimatedCard';
+import Button from '@ui/components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@contexts/ThemeContext';
+import PageTitleSection from '@ui/content/PageTitleSection';
+import PageContainerSection from '@ui/content/PageContainerSection';
 
 const AboutUsPage = () => {
     const showHeader = true;
     const navigate = useNavigate();
     const [headerExpanded, setHeaderExpanded] = useState(false);
-    const [animationStarted, setAnimationStarted] = useState(false);
     const { isDarkMode } = useTheme();
     
     // Team members data - Added example team members
@@ -23,15 +24,6 @@ const AboutUsPage = () => {
     // Core values
     const values = [
     ];
-    
-    // Trigger animation after component mounts
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setAnimationStarted(true);
-        }, 100);
-        
-        return () => clearTimeout(timer);
-    }, []);
     
     const handleLogoClick = () => {
         navigate('/');
@@ -51,127 +43,132 @@ const AboutUsPage = () => {
             />
             
             <div className="main-content">
-                {/* Hero section */}
-                <div className="h-screen flex flex-col items-center justify-center p-4">
-                    <div 
-                        className={`w-full max-w-4xl mx-auto text-center transition-all duration-700 ease-out ${
-                            animationStarted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
-                        }`}
-                    >
-                        <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                            About EveryWay.JA
-                        </h1>
-                        <p className="text-xl mb-8 max-w-2xl mx-auto">
-                            We're dedicated to making everyday services accessible to everyone, everywhere. 
-                            Our mission is to create a world where accessibility is not an afterthought, but a standard.
-                        </p>
-                    </div>
-                </div>
+                {/* Hero section using PageTitleSection */}
+                <PageTitleSection
+                    title="About EveryWay.JA"
+                    description="We're dedicated to making everyday services accessible to everyone, everywhere. Our mission is to create a world where accessibility is not an afterthought, but a standard."
+                    titleAnimation="bottom"
+                    descriptionAnimation="bottom"
+                    image="/assets/images/logos/logo.svg" // Optional logo image
+                    imageAnimation="top"
+                />
                 
-                {/* Our Mission section */}
-                <div className="py-20 px-4 bg-[rgba(var(--color-overlay),0.03)]">
-                    <div className="max-w-6xl mx-auto">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Our Mission</h2>
-                        <div className="flex flex-col md:flex-row gap-8 items-center">
-                        </div>
+                {/* Our Mission section using PageContainerSection */}
+                <PageContainerSection
+                    title="Our Mission"
+                    description="At EveryWay.JA, we believe in a world where accessibility isn't just a feature—it's the foundation of how services are designed and delivered."
+                    titleAnimation="bottom"
+                    descriptionAnimation="bottom"
+                    contentAnimation="left"
+                    withBackground={true}
+                >
+                    <div className="flex flex-col md:flex-row gap-8 items-center">
+                        {/* Mission content goes here */}
                     </div>
-                </div>
+                </PageContainerSection>
                 
-                {/* Our Values section */}
-                <div className="py-20 px-4">
-                    <div className="max-w-6xl mx-auto">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Our Values</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {values.map((value, index) => (
-                                <AnimatedCard
-                                    key={index}
-                                    image={value.image}
-                                    title={value.title}
-                                    description={value.description}
-                                    cardAnimation="bottom"
-                                    animationDelay={300 + (index * 150)}
-                                    cardHeight="h-[400px]"
-                                    contentPosition="below"
-                                />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-                
-                {/* Our Journey section */}
-                <div className="py-20 px-4 bg-[rgba(var(--color-overlay),0.03)]">
-                    <div className="max-w-6xl mx-auto">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Our Journey</h2>
-                        <div className="space-y-12">
-                            {milestones.map((milestone, index) => (
-                                <div 
-                                    key={index} 
-                                    className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center`}
-                                >
-                                    <div className="w-full md:w-1/2">
-                                        <AnimatedCard
-                                            image={milestone.image}
-                                            cardHeight="h-[300px]"
-                                            cardAnimation={index % 2 === 0 ? "left" : "right"}
-                                            animationDelay={300}
-                                        />
-                                    </div>
-                                    <div className="w-full md:w-1/2">
-                                        <AnimatedCard
-                                            title={`${milestone.year} - ${milestone.title}`}
-                                            description={milestone.description}
-                                            cardAnimation={index % 2 === 0 ? "right" : "left"}
-                                            animationDelay={300}
-                                            cardHeight="h-[300px]"
-                                        />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-                
-                {/* Our Team section */}
-                <div className="py-20 px-4">
-                    <div className="max-w-6xl mx-auto">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Our Team</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                            {teamMembers.map((member, index) => (
-                                <AnimatedCard
-                                    key={index}
-                                    image={member.image}
-                                    title={member.name}
-                                    description={`${member.role} - ${member.description}`}
-                                    cardAnimation="bottom"
-                                    animationDelay={300 + (index * 100)}
-                                    cardHeight="h-[450px]"
-                                    imageHeight="h-60"
-                                    contentPosition="below"
-                                />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-                
-                {/* Join Us section */}
-                <div className="py-20 px-4 bg-[rgba(var(--color-overlay),0.03)]">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-8">Join Our Mission</h2>
-                        <p className="text-xl mb-12">
-                            We're always looking for passionate individuals and organizations to join our mission of making services accessible to everyone.
-                        </p>
-                        <div className="flex flex-wrap justify-center">
-                            <Button 
-                                text="Become a Partner"
-                                to="/partners"
-                                color="rgba(var(--color-partner),0.8)"
-                                hoverColor="rgba(var(--color-partner),1)"
-                                size="lg"
-                                icon="fas fa-handshake"
+                {/* Our Values section using PageContainerSection */}
+                <PageContainerSection
+                    title="Our Values"
+                    titleAnimation="bottom"
+                    contentAnimation="bottom"
+                >
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {values.map((value, index) => (
+                            <AnimatedCard
+                                key={index}
+                                image={value.image}
+                                title={value.title}
+                                description={value.description}
+                                cardAnimation="bottom"
+                                animationDelay={300 + (index * 150)}
+                                cardHeight="h-[400px]"
+                                contentPosition="below"
                             />
-                        </div>
+                        ))}
                     </div>
-                </div>
+                </PageContainerSection>
+                
+                {/* Our Journey section using PageContainerSection */}
+                <PageContainerSection
+                    title="Our Journey"
+                    titleAnimation="right"
+                    contentAnimation="bottom"
+                    withBackground={true}
+                >
+                    <div className="space-y-12">
+                        {milestones.map((milestone, index) => (
+                            <div 
+                                key={index} 
+                                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center`}
+                            >
+                                <div className="w-full md:w-1/2">
+                                    <AnimatedCard
+                                        image={milestone.image}
+                                        cardHeight="h-[300px]"
+                                        cardAnimation={index % 2 === 0 ? "left" : "right"}
+                                        animationDelay={300}
+                                    />
+                                </div>
+                                <div className="w-full md:w-1/2">
+                                    <AnimatedCard
+                                        title={`${milestone.year} - ${milestone.title}`}
+                                        description={milestone.description}
+                                        cardAnimation={index % 2 === 0 ? "right" : "left"}
+                                        animationDelay={300}
+                                        cardHeight="h-[300px]"
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </PageContainerSection>
+                
+                {/* Our Team section using PageContainerSection */}
+                <PageContainerSection
+                    title="Our Team"
+                    description="Meet the passionate individuals behind EveryWay.JA who are committed to making accessibility a reality for everyone."
+                    titleAnimation="left"
+                    descriptionAnimation="right"
+                    contentAnimation="bottom"
+                >
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        {teamMembers.map((member, index) => (
+                            <AnimatedCard
+                                key={index}
+                                image={member.image}
+                                title={member.name}
+                                description={`${member.role} - ${member.description}`}
+                                cardAnimation="bottom"
+                                animationDelay={300 + (index * 100)}
+                                cardHeight="h-[450px]"
+                                imageHeight="h-60"
+                                contentPosition="below"
+                            />
+                        ))}
+                    </div>
+                </PageContainerSection>
+                
+                {/* Join Us section using PageContainerSection */}
+                <PageContainerSection
+                    title="Join Our Mission"
+                    description="We're always looking for passionate individuals and organizations to join our mission of making services accessible to everyone."
+                    titleAnimation="bottom"
+                    descriptionAnimation="bottom"
+                    contentAnimation="top"
+                    withBackground={true}
+                >
+                    <div className="flex flex-wrap justify-center">
+                        <Button 
+                            text="Become a Partner"
+                            to="/partners"
+                            color="rgba(var(--color-partner),0.8)"
+                            hoverColor="rgba(var(--color-partner),1)"
+                            size="lg"
+                            icon="fas fa-handshake"
+                        />
+                    </div>
+                </PageContainerSection>
             </div>
         </div>
     );

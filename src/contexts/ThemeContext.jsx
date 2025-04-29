@@ -1,9 +1,39 @@
+/**
+ * ThemeContext.jsx
+ * 
+ * Context provider for theme management in the EveryWay.JA application.
+ * 
+ * This module implements a React Context that manages the application's theme state (dark/light mode).
+ * It handles:
+ * - Reading the user's preferred theme from localStorage
+ * - Falling back to the system preference if no stored preference exists
+ * - Updating the DOM with appropriate theme classes and favicon
+ * - Providing a theme toggle function to all components
+ * - Listening for system theme preference changes
+ * 
+ * @module ThemeContext
+ */
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
+/**
+ * Context for storing and accessing theme-related data
+ * @type {React.Context}
+ */
 const ThemeContext = createContext();
 
+/**
+ * Custom hook to access the theme context from any component
+ * @returns {Object} Theme context with isDarkMode state and toggleTheme function
+ */
 export const useTheme = () => useContext(ThemeContext);
 
+/**
+ * Theme provider component that wraps the application to provide theme functionality
+ * 
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child components
+ * @returns {JSX.Element} Provider component with theme context
+ */
 export const ThemeProvider = ({ children }) => {
     // Get saved theme from localStorage or use browser preference
     const [isDarkMode, setIsDarkMode] = useState(() => {
