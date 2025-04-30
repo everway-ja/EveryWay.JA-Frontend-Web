@@ -14,7 +14,7 @@ const CertificationsPage = () => {
     const { isDarkMode } = useTheme();
     
     // Certification color for consistency
-    const certificationColor = '#5c2490'; // Purple color for certifications
+    const certificationColor = '#ba68ff'; // More vibrant purple color for certifications
     
     const handleLogoClick = () => {
         console.log('Logo clicked from certifications page');

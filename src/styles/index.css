@@ -22,7 +22,7 @@ html {
         --color-primary: 59, 130, 246; /* blue-500 */
         --color-secondary: 107, 114, 128; /* gray-500 */
         --color-overlay: 0, 0, 0; /* black overlay for light mode */
-        --color-certification: 108, 22, 188; /* consistent purple for certification page */
+        --color-certification: 186, 104, 255; /* vibrant purple for certification page */
         --color-partner: 255, 45, 45; /* stronger, more vibrant red for partner page */
     }
     
@@ -33,7 +33,7 @@ html {
         --color-primary: 96, 165, 250; /* blue-400 */
         --color-secondary: 156, 163, 175; /* gray-400 */
         --color-overlay: 255, 255, 255; /* white overlay for dark mode */
-        --color-certification: 108, 22, 188; /* consistent purple for certification page */
+        --color-certification: 186, 104, 255; /* vibrant purple for certification page */
         --color-partner: 255, 45, 45; /* stronger, more vibrant red for partner page */
     }
     

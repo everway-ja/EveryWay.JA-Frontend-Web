@@ -1,15 +1,17 @@
 /**
  * ThemeContext.jsx
  * 
- * Context provider for theme management in the EveryWay.JA application.
+ * Context provider for theme management in the EveryWay application.
  * 
  * This module implements a React Context that manages the application's theme state (dark/light mode).
  * It handles:
  * - Reading the user's preferred theme from localStorage
  * - Falling back to the system preference if no stored preference exists
- * - Updating the DOM with appropriate theme classes and favicon
+ * - Updating the DOM with appropriate theme classes
  * - Providing a theme toggle function to all components
  * - Listening for system theme preference changes
+ * - Updating favicon based on browser theme (not website theme)
+ * - Disabling Tab key to prevent UI issues
  * 
  * @module ThemeContext
  */
@@ -52,24 +54,67 @@ export const ThemeProvider = ({ children }) => {
         setIsDarkMode(prev => !prev);
     }, []);
 
+    // Disable Tab key across the application
+    useEffect(() => {
+        const handleTabKeyDown = (event) => {
+            if (event.key === 'Tab') {
+                event.preventDefault();
+            }
+        };
+        
+        // Add event listener to document
+        document.addEventListener('keydown', handleTabKeyDown);
+        
+        // Cleanup function to remove event listener
+        return () => {
+            document.removeEventListener('keydown', handleTabKeyDown);
+        };
+    }, []);
+    
     // Update document and save preference when theme changes
     useEffect(() => {
         if (isDarkMode) {
             document.documentElement.classList.add('dark');
             localStorage.setItem('theme', 'dark');
-            // Update favicon for dark mode
-            const favicon = document.getElementById('favicon');
-            if (favicon) favicon.href = '/assets/images/logos/logoSeal-white.svg';
         } else {
             document.documentElement.classList.remove('dark');
             localStorage.setItem('theme', 'light');
-            // Update favicon for light mode
-            const favicon = document.getElementById('favicon');
-            if (favicon) favicon.href = '/assets/images/logos/logoSeal-black.svg';
         }
     }, [isDarkMode]);
 
-    // Also listen for OS theme changes
+    // Listen for browser theme changes and update favicon accordingly
+    useEffect(() => {
+        const updateFaviconForBrowserTheme = () => {
+            const browserPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const favicon = document.getElementById('favicon');
+            if (favicon) {
+                favicon.href = browserPrefersDark 
+                    ? '/assets/images/logos/logoSeal-white.svg'
+                    : '/assets/images/logos/logoSeal-black.svg';
+            }
+        };
+        
+        // Set initial favicon based on browser theme
+        updateFaviconForBrowserTheme();
+        
+        // Listen for changes to browser theme
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleBrowserThemeChange = () => {
+            updateFaviconForBrowserTheme();
+        };
+        
+        // Add listener for theme changes
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handleBrowserThemeChange);
+            return () => mediaQuery.removeEventListener('change', handleBrowserThemeChange);
+        } else {
+            // Fallback for older browsers
+            mediaQuery.addListener(handleBrowserThemeChange);
+            return () => mediaQuery.removeEventListener('change', handleBrowserThemeChange);
+        }
+    }, []);
+
+    // Also listen for OS theme changes to update the site theme (when no preference is set)
     useEffect(() => {
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const handleChange = (e) => {
@@ -86,7 +131,7 @@ export const ThemeProvider = ({ children }) => {
         } else {
             // Fallback for older browsers
             mediaQuery.addListener(handleChange);
-            return () => mediaQuery.removeListener(handleChange);
+            return () => mediaQuery.removeEventListener('change', handleChange);
         }
     }, []);
 

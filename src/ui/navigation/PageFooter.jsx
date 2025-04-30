@@ -1,7 +1,7 @@
 /**
  * PageFooter.jsx
  * 
- * A responsive footer component for the EveryWay.JA application that adapts to
+ * A responsive footer component for the EveryWay application that adapts to
  * different pages and themes.
  * 
  * This component:
@@ -93,8 +93,8 @@ const PageFooter = ({ pageName = '' }) => {
                     {/* Logo and Company Info - Center */}
                     <div className="mt-6 md:mt-0 flex flex-col items-center md:w-1/3">
                         <a href="/" className="flex flex-col items-center transition-opacity hover:opacity-80">
-                            <img src={logoSrc} alt="EveryWay.JA Logo" className="w-24 h-24 mb-4" />
-                            <h3 className={`text-2xl font-semibold ${textColorClass}`}>EveryWay.JA</h3>
+                            <img src={logoSrc} alt="EveryWay Logo" className="w-24 h-24 mb-4" />
+                            <h3 className={`text-2xl font-semibold ${textColorClass}`}>EveryWay</h3>
                             <p className={`text-sm italic mt-1 ${textColorClass} opacity-80`}>Life is hard already, it doesn't have to be harder.</p>
                         </a>
                     </div>
@@ -109,14 +109,14 @@ const PageFooter = ({ pageName = '' }) => {
                         </p>
                         <p className="flex items-center mb-1">
                             <i className="fas fa-envelope mr-2"></i> 
-                            <a href="mailto:everyway.ja@gmail.com" className="hover:underline">
-                                everyway.ja@gmail.com
+                            <a href="mailto:EveryWay@gmail.com" className="hover:underline">
+                                EveryWay@gmail.com
                             </a>
                         </p>
                         <p className="flex items-center">
                             <i className="fab fa-instagram mr-2"></i> 
-                            <a href="https://www.instagram.com/everyway.ja/" target="_blank" rel="noopener noreferrer" className="hover:underline">
-                                @everyway.ja
+                            <a href="https://www.instagram.com/EveryWay/" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                @EveryWay
                             </a>
                         </p>
                     </div>
@@ -124,7 +124,7 @@ const PageFooter = ({ pageName = '' }) => {
                 
                 {/* Copyright */}
                 <div className={`mt-8 pt-4 border-t border-[rgba(var(--color-overlay),0.1)] text-center ${textColorClass} text-sm opacity-70`}>
-                    <p>© {currentYear} EveryWay.JA. All rights reserved.</p>
+                    <p>© {currentYear} EveryWay. All rights reserved.</p>
                 </div>
             </div>
         </footer>

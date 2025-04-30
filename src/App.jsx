@@ -1,7 +1,7 @@
 /**
  * App.jsx
  * 
- * The root component of the EveryWay.JA Frontend Web application.
+ * The root component of the EveryWay Frontend Web application.
  * 
  * This component sets up the application routing structure using React Router,
  * and wraps the entire application with the ThemeProvider to enable dark/light

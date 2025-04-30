@@ -5,7 +5,7 @@ import { resolve } from 'path'
 /**
  * Vite Configuration
  * 
- * This configuration defines the build process for the EveryWay.JA Frontend Web application.
+ * This configuration defines the build process for the EveryWay Frontend Web application.
  * 
  * Key features:
  * - React plugin for JSX support

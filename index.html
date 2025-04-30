@@ -4,12 +4,41 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" id="favicon" href="/assets/images/logos/logoSeal-black.svg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EveryWay.JA</title>
+    <title>EveryWay</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Load Funnel Display font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Set favicon based on browser theme -->
+    <script>
+      (function() {
+        // Set favicon based on browser theme
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const favicon = document.getElementById('favicon');
+        if (favicon) {
+          favicon.href = prefersDark ? '/assets/images/logos/logoSeal-white.svg' : '/assets/images/logos/logoSeal-black.svg';
+        }
+        
+        // Listen for changes to browser theme
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleBrowserThemeChange = () => {
+          const prefersDark = mediaQuery.matches;
+          const favicon = document.getElementById('favicon');
+          if (favicon) {
+            favicon.href = prefersDark ? '/assets/images/logos/logoSeal-white.svg' : '/assets/images/logos/logoSeal-black.svg';
+          }
+        };
+        
+        // Add listener for theme changes
+        if (mediaQuery.addEventListener) {
+          mediaQuery.addEventListener('change', handleBrowserThemeChange);
+        } else {
+          // Fallback for older browsers
+          mediaQuery.addListener(handleBrowserThemeChange);
+        }
+      })();
+    </script>
     <!-- Prevent theme flash by setting initial theme before page render -->
     <script>
       (function() {
@@ -21,12 +50,8 @@
         // Apply dark class if needed
         if (isDark) {
           document.documentElement.classList.add('dark');
-          // Set dark favicon
-          document.getElementById('favicon').href = '/assets/images/logos/logoSeal-white.svg';
         } else {
           document.documentElement.classList.remove('dark');
-          // Set light favicon
-          document.getElementById('favicon').href = '/assets/images/logos/logoSeal-black.svg';
         }
         
         // Don't set background colors here - let CSS handle it

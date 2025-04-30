@@ -45,7 +45,7 @@ const AboutUsPage = () => {
             <div className="main-content">
                 {/* Hero section using PageTitleSection */}
                 <PageTitleSection
-                    title="About EveryWay.JA"
+                    title="About EveryWay"
                     description="We're dedicated to making everyday services accessible to everyone, everywhere. Our mission is to create a world where accessibility is not an afterthought, but a standard."
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
@@ -56,7 +56,7 @@ const AboutUsPage = () => {
                 {/* Our Mission section using PageContainerSection */}
                 <PageContainerSection
                     title="Our Mission"
-                    description="At EveryWay.JA, we believe in a world where accessibility isn't just a feature—it's the foundation of how services are designed and delivered."
+                    description="At EveryWay, we believe in a world where accessibility isn't just a feature—it's the foundation of how services are designed and delivered."
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
                     contentAnimation="left"
@@ -127,7 +127,7 @@ const AboutUsPage = () => {
                 {/* Our Team section using PageContainerSection */}
                 <PageContainerSection
                     title="Our Team"
-                    description="Meet the passionate individuals behind EveryWay.JA who are committed to making accessibility a reality for everyone."
+                    description="Meet the passionate individuals behind EveryWay who are committed to making accessibility a reality for everyone."
                     titleAnimation="left"
                     descriptionAnimation="right"
                     contentAnimation="bottom"

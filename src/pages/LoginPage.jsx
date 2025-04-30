@@ -30,7 +30,7 @@ const LoginPage = () => {
                 {/* Title section using PageTitleSection */}
                 <PageTitleSection
                     title="Login"
-                    description="Access your EveryWay.JA account"
+                    description="Access your EveryWay account"
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
                 />

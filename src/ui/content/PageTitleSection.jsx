@@ -1,7 +1,7 @@
 /**
  * PageTitleSection.jsx
  * 
- * A versatile, animated hero section component for page headers in the EveryWay.JA application.
+ * A versatile, animated hero section component for page headers in the EveryWay application.
  * 
  * This component provides a full-screen height section with animated entry effects for:
  * - The main title

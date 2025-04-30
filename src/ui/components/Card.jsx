@@ -2,7 +2,7 @@
  * Card.jsx
  * 
  * A versatile card component that serves as a foundational UI element
- * throughout the EveryWay.JA application.
+ * throughout the EveryWay application.
  * 
  * This component offers highly customizable cards that can display:
  * - Just a title and description (no image)

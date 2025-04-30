@@ -1,7 +1,7 @@
 /**
  * Button.jsx
  * 
- * A versatile, customizable button component for the EveryWay.JA application.
+ * A versatile, customizable button component for the EveryWay application.
  * 
  * This component provides a unified approach to buttons throughout the application with:
  * - Support for internal navigation (React Router) and external links

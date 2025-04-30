@@ -1,7 +1,7 @@
 /**
  * RandomBackground.jsx
  * 
- * A component that provides dynamic, randomly selected background imagery for the EveryWay.JA application.
+ * A component that provides dynamic, randomly selected background imagery for the EveryWay application.
  * 
  * This component:
  * - Randomly selects a background image from a predefined set

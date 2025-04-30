@@ -1,7 +1,7 @@
 /**
  * PageHeader.jsx
  * 
- * The main navigation header component for the EveryWay.JA application.
+ * The main navigation header component for the EveryWay application.
  * 
  * This component provides a responsive, animated header with:
  * - Application logo and home navigation
@@ -209,7 +209,7 @@ const PageHeader = ({
                     >
                         <img 
                             src={logoSrc} 
-                            alt="EveryWay.JA Logo" 
+                            alt="EveryWay Logo" 
                             className="w-16 h-16 transition-opacity hover:opacity-80"
                         />
                     </a>
@@ -286,7 +286,7 @@ const PageHeader = ({
                     <div className="absolute inset-0 flex items-center justify-center z-10">
                         <div className="text-center mb-6"> {/* Added bottom margin to move page indicator upwards */}
                             {/* Path display with improved styling */}
-                            <p className={`text-2xl ${titleColorClass} font-semibold`}>
+                            <p className={`text-2xl ${titleColorClass}`}>
                                 {currentPath}
                             </p>
                         </div>
@@ -363,7 +363,7 @@ const PageHeader = ({
                                         <span className="inline-flex justify-center items-center w-6">
                                             <i className="fas fa-handshake"></i>
                                         </span>
-                                        <span className="ml-2 font-semibold">Our Partners</span>
+                                        <span className="ml-2">Our Partners</span>
                                     </a>
                                     {/* Light animation overlay for Partners */}
                                     <div 
@@ -377,11 +377,11 @@ const PageHeader = ({
                                 
                                 {/* Get Our Certifications button with light animation - Updated text */}
                                 <div className="relative overflow-hidden">
-                                    <a href="/certifications" className={`flex items-center ${isCertificationsPage ? titleColorClass : 'text-[rgb(132,0,255)]'} hover:opacity-80 transition-opacity pl-4 relative z-10`}>
+                                    <a href="/certifications" className={`flex items-center ${isCertificationsPage ? titleColorClass : 'text-[#ba68ff]'} hover:opacity-80 transition-opacity pl-4 relative z-10`}>
                                         <span className="inline-flex justify-center items-center w-6">
                                             <i className="fas fa-certificate"></i>
                                         </span>
-                                        <span className="ml-2 font-semibold">Get Our Certifications</span>
+                                        <span className="ml-2">Get Our Certifications</span>
                                     </a>
                                     {/* Light animation overlay for Certifications */}
                                     <div 

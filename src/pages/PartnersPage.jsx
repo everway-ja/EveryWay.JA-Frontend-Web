@@ -50,7 +50,7 @@ const PartnersPage = () => {
     // Handle email partner button click
     const handleContactPartnerClick = (e) => {
         e.preventDefault();
-        window.location.href = 'mailto:everyway.ja@gmail.com?subject=Partnership%20Inquiry&body=I%20am%20interested%20in%20becoming%20a%20partner%20with%20EveryWay.JA.';
+        window.location.href = 'mailto:EveryWay@gmail.com?subject=Partnership%20Inquiry&body=I%20am%20interested%20in%20becoming%20a%20partner%20with%20EveryWay.';
     };
 
     // Partner color for consistency
@@ -78,7 +78,7 @@ const PartnersPage = () => {
                 {/* Introduction section */}
                 <PageContainerSection
                     title="Collaboration for Accessibility"
-                    description="At EveryWay.JA, we believe that creating a more accessible world requires collaboration. 
+                    description="At EveryWay, we believe that creating a more accessible world requires collaboration. 
                     We're proud to partner with organizations across different sectors who share our vision 
                     of making services accessible to everyone, regardless of their abilities."
                     titleAnimation="right"

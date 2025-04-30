@@ -30,7 +30,7 @@ const RegistrationPage = () => {
                 {/* Title section using PageTitleSection */}
                 <PageTitleSection
                     title="Registration"
-                    description="Join the EveryWay.JA community"
+                    description="Join the EveryWay community"
                     titleAnimation="bottom"
                     descriptionAnimation="right"
                 />

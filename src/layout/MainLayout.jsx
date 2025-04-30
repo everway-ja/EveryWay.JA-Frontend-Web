@@ -1,7 +1,7 @@
 /**
  * MainLayout.jsx
  * 
- * Primary layout component for the EveryWay.JA application that serves as the 
+ * Primary layout component for the EveryWay application that serves as the 
  * container for all pages.
  * 
  * This component:

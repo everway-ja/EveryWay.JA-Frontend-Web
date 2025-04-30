@@ -1,7 +1,7 @@
 /**
  * PageContainerSection.jsx
  * 
- * A versatile content section component for creating animated page sections in the EveryWay.JA application.
+ * A versatile content section component for creating animated page sections in the EveryWay application.
  * 
  * This component serves as the primary building block for page content areas, providing:
  * - A consistent, responsive container structure

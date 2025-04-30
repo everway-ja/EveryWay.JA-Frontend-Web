@@ -4,7 +4,7 @@
  * Tailwind CSS Configuration
  * 
  * This configuration defines how Tailwind CSS utility classes are generated
- * for the EveryWay.JA Frontend Web application.
+ * for the EveryWay Frontend Web application.
  * 
  * Key features:
  * - Content paths for where Tailwind should look for class usage
