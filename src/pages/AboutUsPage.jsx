@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PageHeader from '@ui/navigation/PageHeader';
 import AnimatedCard from '@ui/components/AnimatedCard';
 import Button from '@ui/components/Button';
@@ -10,7 +10,6 @@ import PageContainerSection from '@ui/content/PageContainerSection';
 const AboutUsPage = () => {
     const showHeader = true;
     const navigate = useNavigate();
-    const [headerExpanded, setHeaderExpanded] = useState(false);
     const { isDarkMode } = useTheme();
     
     // Team members data - Added example team members
@@ -28,17 +27,12 @@ const AboutUsPage = () => {
     const handleLogoClick = () => {
         navigate('/');
     };
-    
-    const handleMenuClick = (isOpen) => {
-        setHeaderExpanded(isOpen);
-    };
 
     return (
-        <div className={headerExpanded ? 'header-expanded' : ''}>
+        <div>
             <PageHeader 
                 enabled={showHeader}
                 onLogoClick={handleLogoClick}
-                onMenuClick={handleMenuClick}
                 currentPath="About Us"
             />
             
@@ -46,32 +40,41 @@ const AboutUsPage = () => {
                 {/* Hero section using PageTitleSection */}
                 <PageTitleSection
                     title="About EveryWay"
-                    description="We're dedicated to making everyday services accessible to everyone, everywhere. Our mission is to create a world where accessibility is not an afterthought, but a standard."
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
                     image="/assets/images/logos/logo.svg" // Optional logo image
-                    imageAnimation="top"
+                    imageAnimation="bottom"
                 />
                 
                 {/* Our Mission section using PageContainerSection */}
                 <PageContainerSection
                     title="Our Mission"
-                    description="At EveryWay, we believe in a world where accessibility isn't just a feature—it's the foundation of how services are designed and delivered."
-                    titleAnimation="bottom"
-                    descriptionAnimation="bottom"
-                    contentAnimation="left"
+                    description="Our mission is to create a world where accessibility is not an afterthought, but a standard."
+                    titleAnimation="right"
+                    descriptionAnimation="right"
+                    contentAnimation="bottom"
                     withBackground={true}
                 >
-                    <div className="flex flex-col md:flex-row gap-8 items-center">
-                        {/* Mission content goes here */}
-                    </div>
                 </PageContainerSection>
+
+                {/* Our Vision section using PageContainerSection */}
+                <PageContainerSection
+                    title="Our Vision"
+                    description="We envision a future where every service is accessible to everyone, regardless of their difficulties."
+                    titleAnimation="left"
+                    descriptionAnimation="left"
+                    contentAnimation="bottom"
+                >
+                </PageContainerSection>
+
                 
                 {/* Our Values section using PageContainerSection */}
                 <PageContainerSection
                     title="Our Values"
-                    titleAnimation="bottom"
+                    titleAnimation="right"
+                    descriptionAnimation="right"
                     contentAnimation="bottom"
+                    withBackground={true}
                 >
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {values.map((value, index) => (
@@ -80,7 +83,7 @@ const AboutUsPage = () => {
                                 image={value.image}
                                 title={value.title}
                                 description={value.description}
-                                cardAnimation="bottom"
+                                cardAnimation="right"
                                 animationDelay={300 + (index * 150)}
                                 cardHeight="h-[400px]"
                                 contentPosition="below"
@@ -92,9 +95,9 @@ const AboutUsPage = () => {
                 {/* Our Journey section using PageContainerSection */}
                 <PageContainerSection
                     title="Our Journey"
-                    titleAnimation="right"
+                    titleAnimation="left"
+                    descriptionAnimation="left"
                     contentAnimation="bottom"
-                    withBackground={true}
                 >
                     <div className="space-y-12">
                         {milestones.map((milestone, index) => (
@@ -106,7 +109,7 @@ const AboutUsPage = () => {
                                     <AnimatedCard
                                         image={milestone.image}
                                         cardHeight="h-[300px]"
-                                        cardAnimation={index % 2 === 0 ? "left" : "right"}
+                                        cardAnimation="left"
                                         animationDelay={300}
                                     />
                                 </div>
@@ -114,7 +117,7 @@ const AboutUsPage = () => {
                                     <AnimatedCard
                                         title={`${milestone.year} - ${milestone.title}`}
                                         description={milestone.description}
-                                        cardAnimation={index % 2 === 0 ? "right" : "left"}
+                                        cardAnimation="left"
                                         animationDelay={300}
                                         cardHeight="h-[300px]"
                                     />
@@ -128,9 +131,10 @@ const AboutUsPage = () => {
                 <PageContainerSection
                     title="Our Team"
                     description="Meet the passionate individuals behind EveryWay who are committed to making accessibility a reality for everyone."
-                    titleAnimation="left"
+                    titleAnimation="right"
                     descriptionAnimation="right"
                     contentAnimation="bottom"
+                    withBackground={true}
                 >
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         {teamMembers.map((member, index) => (
@@ -139,7 +143,7 @@ const AboutUsPage = () => {
                                 image={member.image}
                                 title={member.name}
                                 description={`${member.role} - ${member.description}`}
-                                cardAnimation="bottom"
+                                cardAnimation="right"
                                 animationDelay={300 + (index * 100)}
                                 cardHeight="h-[450px]"
                                 imageHeight="h-60"
@@ -155,15 +159,13 @@ const AboutUsPage = () => {
                     description="We're always looking for passionate individuals and organizations to join our mission of making services accessible to everyone."
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
-                    contentAnimation="top"
-                    withBackground={true}
+                    contentAnimation="bottom"
                 >
                     <div className="flex flex-wrap justify-center">
                         <Button 
                             text="Become a Partner"
                             to="/partners"
-                            color="rgba(var(--color-partner),0.8)"
-                            hoverColor="rgba(var(--color-partner),1)"
+                            color="#c13f3f"
                             size="lg"
                             icon="fas fa-handshake"
                         />

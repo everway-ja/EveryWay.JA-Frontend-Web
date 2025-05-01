@@ -34,20 +34,6 @@ const RegistrationPage = () => {
                     titleAnimation="bottom"
                     descriptionAnimation="right"
                 />
-                
-                {/* Registration form section using PageContainerSection */}
-                <PageContainerSection
-                    title="Create Your Account"
-                    description="Sign up to access all our services"
-                    titleAnimation="left"
-                    descriptionAnimation="right"
-                    contentAnimation="bottom"
-                    withBackground={true}
-                >
-                    <div className="max-w-lg mx-auto">
-                        {/* Registration form would go here */}
-                    </div>
-                </PageContainerSection>
             </div>
         </div>
     );

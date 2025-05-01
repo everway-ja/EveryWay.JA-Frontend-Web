@@ -10,6 +10,7 @@
  * - Handles preloading of background images
  * - Applies theme-appropriate styling overlays
  * - Determines the current page name for use in the footer
+ * - Scrolls to top on page navigation
  * 
  * The component uses nested routing via React Router's Outlet to render
  * different page content while maintaining the consistent layout structure.
@@ -19,7 +20,7 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import { useTheme } from '@contexts/ThemeContext'
 import PageFooter from '@ui/navigation/PageFooter'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 /**
  * Main layout component that wraps all pages in the application
@@ -31,6 +32,32 @@ const MainLayout = () => {
     const [backgroundImage, setBackgroundImage] = useState('');
     const [imagesPreloaded, setImagesPreloaded] = useState(false);
     const location = useLocation();
+    const contentRef = useRef(null);
+    
+    // Scroll to top whenever the pathname changes
+    // This is a secondary mechanism in addition to the ScrollToTop component
+    useEffect(() => {
+        const scrollToTop = () => {
+            // Try various scroll methods for maximum browser compatibility
+            if (contentRef.current) {
+                contentRef.current.scrollTop = 0;
+            }
+            
+            // Standard window scrolling
+            window.scrollTo(0, 0);
+            
+            // For Safari and other browsers that might need specific element targeting
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        };
+        
+        // Execute immediately
+        scrollToTop();
+        
+        // And also after a small delay to catch any pending rendering
+        const timeoutId = setTimeout(scrollToTop, 50);
+        return () => clearTimeout(timeoutId);
+    }, [location.pathname]);
     
     /**
      * Determines the current page name based on the URL pathname
@@ -176,7 +203,7 @@ const MainLayout = () => {
             </div>
             
             {/* Content with higher z-index */}
-            <div className="relative z-10 flex flex-col min-h-screen">
+            <div ref={contentRef} className="relative z-10 flex flex-col min-h-screen">
                 <Outlet />
                 <PageFooter pageName={currentPageName} />
             </div>

@@ -11,7 +11,7 @@ const PartnersPage = () => {
     const showHeader = true;
     const navigate = useNavigate();
     const [headerExpanded, setHeaderExpanded] = useState(false);
-    const { isDarkMode } = useTheme();
+    const { isDarkMode, isMobileDevice } = useTheme(); // Add isMobileDevice to keep mobile context alive
     
     // Partner categories
     const partnerCategories = [
@@ -82,7 +82,7 @@ const PartnersPage = () => {
                     We're proud to partner with organizations across different sectors who share our vision 
                     of making services accessible to everyone, regardless of their abilities."
                     titleAnimation="right"
-                    descriptionAnimation="left"
+                    descriptionAnimation="right"
                     contentAnimation="bottom"
                     withBackground={true}
                 />
@@ -94,7 +94,7 @@ const PartnersPage = () => {
                         title={category.title}
                         description={category.description}
                         titleAnimation={categoryIndex % 2 === 0 ? "left" : "right"}
-                        descriptionAnimation={categoryIndex % 2 === 0 ? "right" : "left"}
+                        descriptionAnimation={categoryIndex % 2 === 0 ? "left" : "right"}
                         contentAnimation="bottom"
                         titleColor={partnerColor}
                         withBackground={categoryIndex % 2 !== 0}
@@ -107,7 +107,7 @@ const PartnersPage = () => {
                                     image={partner.image}
                                     title={partner.name}
                                     description={partner.description}
-                                    cardAnimation="bottom"
+                                    cardAnimation={categoryIndex % 2 === 0 ? "left" : "right"}
                                     animationDelay={300 + (partnerIndex * 150)}
                                     cardHeight="h-[400px]"
                                     contentPosition="below"
@@ -126,15 +126,14 @@ const PartnersPage = () => {
                     We're always looking for new partnerships that align with our mission."
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
-                    contentAnimation="top"
+                    contentAnimation="bottom"
                     withBackground={true}
                 >
                     <div className="flex flex-wrap justify-center">
                         <Button 
                             text="Contact Us to Partner"
                             onClick={handleContactPartnerClick}
-                            color="rgba(var(--color-partner),0.8)"
-                            hoverColor="rgba(var(--color-partner),1)"
+                            color="#c13f3f"
                             icon="fas fa-handshake"
                             size="lg"
                         />

@@ -1,13 +1,11 @@
 import PageHeader from '@ui/navigation/PageHeader';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState } from 'react';
 
 const MainPage = () => {
     // Set this to false to disable the header
     const showHeader = true;
     const navigate = useNavigate();
     const location = useLocation();
-    const [headerExpanded, setHeaderExpanded] = useState(false);
     
     // Format the current path for display
     const formatPathForDisplay = (path) => {
@@ -26,17 +24,11 @@ const MainPage = () => {
         navigate('/'); // Navigate to the home/main page
     };
     
-    const handleMenuClick = (isOpen) => {
-        console.log('Menu button clicked', isOpen ? 'opened' : 'closed');
-        setHeaderExpanded(isOpen);
-    };
-    
     return (
-        <div className={headerExpanded ? 'header-expanded' : ''}>
+        <div>
             <PageHeader 
                 enabled={showHeader}
                 onLogoClick={handleLogoClick}
-                onMenuClick={handleMenuClick}
                 currentPath={currentPath}
             />
             

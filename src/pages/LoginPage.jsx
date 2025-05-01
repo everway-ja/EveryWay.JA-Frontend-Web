@@ -34,18 +34,6 @@ const LoginPage = () => {
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
                 />
-                
-                {/* Login form section using PageContainerSection */}
-                <PageContainerSection
-                    title="Account Access"
-                    titleAnimation="left"
-                    contentAnimation="right"
-                    withBackground={true}
-                >
-                    <div className="max-w-md mx-auto">
-                        {/* Login form would go here */}
-                    </div>
-                </PageContainerSection>
             </div>
         </div>
     );

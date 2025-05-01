@@ -59,6 +59,181 @@
         document.documentElement.style.color = isDark ? '#f3f4f6' : '#000000';
       })();
     </script>
+    <!-- Handle mobile detection before any React code runs -->
+    <script>
+      (function() {
+        // Special handling for dev tools mobile emulation
+        const mobileModeCookie = "everyway-mobile-mode";
+        
+        // Set mobile mode cookie that persists across page refreshes and navigation
+        function setMobileModeState(isMobile) {
+          document.cookie = `${mobileModeCookie}=${isMobile ? 'true' : 'false'};path=/;max-age=3600`;
+          return isMobile;
+        }
+        
+        // Get mobile mode from cookie or detect from screen size
+        function getMobileModeState() {
+          // First check for cookie from previous navigation
+          const cookieMatch = document.cookie.match(new RegExp(`${mobileModeCookie}=([^;]+)`));
+          if (cookieMatch) {
+            return cookieMatch[1] === 'true';
+          }
+          
+          // Otherwise check window width
+          return window.innerWidth < 768;
+        }
+        
+        // Force an immediate mobile check
+        function checkAndApplyMobileStyles() {
+          // Get mobile state with cookie fallback
+          const isMobile = getMobileModeState();
+          
+          // Always set cookie for next navigation
+          setMobileModeState(isMobile);
+          
+          // Set global variable
+          window.__EVERYWAY_IS_MOBILE = isMobile;
+          
+          // Remove any existing mobile styles to prevent duplication
+          const existingStyles = document.getElementById('everyway-mobile-styles');
+          if (existingStyles) {
+            existingStyles.remove();
+          }
+          
+          // Add mobile-device class to html element
+          if (isMobile) {
+            document.documentElement.classList.add('mobile-device');
+            
+            // Add stronger, more direct mobile styles with highest possible priority
+            const styleTag = document.createElement('style');
+            styleTag.id = 'everyway-mobile-styles';
+            styleTag.innerHTML = `
+              /* Force mobile header styles with absolute priority */
+              .page-header, 
+              .page-header[style] {
+                height: 70px !important;
+                max-height: 70px !important;
+                min-height: 70px !important;
+              }
+              
+              .page-header > div,
+              .page-header > div[style] {
+                height: 70px !important;
+                min-height: 70px !important;
+                max-height: 70px !important;
+              }
+              
+              .main-content,
+              .main-content[style] {
+                padding-top: 70px !important;
+              }
+              
+              /* Position title properly in mobile mode */
+              .page-header .inset-0.flex {
+                position: absolute !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                height: auto !important;
+              }
+              
+              /* Fix possible navigation pages */
+              #root .partners-page .page-header,
+              #root .certification-page .page-header,
+              #root .feedback-page .page-header {
+                height: 70px !important;
+                max-height: 70px !important;
+                min-height: 70px !important;
+              }
+              
+              #root .partners-page .page-header > div,
+              #root .certification-page .page-header > div,
+              #root .feedback-page .page-header > div {
+                height: 70px !important;
+                min-height: 70px !important;
+                max-height: 70px !important;
+              }
+            `;
+            
+            // Insert at the beginning of <head> for highest priority
+            document.head.insertBefore(styleTag, document.head.firstChild);
+          } else {
+            document.documentElement.classList.remove('mobile-device');
+            // Remove mobile styles
+            const mobileStyles = document.getElementById('everyway-mobile-styles');
+            if (mobileStyles) {
+              mobileStyles.remove();
+            }
+          }
+        }
+        
+        // Run check immediately
+        checkAndApplyMobileStyles();
+        
+        // Always check when window resizes
+        window.addEventListener('resize', function() {
+          // Only update if width crosses the mobile breakpoint
+          const newIsMobile = window.innerWidth < 768;
+          if (newIsMobile !== window.__EVERYWAY_IS_MOBILE) {
+            setMobileModeState(newIsMobile);
+            checkAndApplyMobileStyles();
+          }
+        });
+        
+        // For emulated mobile mode in devtools, always check on load
+        window.addEventListener('load', checkAndApplyMobileStyles);
+        
+        // Check after any navigation
+        document.addEventListener('click', function(e) {
+          // Extra time to let navigation complete
+          setTimeout(checkAndApplyMobileStyles, 100);
+        });
+        
+        // Monitor hash changes for SPA navigation
+        window.addEventListener('hashchange', checkAndApplyMobileStyles);
+        
+        // Monitor history state changes for React Router
+        window.addEventListener('popstate', checkAndApplyMobileStyles);
+        
+        // Set up MutationObserver to detect DOM changes
+        const observer = new MutationObserver(function(mutations) {
+          // Look for significant DOM changes that might indicate navigation
+          for (const mutation of mutations) {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+              // Check if any added nodes are significant page components
+              for (const node of mutation.addedNodes) {
+                if (node.nodeType === 1 && (
+                  (node.classList && (
+                    node.classList.contains('partners-page') || 
+                    node.classList.contains('certification-page') ||
+                    node.classList.contains('page-header')
+                  )) ||
+                  (node.id === 'root') ||
+                  (node.querySelector && (
+                    node.querySelector('.page-header') ||
+                    node.querySelector('.partners-page') ||
+                    node.querySelector('.certification-page')
+                  ))
+                )) {
+                  setTimeout(checkAndApplyMobileStyles, 50);
+                  break;
+                }
+              }
+            }
+          }
+        });
+        
+        // Start observing when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+          observer.observe(document.body, {
+            childList: true,
+            subtree: true
+          });
+          
+          // Also recheck styles after DOM is fully loaded
+          checkAndApplyMobileStyles();
+        });
+      })();
+    </script>
     <style>
       /* Initial theme styles to prevent flash */
       html, body {

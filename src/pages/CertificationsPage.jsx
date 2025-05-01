@@ -11,7 +11,7 @@ const CertificationsPage = () => {
     const showHeader = true;
     const navigate = useNavigate();
     const [headerExpanded, setHeaderExpanded] = useState(false);
-    const { isDarkMode } = useTheme();
+    const { isDarkMode, isMobileDevice } = useTheme(); // Add isMobileDevice to keep mobile context alive
     
     // Certification color for consistency
     const certificationColor = '#ba68ff'; // More vibrant purple color for certifications
@@ -55,7 +55,7 @@ const CertificationsPage = () => {
                 <PageContainerSection
                     title="Benefits of Our Certifications"
                     description="Our certifications help your business stand out by validating your commitment to accessibility and quality standards."
-                    titleAnimation="left"
+                    titleAnimation="right"
                     descriptionAnimation="right"
                     contentAnimation="bottom"
                     withBackground={true}

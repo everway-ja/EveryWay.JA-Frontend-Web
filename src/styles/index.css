@@ -91,7 +91,27 @@ html {
     z-index: 1; /* Higher z-index than background */
     display: flex;
     flex-direction: column;
-    padding-top: 120px; /* Match the header height */
+    padding-top: 70px; /* Fixed height for mobile based on header height */
+}
+
+@media (min-width: 768px) {
+    .main-content {
+        padding-top: 120px; /* Fixed height for desktop */
+    }
+}
+
+/* Basic media query to override inline styles when needed */
+@media (max-width: 767px) {
+    /* Force mobile header height */
+    .page-header {
+        height: 70px !important;
+        max-height: 70px !important;
+    }
+    
+    /* Force mobile container height */
+    .page-header > div {
+        height: 70px !important;
+    }
 }
 
 /* Page header with glassy effect - Enhanced fixed positioning */
@@ -105,10 +125,17 @@ html {
     box-shadow: 0 4px 30px rgba(var(--color-overlay), 0.2); /* Stronger shadow */
     width: 100%;
     z-index: 1000; /* Increased z-index to ensure it stays on top */
-    height: 120px;
+    height: 70px; /* Fixed height for mobile */
+    max-height: 120px; /* Ensure it doesn't get too tall on large screens */
     text-align: center;
     transition: height 0.3s ease-in-out, background 0.3s ease-in-out;
     will-change: height, background;
+}
+
+@media (min-width: 768px) {
+    .page-header {
+        height: 120px; /* Fixed height for desktop */
+    }
 }
 
 /* Dark mode keeps previous opacity but with reduced visibility */
@@ -258,4 +285,28 @@ html {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animation for dropdown menu */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation for dropdown menu in WebKit browsers */
+@-webkit-keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -23,6 +23,7 @@ import PartnersPage from '@pages/PartnersPage'
 import FeedbackPage from '@pages/FeedbackPage'
 import AboutUsPage from '@pages/AboutUsPage'
 import { ThemeProvider } from '@contexts/ThemeContext'
+import ScrollToTop from '@ui/utils/ScrollToTop'
 
 /**
  * Main application component that defines the routing structure
@@ -33,6 +34,8 @@ import { ThemeProvider } from '@contexts/ThemeContext'
 function App() {
     return (
         <ThemeProvider>
+            {/* ScrollToTop component that handles scroll restoration on navigation */}
+            <ScrollToTop />
             <Routes>
                 <Route path="/" element={<MainLayout />}>
                     <Route index element={<MainPage />} />

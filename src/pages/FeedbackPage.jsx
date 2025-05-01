@@ -69,14 +69,14 @@ const FeedbackPage = () => {
                     title="Feedback"
                     description="We value your thoughts and suggestions"
                     titleAnimation="bottom"
-                    descriptionAnimation="right"
+                    descriptionAnimation="bottom"
                 />
                 
                 {/* Feedback form section using PageContainerSection */}
                 <PageContainerSection
                     title="Share Your Experience"
                     description="Your feedback helps us improve our services for everyone"
-                    titleAnimation="left"
+                    titleAnimation="right"
                     descriptionAnimation="right"
                     contentAnimation="bottom"
                     withBackground={true}

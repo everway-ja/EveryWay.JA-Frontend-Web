@@ -3,32 +3,34 @@
  * 
  * The main navigation header component for the EveryWay application.
  * 
- * This component provides a responsive, animated header with:
+ * This component provides a responsive header with:
  * - Application logo and home navigation
  * - Theme toggle (dark/light mode)
- * - Current page indicator
- * - Expandable menu with navigation links
+ * - Current page indicator (except on home page)
  * - Contextual styling based on current page
  * - Background image randomization
+ * - User account icon on the right side
+ * - Dropdown menu functionality for the account button
  * 
  * The header adapts its appearance based on the current theme and page context,
  * with special styling for partner and certification pages.
  * 
  * @module PageHeader
  */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useTheme } from '@contexts/ThemeContext';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import ShinyLink from './links/ShinyLink';
+import NavLink from './links/NavLink';
 
 /**
- * Page header component with expandable menu for navigation
+ * Page header component with navigation links
  * 
  * @param {Object} props - Component props
  * @param {boolean} props.enabled - Whether the header is enabled/visible
  * @param {React.ReactNode} props.children - Additional content to render in the header
  * @param {string} props.className - Additional CSS classes to apply
  * @param {Function} props.onLogoClick - Callback function when logo is clicked
- * @param {Function} props.onMenuClick - Callback function when menu is toggled, receives isOpen state
  * @param {string} props.currentPath - Current page path for display
  * @returns {JSX.Element|null} The rendered header or null if disabled
  */
@@ -36,23 +38,83 @@ const PageHeader = ({
     enabled = true, 
     children, 
     className = '', 
-    onLogoClick = () => {}, 
-    onMenuClick = () => {},
+    onLogoClick = () => {},
     currentPath = 'Home' // Default path
 }) => {
-    const { isDarkMode, toggleTheme } = useTheme();
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [userMenuOpen, setUserMenuOpen] = useState(false);
-    const [partnerLinkAnimated, setPartnerLinkAnimated] = useState(false);
-    const [certificationLinkAnimated, setCertificationLinkAnimated] = useState(false);
+    // Get theme context values
+    const { isDarkMode, toggleTheme, isMobileDevice: contextMobileDevice } = useTheme();
+    
+    // Force detect mobile directly in component, using global var as backup
+    const [forcedMobileDevice, setForcedMobileDevice] = useState(() => {
+        // First check the global var which persists across navigation
+        if (typeof window !== 'undefined' && window.__EVERYWAY_IS_MOBILE !== undefined) {
+            return window.__EVERYWAY_IS_MOBILE;
+        }
+        // Fallback to direct check
+        return window.innerWidth < 768;
+    });
+    
+    // Use the forced check as the source of truth
+    const isMobileDevice = forcedMobileDevice;
+    
     const headerRef = useRef(null);
-    const navigate = useNavigate();
     const location = useLocation();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
+    const accountButtonRef = useRef(null);
+    
+    // Update forced mobile check on component mount and window resize
+    useEffect(() => {
+        const handleResize = () => {
+            const newIsMobile = window.innerWidth < 768;
+            setForcedMobileDevice(newIsMobile);
+            if (typeof window !== 'undefined') {
+                window.__EVERYWAY_IS_MOBILE = newIsMobile;
+            }
+        };
+        
+        // Check the global var on mount, which persists across navigation
+        if (typeof window !== 'undefined' && window.__EVERYWAY_IS_MOBILE !== undefined) {
+            setForcedMobileDevice(window.__EVERYWAY_IS_MOBILE);
+        }
+        
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     
     // Check if we're on the certifications page, partners page, or feedback page
     const isCertificationsPage = currentPath === 'Get Our Certifications';
     const isPartnersPage = currentPath === 'Our Partners';
     const isFeedbackPage = currentPath === 'Feedback';
+    const isHomePage = currentPath === 'Home';
+    
+    // Update the position of the dropdown menu when the account button is clicked
+    useEffect(() => {
+        if (accountButtonRef.current && isMenuOpen) {
+            const rect = accountButtonRef.current.getBoundingClientRect();
+            setMenuPosition({
+                top: rect.bottom,
+                right: window.innerWidth - rect.right
+            });
+        }
+    }, [isMenuOpen]);
+    
+    // Close the menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (isMenuOpen && 
+                accountButtonRef.current && 
+                !accountButtonRef.current.contains(event.target) &&
+                !event.target.closest('.dropdown-menu')) {
+                setIsMenuOpen(false);
+            }
+        };
+        
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isMenuOpen]);
     
     // Switch logo based on theme - use white logo for dark theme, certification page, or partners page
     const logoSrc = isDarkMode || isCertificationsPage || isPartnersPage
@@ -62,23 +124,16 @@ const PageHeader = ({
     // Title color - white for dark theme, certification page, or partner page, black for light theme
     const titleColorClass = isDarkMode || isCertificationsPage || isPartnersPage ? 'text-white' : 'text-black';
     
-    // Icon color for menu button - white for dark theme, certification page, or partner page, black for light theme
+    // Icon color for theme toggle - white for dark theme, certification page, or partner page, black for light theme
     const iconColor = isDarkMode || isCertificationsPage || isPartnersPage ? '#ffffff' : '#000000';
-    
+
     /**
-     * Toggles the user menu open/closed state
+     * Toggle the menu visibility when the account button is clicked
      */
-    const handleUserMenuToggle = () => {
-        setUserMenuOpen(prev => !prev);
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
     };
-    
-    /**
-     * Closes the user menu
-     */
-    const handleUserMenuClose = () => {
-        setUserMenuOpen(false);
-    };
-    
+
     /**
      * Selects a random background image and applies a transition effect
      */
@@ -127,46 +182,6 @@ const PageHeader = ({
         }
     };
     
-    /**
-     * Handles clicks on the menu button and triggers appropriate state changes
-     */
-    const handleMenuClick = () => {
-        setMenuOpen(prevState => !prevState);
-        onMenuClick(!menuOpen);
-        
-        // Close user menu when opening main menu
-        setUserMenuOpen(false);
-        
-        // Reset animation states when closing the menu
-        if (menuOpen) {
-            setPartnerLinkAnimated(false);
-            setCertificationLinkAnimated(false);
-        }
-    };
-    
-    // Effect to toggle body class for proper content padding
-    useEffect(() => {
-        if (menuOpen) {
-            document.body.classList.add('header-expanded');
-            
-            // Trigger animations with a small delay when menu opens
-            const partnerTimeout = setTimeout(() => {
-                setPartnerLinkAnimated(true);
-            }, 300);
-            
-            const certificationTimeout = setTimeout(() => {
-                setCertificationLinkAnimated(true);
-            }, 500);
-            
-            return () => {
-                clearTimeout(partnerTimeout);
-                clearTimeout(certificationTimeout);
-            };
-        } else {
-            document.body.classList.remove('header-expanded');
-        }
-    }, [menuOpen]);
-    
     if (!enabled) return null;
     
     // Determine header class based on current page
@@ -179,12 +194,13 @@ const PageHeader = ({
     
     return (
         <>
-            {/* Page Header with expandable menu */}
+            {/* Page Header with fixed height */}
             <header 
                 ref={headerRef}
                 className={`page-header ${headerClass} ${className} transition-all duration-300 ease-in-out`}
                 style={{ 
-                    height: menuOpen ? '440px' : '120px',
+                    height: isMobileDevice ? '70px' : '120px',
+                    maxHeight: isMobileDevice ? '70px' : '120px',
                     overflow: 'hidden',
                     position: 'fixed',
                     top: 0,
@@ -192,9 +208,29 @@ const PageHeader = ({
                     width: '100%',
                     zIndex: 1000
                 }}
+                data-is-mobile={isMobileDevice ? 'true' : 'false'} // Add data attribute for easier debugging
             >
                 {/* Fixed height container for header title and buttons */}
-                <div className="h-[140px] relative">
+                <div className={`relative ${isMobileDevice ? 'h-[70px]' : 'h-[120px]'}`}>
+                    {/* User account button on the right side */}
+                    <button
+                        ref={accountButtonRef}
+                        className={`absolute ${isMobileDevice ? 'top-1' : 'top-[-0.5rem]'} right-4 ${isMobileDevice ? 'w-16 h-16' : 'w-20 h-20 md:w-32 md:h-32'} flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20`}
+                        aria-label="User account"
+                        type="button"
+                        onClick={toggleMenu}
+                    >
+                        <div className="flex items-center justify-center gap-2">
+                            {/* Hamburger menu icon */}
+                            <i className={`fas fa-bars ${isMobileDevice ? 'text-2xl' : 'text-lg md:text-xl'}`} style={{ color: iconColor }}></i>
+                            
+                            {/* User account icon */}
+                            <div className={`flex items-center justify-center ${isMobileDevice ? 'w-10 h-10' : 'w-8 h-8 md:w-12 md:h-12'} bg-gray-300 rounded-full`}>
+                                <i className={`fas fa-user text-gray-600 ${isMobileDevice ? 'text-lg' : 'text-sm md:text-lg'}`}></i>
+                            </div>
+                        </div>
+                    </button>
+                    
                     {/* Home link with larger logo on the left side */}
                     <a 
                         href="/"
@@ -204,224 +240,141 @@ const PageHeader = ({
                             onLogoClick();
                             // Let default navigation happen naturally
                         }}
-                        className="absolute top-[-0.5rem] left-4 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20"
+                        className={`absolute ${isMobileDevice ? 'top-1' : 'top-[-0.5rem]'} left-4 ${isMobileDevice ? 'w-16 h-16' : 'w-20 h-20 md:w-32 md:h-32'} flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20`}
                         aria-label="Go to home page"
                     >
                         <img 
                             src={logoSrc} 
                             alt="EveryWay Logo" 
-                            className="w-16 h-16 transition-opacity hover:opacity-80"
+                            className={`${isMobileDevice ? 'w-12 h-12' : 'w-10 h-10 md:w-16 md:h-16'} transition-opacity hover:opacity-80`}
                         />
                     </a>
                     
-                    {/* Theme toggle button placed next to logo button */}
+                    {/* Theme toggle button placed next to logo button - hidden on mobile */}
                     <button
                         onClick={toggleTheme}
-                        className="absolute top-[-0.5rem] left-36 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20"
+                        className={`absolute top-[-0.5rem] left-24 md:left-36 w-20 h-20 md:w-32 md:h-32 hidden md:flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20`}
                         aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
                         type="button"
                     >
                         {/* Lightbulb/Moon icon for theme toggle */}
-                        <div className="flex items-center justify-center w-8 h-8">
+                        <div className="flex items-center justify-center w-6 h-6 md:w-8 md:h-8">
                             {isDarkMode ? (
                                 // Lightbulb for dark mode (clicking switches to light)
-                                <i className="fas fa-lightbulb text-2xl" style={{ color: iconColor }}></i>
+                                <i className="fas fa-lightbulb text-xl md:text-2xl" style={{ color: iconColor }}></i>
                             ) : (
                                 // Moon icon for light mode (clicking switches to dark)
-                                <i className="fas fa-moon text-2xl" style={{ color: iconColor }}></i>
+                                <i className="fas fa-moon text-xl md:text-2xl" style={{ color: iconColor }}></i>
                             )}
                         </div>
                     </button>
                     
-                    {/* User menu button to the left of the hamburger menu */}
-                    <div className="absolute top-[-0.5rem] right-4 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20">
-
-                    </div>
-                    
-                    {/* Hamburger menu button moved to right corner */}
-                    <button 
-                        onClick={handleMenuClick}
-                        className="absolute top-[-0.5rem] right-4 w-32 h-32 flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20"
-                        aria-label="Menu"
-                        type="button"
-                    >
-                        <div className="flex flex-col items-center justify-center w-8 h-8 relative">
-                            <div
-                                style={{
-                                    width: '28px',
-                                    height: '3px',
-                                    backgroundColor: iconColor,
-                                    borderRadius: '999px',
-                                    position: 'absolute',
-                                    transition: 'transform 0.3s ease',
-                                    transform: menuOpen ? 'rotate(45deg)' : 'rotate(0) translateY(-8px)'
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    width: '28px',
-                                    height: '3px',
-                                    backgroundColor: iconColor,
-                                    borderRadius: '999px',
-                                    position: 'absolute',
-                                    transition: 'opacity 0.3s ease',
-                                    opacity: menuOpen ? '0' : '1'
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    width: '28px',
-                                    height: '3px',
-                                    backgroundColor: iconColor,
-                                    borderRadius: '999px',
-                                    position: 'absolute',
-                                    transition: 'transform 0.3s ease',
-                                    transform: menuOpen ? 'rotate(-45deg)' : 'rotate(0) translateY(8px)'
-                                }}
-                            ></div>
-                        </div>
-                    </button>
-                    
-                    {/* Centered path display - Improved centering and increased size */}
-                    <div className="absolute inset-0 flex items-center justify-center z-10">
-                        <div className="text-center mb-6"> {/* Added bottom margin to move page indicator upwards */}
-                            {/* Path display with improved styling */}
-                            <p className={`text-2xl ${titleColorClass}`}>
+                    {/* Centered path display - only show if not on home page */}
+                    {!isHomePage && (
+                        <div className={`absolute inset-0 flex items-center justify-center z-10`}>
+                            <p className={`${isMobileDevice ? 'text-lg' : 'text-xl md:text-3xl'} font-semibold ${titleColorClass}`}>
                                 {currentPath}
                             </p>
                         </div>
-                    </div>
+                    )}
                 </div>
                 
-                {/* Menu content - appears when header is expanded */}
+                {/* Subtle gradient effect at the bottom of the header */}
                 <div 
-                    className={`w-full transition-opacity duration-300 ease-in-out ${  
-                        menuOpen ? 'opacity-100 header-menu-expanded' : 'opacity-0 pointer-events-none'
-                    }`}
+                    className="absolute left-0 right-0 bottom-0 w-full transition-all duration-500 ease-in-out"
                     style={{
-                        position: 'absolute',
-                        top: '140px',
-                        left: 0,
-                        right: 0,
-                        padding: '1rem 0',
-                        willChange: 'opacity',
-                        transition: 'opacity 300ms ease-in-out',
-                        height: '320px' // Fixed height for menu content
-                    }}
-                >
-                    {/* Three equally sized columns centered horizontally */}
-                    <div className="grid grid-cols-3 w-3/4 mx-auto pb-6">
-                        {/* Column 1 */}
-                        <div className="relative p-4">
-                            <div className="absolute top-0 right-0 bottom-6 w-px bg-[rgba(var(--color-overlay),0.2)]"></div>
-                            <h3 className={`font-semibold text-lg mb-3 ${titleColorClass} text-center`}>Other Pages</h3>
-                            {/* Column 1 content */}
-                        </div>
-                        
-                        {/* Column 2 */}
-                        <div className="relative p-4">
-                            <div className="absolute top-0 right-0 bottom-6 w-px bg-[rgba(var(--color-overlay),0.2)]"></div>
-                            <h3 className={`font-semibold text-lg mb-3 ${titleColorClass} text-center`}>In This Page</h3>
-                            {/* Column 2 content */}
-                        </div>
-                        
-                        {/* Column 3 */}
-                        <div className="p-4">
-                            <h3 className={`font-semibold text-lg mb-3 ${titleColorClass} text-center`}>Quick Links</h3>
-                            {/* Quick links with icons - adjusted for consistent spacing */}
-                            <div className="flex flex-col gap-4 mt-4 relative">
-                                {/* Home link (added at the top) */}
-                                <a href="/" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
-                                    <span className="inline-flex justify-center items-center w-6">
-                                        <i className="fas fa-home"></i>
-                                    </span>
-                                    <span className="ml-2">Home</span>
-                                </a>
-                                
-                                {/* About Us link */}
-                                <a href="/about" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
-                                    <span className="inline-flex justify-center items-center w-6">
-                                        <i className="fas fa-info-circle"></i>
-                                    </span>
-                                    <span className="ml-2">About Us</span>
-                                </a>
-                                
-                                {/* Feedback link - no special color */}
-                                <a href="/feedback" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
-                                    <span className="inline-flex justify-center items-center w-6">
-                                        <i className="fas fa-comment-alt"></i>
-                                    </span>
-                                    <span className="ml-2">Feedback</span>
-                                </a>
-                                
-                                {/* Separator */}
-                                <div className={`border-t border-[rgba(var(--color-overlay),0.3)] mx-4 my-1`}></div>
-                                
-                                {/* Our Partners button with light animation */}
-                                <div className="relative overflow-hidden">
-                                    <a href="/partners" className={`flex items-center ${isPartnersPage ? titleColorClass : 'text-[#ff2d2d]'} hover:opacity-80 transition-opacity pl-4 relative z-10`}>
-                                        <span className="inline-flex justify-center items-center w-6">
-                                            <i className="fas fa-handshake"></i>
-                                        </span>
-                                        <span className="ml-2">Our Partners</span>
-                                    </a>
-                                    {/* Light animation overlay for Partners */}
-                                    <div 
-                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-50 z-0 transition-transform duration-1000 ease-in-out" 
-                                        style={{ 
-                                            transform: partnerLinkAnimated ? 'translateX(100%)' : 'translateX(-100%)',
-                                            opacity: isDarkMode ? '0.4' : '0.2'
-                                        }}
-                                    ></div>
-                                </div>
-                                
-                                {/* Get Our Certifications button with light animation - Updated text */}
-                                <div className="relative overflow-hidden">
-                                    <a href="/certifications" className={`flex items-center ${isCertificationsPage ? titleColorClass : 'text-[#ba68ff]'} hover:opacity-80 transition-opacity pl-4 relative z-10`}>
-                                        <span className="inline-flex justify-center items-center w-6">
-                                            <i className="fas fa-certificate"></i>
-                                        </span>
-                                        <span className="ml-2">Get Our Certifications</span>
-                                    </a>
-                                    {/* Light animation overlay for Certifications */}
-                                    <div 
-                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-50 z-0 transition-transform duration-1000 ease-in-out" 
-                                        style={{ 
-                                            transform: certificationLinkAnimated ? 'translateX(100%)' : 'translateX(-100%)',
-                                            opacity: isDarkMode ? '0.4' : '0.2'
-                                        }}
-                                    ></div>
-                                </div>
-                                
-                                {/* User Account section in the main menu */}
-                                <div className={`border-t border-[rgba(var(--color-overlay),0.3)] mx-4 my-1`}></div>
-                                <a href="/login" className={`flex items-center ${titleColorClass} hover:opacity-80 transition-opacity pl-4`}>
-                                    <span className="inline-flex justify-center items-center w-6">
-                                        <i className="fas fa-user"></i>
-                                    </span>
-                                    <span className="ml-2">My Account</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                {/* Gradient effect that appears from bottom - smaller when menu closed, full size when open */}
-                <div 
-                    className={`absolute left-0 right-0 bottom-0 w-full transition-all duration-500 ease-in-out`}
-                    style={{
-                        height: menuOpen ? '150px' : '50px', // Full height when open, smaller when closed
-                        opacity: menuOpen ? (isDarkMode ? '0.7' : '1') : (isDarkMode ? '0.4' : '0.7'), // Lower opacity in dark mode
+                        height: '50px',
+                        opacity: isDarkMode ? '0.4' : '0.7',
                         background: isDarkMode 
-                            ? 'linear-gradient(to top, rgba(255, 255, 255, 0.08), transparent)' // Reduced intensity for dark mode
+                            ? 'linear-gradient(to top, rgba(255, 255, 255, 0.08), transparent)'
                             : 'linear-gradient(to top, rgba(0, 0, 0, 0.15), transparent)',
-                        pointerEvents: 'none', // Make sure it doesn't interfere with clicks
+                        pointerEvents: 'none',
                         zIndex: 5
                     }}
                 />
                 
                 {children}
             </header>
+            
+            {/* Dropdown menu - Positioned outside the header to avoid overflow clipping */}
+            {isMenuOpen && (
+                <div 
+                    className={`fixed dropdown-menu w-64 rounded-lg overflow-hidden shadow-lg backdrop-blur-lg z-[1001] ${titleColorClass}`}
+                    style={{
+                        top: `${menuPosition.top}px`,
+                        right: `${menuPosition.right}px`,
+                        background: isCertificationsPage 
+                            ? `rgba(var(--color-certification), ${isDarkMode ? 0.65 : 0.75})` 
+                            : isPartnersPage 
+                                ? `rgba(var(--color-partner), ${isDarkMode ? 0.65 : 0.75})`
+                                : `rgba(var(--color-overlay), ${isDarkMode ? 0.15 : 0.2})`,
+                        animation: 'fadeInDown 0.3s ease-out forwards',
+                    }}
+                >
+                    <div className="py-2">
+                        <div className="block px-4 py-3 hover:bg-[rgba(255,255,255,0.1)] transition-all duration-200">
+                            <NavLink 
+                                to="/login"
+                                text="Login"
+                                icon="fas fa-sign-in-alt"
+                                iconPosition="left"
+                                iconClassName="w-6 text-center"
+                                color={titleColorClass}
+                                className="flex items-center w-full"
+                                useActiveColor={false}
+                            />
+                        </div>
+                        <div className="block px-4 py-3 hover:bg-[rgba(255,255,255,0.1)] transition-all duration-200">
+                            <NavLink 
+                                to="/register"
+                                text="Sign Up"
+                                icon="fas fa-user-plus"
+                                iconPosition="left"
+                                iconClassName="w-6 text-center"
+                                color={titleColorClass}
+                                className="flex items-center w-full"
+                                useActiveColor={false}
+                            />
+                        </div>
+                        <div className="border-t border-[rgba(255,255,255,0.1)] my-1"></div>
+                        <div className="block px-4 py-3 hover:bg-[rgba(255,255,255,0.1)] transition-all duration-200">
+                            <ShinyLink 
+                                href="/partners"
+                                color={titleColorClass}
+                                icon="fas fa-handshake"
+                                animationDuration={1200}
+                                className="flex items-center w-full"
+                            >
+                                <span className="ml-4">Become a Partner</span>
+                            </ShinyLink>
+                        </div>
+                        <div className="block px-4 py-3 hover:bg-[rgba(255,255,255,0.1)] transition-all duration-200">
+                            <ShinyLink 
+                                href="/certifications"
+                                color={titleColorClass}
+                                icon="fas fa-certificate"
+                                animationDuration={1200}
+                                animationDelay={600}
+                                className="flex items-center w-full"
+                            >
+                                <span className="ml-4">Get Our Certifications</span>
+                            </ShinyLink>
+                        </div>
+                        <div className="block px-4 py-3 hover:bg-[rgba(255,255,255,0.1)] transition-all duration-200">
+                            <NavLink 
+                                to="/feedback"
+                                text="Give us Your Feedback"
+                                icon="fas fa-comment"
+                                iconPosition="left"
+                                iconClassName="w-6 text-center"
+                                color={titleColorClass}
+                                className="flex items-center w-full"
+                                useActiveColor={false}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 };

@@ -11,6 +11,7 @@
  * - Providing a theme toggle function to all components
  * - Listening for system theme preference changes
  * - Updating favicon based on browser theme (not website theme)
+ * - Detecting and persisting mobile device status
  * - Disabling Tab key to prevent UI issues
  * 
  * @module ThemeContext
@@ -49,9 +50,34 @@ export const ThemeProvider = ({ children }) => {
         return window.matchMedia('(prefers-color-scheme: dark)').matches;
     });
 
+    // Detect if user is on a mobile device based on screen width
+    const [isMobileDevice, setIsMobileDevice] = useState(() => {
+        return window.innerWidth < 768; // Matching Tailwind's md breakpoint
+    });
+
     // Toggle function for manual control - memoized to avoid recreating on each render
     const toggleTheme = useCallback(() => {
         setIsDarkMode(prev => !prev);
+    }, []);
+
+    // Add a global variable for mobile detection that persists across re-renders and navigation
+    useEffect(() => {
+        // Create a global variable that will persist across page navigations
+        window.__EVERYWAY_IS_MOBILE = window.innerWidth < 768;
+        
+        const handleResize = () => {
+            const newIsMobile = window.innerWidth < 768;
+            window.__EVERYWAY_IS_MOBILE = newIsMobile;
+            setIsMobileDevice(newIsMobile);
+        };
+        
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Force global detection before each render
+    useEffect(() => {
+        setIsMobileDevice(window.__EVERYWAY_IS_MOBILE || window.innerWidth < 768);
     }, []);
 
     // Disable Tab key across the application
@@ -81,6 +107,15 @@ export const ThemeProvider = ({ children }) => {
             localStorage.setItem('theme', 'light');
         }
     }, [isDarkMode]);
+
+    // Add mobile class to document for CSS targeting
+    useEffect(() => {
+        if (isMobileDevice) {
+            document.documentElement.classList.add('mobile-device');
+        } else {
+            document.documentElement.classList.remove('mobile-device');
+        }
+    }, [isMobileDevice]);
 
     // Listen for browser theme changes and update favicon accordingly
     useEffect(() => {
@@ -136,7 +171,7 @@ export const ThemeProvider = ({ children }) => {
     }, []);
 
     return (
-        <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+        <ThemeContext.Provider value={{ isDarkMode, toggleTheme, isMobileDevice }}>
             {children}
         </ThemeContext.Provider>
     );
