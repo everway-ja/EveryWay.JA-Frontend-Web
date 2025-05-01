@@ -60,6 +60,7 @@ const PageHeader = ({
     const headerRef = useRef(null);
     const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuClosing, setIsMenuClosing] = useState(false);
     const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
     const accountButtonRef = useRef(null);
     
@@ -106,7 +107,7 @@ const PageHeader = ({
                 accountButtonRef.current && 
                 !accountButtonRef.current.contains(event.target) &&
                 !event.target.closest('.dropdown-menu')) {
-                setIsMenuOpen(false);
+                closeMenuWithAnimation();
             }
         };
         
@@ -128,10 +129,25 @@ const PageHeader = ({
     const iconColor = isDarkMode || isCertificationsPage || isPartnersPage ? '#ffffff' : '#000000';
 
     /**
+     * Close the menu with a fade out animation
+     */
+    const closeMenuWithAnimation = () => {
+        setIsMenuClosing(true);
+        setTimeout(() => {
+            setIsMenuOpen(false);
+            setIsMenuClosing(false);
+        }, 300); // Match this with the animation duration
+    };
+
+    /**
      * Toggle the menu visibility when the account button is clicked
      */
     const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
+        if (isMenuOpen) {
+            closeMenuWithAnimation();
+        } else {
+            setIsMenuOpen(true);
+        }
     };
 
     /**
@@ -308,7 +324,7 @@ const PageHeader = ({
                             : isPartnersPage 
                                 ? `rgba(var(--color-partner), ${isDarkMode ? 0.65 : 0.75})`
                                 : `rgba(var(--color-overlay), ${isDarkMode ? 0.15 : 0.2})`,
-                        animation: 'fadeInDown 0.3s ease-out forwards',
+                        animation: isMenuClosing ? 'fadeOutUp 0.3s ease-out forwards' : 'fadeInDown 0.3s ease-out forwards',
                     }}
                 >
                     <div className="py-2">

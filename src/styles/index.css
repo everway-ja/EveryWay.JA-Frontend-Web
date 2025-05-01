@@ -310,3 +310,27 @@ html {
         transform: translateY(0);
     }
 }
+
+/* Animation for dropdown menu closing */
+@keyframes fadeOutUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Animation for dropdown menu closing in WebKit browsers */
+@-webkit-keyframes fadeOutUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
