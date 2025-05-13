@@ -27,12 +27,12 @@ const RegistrationPage = () => {
             />
             
             <div className="main-content">
-                {/* Title section using PageTitleSection */}
-                <PageTitleSection
+                {/* Title section using PageTitleSection */}                <PageTitleSection
                     title="Registration"
                     description="Join the EveryWay community"
                     titleAnimation="bottom"
-                    descriptionAnimation="right"
+                    descriptionAnimation="bottom"
+                    staggerDelay={150} // Animations will start at the same time in PageTitleSection
                 />
             </div>
         </div>

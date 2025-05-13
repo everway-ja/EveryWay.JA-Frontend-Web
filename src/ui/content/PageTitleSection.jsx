@@ -33,18 +33,18 @@ import { useTheme } from '@contexts/ThemeContext';
  * @param {Object} props - Component props
  * @param {string} props.title - The title text
  * @param {string} props.description - The description text
- * @param {string} props.image - URL to the image (optional)
- * @param {string} props.titleAnimation - Animation direction for title ('none', 'top', 'bottom', 'left', 'right')
+ * @param {string} props.image - URL to the image (optional) * @param {string} props.titleAnimation - Animation direction for title ('none', 'top', 'bottom', 'left', 'right')
  * @param {string} props.descriptionAnimation - Animation direction for description ('none', 'top', 'bottom', 'left', 'right')
  * @param {string} props.imageAnimation - Animation direction for image ('none', 'top', 'bottom', 'left', 'right')
+ * @param {string} props.iconAnimation - Animation direction for icon ('none', 'top', 'bottom', 'left', 'right')
  * @param {number} props.animationDelay - Base delay for animations in ms
  * @param {number} props.animationDuration - Duration of animations in ms
  * @param {number} props.staggerDelay - Delay between staggered animations in ms
  * @param {string} props.titleColor - Optional custom color for the title
  * @param {string} props.className - Additional classes for the container
- * @param {string} props.icon - Optional FontAwesome icon class (instead of image)
- * @param {string} props.iconColor - Custom color for the icon
+ * @param {string} props.icon - Optional FontAwesome icon class (instead of image) * @param {string} props.iconColor - Custom color for the icon
  * @param {string} props.iconSize - Tailwind size class for icon
+ * @param {string} props.iconPosition - Position of the icon ('top', 'bottom') - defaults to 'bottom'
  * @param {string} props.titleStyle - Additional classes for title
  * @param {string} props.descriptionStyle - Additional classes for description
  * @param {string} props.imageStyle - Additional classes for image
@@ -56,19 +56,19 @@ import { useTheme } from '@contexts/ThemeContext';
 const PageTitleSection = ({
   title,
   description,
-  image = null,
-  titleAnimation = 'bottom',
+  image = null,  titleAnimation = 'bottom',
   descriptionAnimation = 'bottom',
   imageAnimation = 'right',
+  iconAnimation = null,
   animationDelay = 100,
   animationDuration = 700,
   staggerDelay = 150,
   titleColor = '',
-  className = '',
-  // New customization options
+  className = '',  // New customization options
   icon = null,
   iconColor = '',
   iconSize = 'text-6xl',
+  iconPosition = 'bottom',
   titleStyle = '',
   descriptionStyle = '',
   imageStyle = '',
@@ -151,40 +151,54 @@ const PageTitleSection = ({
     if (inView) {
       setAnimationStarted(true);
     }
-  }, [inView]);
-
-  // Determine delays for each element
-  const titleDelay = animationDelay;
-  const descriptionDelay = titleAnimation !== 'none' ? titleDelay + staggerDelay : titleDelay;
-  const mediaDelay = descriptionAnimation !== 'none' ? descriptionDelay + staggerDelay : descriptionDelay;
-  const childrenDelay = mediaDelay + staggerDelay;
+  }, [inView]);  // Determine sequentially staggered delays for elements
+  // Elements will appear in sequence from bottom to top, regardless of visual ordering
+  // When iconPosition is 'bottom', the sequence is children -> icon/image -> description -> title
+  // When iconPosition is 'top', the sequence is children -> description -> title -> icon/image
+  
+  let currentDelay = animationDelay;
+  
+  // Calculate delays based on icon position (bottom or top)
+  const childrenDelay = currentDelay;
+  currentDelay += staggerDelay;
+  
+  const mediaDelay = iconPosition === 'bottom' 
+    ? currentDelay 
+    : currentDelay + (staggerDelay * 2);
+  
+  const descriptionDelay = iconPosition === 'bottom'
+    ? currentDelay + staggerDelay
+    : currentDelay;
+  
+  const titleDelay = iconPosition === 'bottom'
+    ? currentDelay + (staggerDelay * 2)
+    : currentDelay + staggerDelay;
 
   // Check if we're using an icon instead of an image
   const hasIcon = icon !== null;
   const hasImage = image !== null && !hasIcon;
-
   return (
     <div ref={ref} className={`h-screen flex flex-col items-center justify-center p-4 ${className} ${containerStyle}`}>
       <div className={`w-full max-w-4xl mx-auto text-center relative`}>
-        {/* Media Section (Image or Icon) */}
-        {hasImage && (
+        {/* Media Section (Image or Icon) - Above Title if iconPosition is 'top' */}
+        {hasIcon && iconPosition === 'top' && (
           <div 
-            className={`mx-auto mb-8 transition-all ${getAnimationClass(imageAnimation, animationStarted)} ${imageStyle}`}
-            style={getTransitionStyle(imageAnimation, mediaDelay)}
-          >
-            <img src={image} alt={title} className="w-64 h-64 object-contain mx-auto" />
-          </div>
-        )}
-        
-        {hasIcon && (
-          <div 
-            className={`mx-auto mb-8 transition-all ${getAnimationClass(imageAnimation, animationStarted)} ${iconStyle}`}
-            style={getTransitionStyle(imageAnimation, mediaDelay)}
+            className={`mx-auto mb-8 transition-all ${getAnimationClass(iconAnimation || imageAnimation, animationStarted)} ${iconStyle}`}
+            style={getTransitionStyle(iconAnimation || imageAnimation, mediaDelay)}
           >
             <i 
               className={`${icon} ${iconSize}`} 
               style={{ color: iconColor || (titleColor || 'rgb(var(--color-text))') }}
             ></i>
+          </div>
+        )}
+        
+        {hasImage && iconPosition === 'top' && (
+          <div 
+            className={`mx-auto mb-8 transition-all ${getAnimationClass(imageAnimation, animationStarted)} ${imageStyle}`}
+            style={getTransitionStyle(imageAnimation, mediaDelay)}
+          >
+            <img src={image} alt={title} className="w-64 h-64 object-contain mx-auto" />
           </div>
         )}
         
@@ -204,6 +218,28 @@ const PageTitleSection = ({
           >
             {description}
           </p>
+        )}
+        
+        {/* Media Section (Image or Icon) - Below Description if iconPosition is 'bottom' */}
+        {hasImage && iconPosition === 'bottom' && (
+          <div 
+            className={`mx-auto mb-8 transition-all ${getAnimationClass(imageAnimation, animationStarted)} ${imageStyle}`}
+            style={getTransitionStyle(imageAnimation, mediaDelay)}
+          >
+            <img src={image} alt={title} className="w-64 h-64 object-contain mx-auto" />
+          </div>
+        )}
+        
+        {hasIcon && iconPosition === 'bottom' && (
+          <div 
+            className={`mx-auto mb-8 transition-all ${getAnimationClass(iconAnimation || imageAnimation, animationStarted)} ${iconStyle}`}
+            style={getTransitionStyle(iconAnimation || imageAnimation, mediaDelay)}
+          >
+            <i 
+              className={`${icon} ${iconSize}`} 
+              style={{ color: iconColor || (titleColor || 'rgb(var(--color-text))') }}
+            ></i>
+          </div>
         )}
         
         {/* Children (if provided) */}

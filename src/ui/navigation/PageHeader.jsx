@@ -22,6 +22,7 @@ import { useTheme } from '@contexts/ThemeContext';
 import { useLocation } from 'react-router-dom';
 import ShinyLink from './links/ShinyLink';
 import NavLink from './links/NavLink';
+import Button from '@ui/components/Button';
 
 /**
  * Page header component with navigation links
@@ -88,17 +89,16 @@ const PageHeader = ({
     const isPartnersPage = currentPath === 'Our Partners';
     const isFeedbackPage = currentPath === 'Feedback';
     const isHomePage = currentPath === 'Home';
-    
-    // Update the position of the dropdown menu when the account button is clicked
+    // Update the position of the dropdown menu to appear near the header on right side
     useEffect(() => {
-        if (accountButtonRef.current && isMenuOpen) {
-            const rect = accountButtonRef.current.getBoundingClientRect();
+        if (isMenuOpen) {
+            const headerHeight = isMobileDevice ? 70 : 120; // Match the header height
             setMenuPosition({
-                top: rect.bottom,
-                right: window.innerWidth - rect.right
+                top: headerHeight - 10, // Position slightly higher than directly below the header
+                right: 10 // Closer to the right edge of the screen
             });
         }
-    }, [isMenuOpen]);
+    }, [isMenuOpen, isMobileDevice]);
     
     // Close the menu when clicking outside
     useEffect(() => {
@@ -111,9 +111,15 @@ const PageHeader = ({
             }
         };
         
-        document.addEventListener('mousedown', handleClickOutside);
+        // Use mousedown for earlier capture and add to document.body for better delegation
+        document.body.addEventListener('mousedown', handleClickOutside, true);
+        
+        // Also handle touch events for mobile devices
+        document.body.addEventListener('touchstart', handleClickOutside, true);
+        
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.body.removeEventListener('mousedown', handleClickOutside, true);
+            document.body.removeEventListener('touchstart', handleClickOutside, true);
         };
     }, [isMenuOpen]);
     
@@ -136,7 +142,7 @@ const PageHeader = ({
         setTimeout(() => {
             setIsMenuOpen(false);
             setIsMenuClosing(false);
-        }, 300); // Match this with the animation duration
+        }, 200); // Match this with the animation duration
     };
 
     /**
@@ -225,65 +231,64 @@ const PageHeader = ({
                     zIndex: 1000
                 }}
                 data-is-mobile={isMobileDevice ? 'true' : 'false'} // Add data attribute for easier debugging
-            >
-                {/* Fixed height container for header title and buttons */}
-                <div className={`relative ${isMobileDevice ? 'h-[70px]' : 'h-[120px]'}`}>
-                    {/* User account button on the right side */}
-                    <button
+            >                {/* Fixed height container for header title and buttons */}                <div className={`relative ${isMobileDevice ? 'h-[70px]' : 'h-[120px]'}`}>
+                      {/* User account button on the right side */}
+                    <Button
                         ref={accountButtonRef}
-                        className={`absolute ${isMobileDevice ? 'top-1' : 'top-[-0.5rem]'} right-4 ${isMobileDevice ? 'w-16 h-16' : 'w-20 h-20 md:w-32 md:h-32'} flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20`}
-                        aria-label="User account"
-                        type="button"
+                        isHeader={true}
+                        position="right"
+                        icon="fas fa-bars"
+                        iconColor={iconColor}
+                        bgColor="transparent"
+                        className={`${isMobileDevice ? 'top-1' : 'top-[-0.5rem]'} flex items-center justify-center`}
+                        ariaLabel="User account menu"
                         onClick={toggleMenu}
                     >
-                        <div className="flex items-center justify-center gap-2">
-                            {/* Hamburger menu icon */}
-                            <i className={`fas fa-bars ${isMobileDevice ? 'text-2xl' : 'text-lg md:text-xl'}`} style={{ color: iconColor }}></i>
-                            
-                            {/* User account icon */}
-                            <div className={`flex items-center justify-center ${isMobileDevice ? 'w-10 h-10' : 'w-8 h-8 md:w-12 md:h-12'} bg-gray-300 rounded-full`}>
-                                <i className={`fas fa-user text-gray-600 ${isMobileDevice ? 'text-lg' : 'text-sm md:text-lg'}`}></i>
-                            </div>
+                        <div className={`flex items-center justify-center ${isMobileDevice ? 'w-10 h-10' : 'w-8 h-8 md:w-12 md:h-12'} bg-gray-300 rounded-full ml-2`}>
+                            <i className={`fas fa-user text-gray-600 ${isMobileDevice ? 'text-lg' : 'text-sm md:text-lg'}`}></i>
                         </div>
-                    </button>
+                    </Button>
                     
-                    {/* Home link with larger logo on the left side */}
-                    <a 
+                    {/* Home link with logo on the left side */}
+                    <Button
+                        isHeader={true}
+                        position="left"
                         href="/"
+                        bgColor="transparent"
+                        className={`${isMobileDevice ? 'top-1' : 'top-[-0.5rem]'}`}
+                        ariaLabel="Go to home page"
                         onClick={(e) => {
-                            // Still change background when clicking the logo 
                             selectRandomBackground();
                             onLogoClick();
-                            // Let default navigation happen naturally
                         }}
-                        className={`absolute ${isMobileDevice ? 'top-1' : 'top-[-0.5rem]'} left-4 ${isMobileDevice ? 'w-16 h-16' : 'w-20 h-20 md:w-32 md:h-32'} flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20`}
-                        aria-label="Go to home page"
                     >
                         <img 
                             src={logoSrc} 
                             alt="EveryWay Logo" 
                             className={`${isMobileDevice ? 'w-12 h-12' : 'w-10 h-10 md:w-16 md:h-16'} transition-opacity hover:opacity-80`}
                         />
-                    </a>
-                    
-                    {/* Theme toggle button placed next to logo button - hidden on mobile */}
-                    <button
+                    </Button>
+                      {/* Theme toggle button - left of the logo, hidden on mobile */}
+                    <Button
+                        isHeader={true}
+                        position="left"
+                        icon={isDarkMode ? "fas fa-lightbulb" : "fas fa-moon"}
+                        iconColor={iconColor}
+                        bgColor="transparent"
+                        className={`${isMobileDevice ? 'top-1' : 'top-[-0.5rem]'} left-24 md:left-36`}
+                        mobileVisible={false}
+                        ariaLabel={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
                         onClick={toggleTheme}
-                        className={`absolute top-[-0.5rem] left-24 md:left-36 w-20 h-20 md:w-32 md:h-32 hidden md:flex items-center justify-center bg-transparent border-none hover:bg-opacity-10 hover:bg-gray-500 transition-colors focus:outline-none cursor-pointer z-20`}
-                        aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                        type="button"
+                    />
+                      {/* Prototype text - positioned more to the right and higher */}
+                    <div 
+                        className={`absolute ${isMobileDevice ? 'left-44 md:left-60' : 'left-52 md:left-72'} h-full flex items-center justify-center ${titleColorClass} transition-colors duration-300 ease-in-out font-medium`}
+                        style={{ top: '47.5%', transform: 'translateY(-50%)' }}
                     >
-                        {/* Lightbulb/Moon icon for theme toggle */}
-                        <div className="flex items-center justify-center w-6 h-6 md:w-8 md:h-8">
-                            {isDarkMode ? (
-                                // Lightbulb for dark mode (clicking switches to light)
-                                <i className="fas fa-lightbulb text-xl md:text-2xl" style={{ color: iconColor }}></i>
-                            ) : (
-                                // Moon icon for light mode (clicking switches to dark)
-                                <i className="fas fa-moon text-xl md:text-2xl" style={{ color: iconColor }}></i>
-                            )}
+                        <div className={`${isMobileDevice ? 'text-lg' : 'text-xl font-semibold'}`}>
+                            Prototype
                         </div>
-                    </button>
+                    </div>
                     
                     {/* Centered path display - only show if not on home page */}
                     {!isHomePage && (
@@ -311,10 +316,9 @@ const PageHeader = ({
                 
                 {children}
             </header>
-            
-            {/* Dropdown menu - Positioned outside the header to avoid overflow clipping */}
+              {/* Dropdown menu - Positioned below the header on the right side */}
             {isMenuOpen && (
-                <div 
+                <div
                     className={`fixed dropdown-menu w-64 rounded-lg overflow-hidden shadow-lg backdrop-blur-lg z-[1001] ${titleColorClass}`}
                     style={{
                         top: `${menuPosition.top}px`,
@@ -324,7 +328,8 @@ const PageHeader = ({
                             : isPartnersPage 
                                 ? `rgba(var(--color-partner), ${isDarkMode ? 0.65 : 0.75})`
                                 : `rgba(var(--color-overlay), ${isDarkMode ? 0.15 : 0.2})`,
-                        animation: isMenuClosing ? 'fadeOutUp 0.3s ease-out forwards' : 'fadeInDown 0.3s ease-out forwards',
+                        animation: isMenuClosing ? 'fadeOutUp 0.2s ease-out forwards' : 'fadeInDown 0.2s ease-out forwards',                        transition: 'background 0.15s ease-out',
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
                     }}
                 >
                     <div className="py-2">
@@ -335,7 +340,7 @@ const PageHeader = ({
                                 icon="fas fa-sign-in-alt"
                                 iconPosition="left"
                                 iconClassName="w-6 text-center"
-                                color={titleColorClass}
+                                color={isCertificationsPage ? "#ffffff" : (isPartnersPage ? "#ffffff" : undefined)}
                                 className="flex items-center w-full"
                                 useActiveColor={false}
                             />
@@ -347,7 +352,7 @@ const PageHeader = ({
                                 icon="fas fa-user-plus"
                                 iconPosition="left"
                                 iconClassName="w-6 text-center"
-                                color={titleColorClass}
+                                color={isCertificationsPage ? "#ffffff" : (isPartnersPage ? "#ffffff" : undefined)}
                                 className="flex items-center w-full"
                                 useActiveColor={false}
                             />
@@ -356,8 +361,9 @@ const PageHeader = ({
                         <div className="block px-4 py-3 hover:bg-[rgba(255,255,255,0.1)] transition-all duration-200">
                             <ShinyLink 
                                 href="/partners"
-                                color={titleColorClass}
+                                color="#ffffff"
                                 icon="fas fa-handshake"
+                                iconColor="#ffffff"
                                 animationDuration={1200}
                                 className="flex items-center w-full"
                             >
@@ -367,8 +373,9 @@ const PageHeader = ({
                         <div className="block px-4 py-3 hover:bg-[rgba(255,255,255,0.1)] transition-all duration-200">
                             <ShinyLink 
                                 href="/certifications"
-                                color={titleColorClass}
+                                color="#ffffff"
                                 icon="fas fa-certificate"
+                                iconColor="#ffffff"
                                 animationDuration={1200}
                                 animationDelay={600}
                                 className="flex items-center w-full"
@@ -383,7 +390,7 @@ const PageHeader = ({
                                 icon="fas fa-comment"
                                 iconPosition="left"
                                 iconClassName="w-6 text-center"
-                                color={titleColorClass}
+                                color={isCertificationsPage ? "#ffffff" : (isPartnersPage ? "#ffffff" : undefined)}
                                 className="flex items-center w-full"
                                 useActiveColor={false}
                             />

@@ -11,6 +11,7 @@
  * - Applies theme-appropriate styling overlays
  * - Determines the current page name for use in the footer
  * - Scrolls to top on page navigation
+ * - Changes background image when navigating between pages
  * 
  * The component uses nested routing via React Router's Outlet to render
  * different page content while maintaining the consistent layout structure.
@@ -122,10 +123,7 @@ const MainLayout = () => {
                 setImagesPreloaded(true);
                 
                 // Select a random background now that all are loaded
-                const bgNumber = Math.floor(Math.random() * backgroundImages.length);
-                const imagePath = backgroundImages[bgNumber];
-                console.log('Setting background image to:', imagePath);
-                setBackgroundImage(imagePath);
+                selectRandomBackground();
             }
         };
         
@@ -151,6 +149,24 @@ const MainLayout = () => {
         };
     }, []);
 
+    /**
+     * Selects a random background image from the available options
+     */
+    const selectRandomBackground = () => {
+        const bgNumber = Math.floor(Math.random() * backgroundImages.length);
+        const imagePath = backgroundImages[bgNumber];
+        console.log('Setting background image to:', imagePath);
+        setBackgroundImage(imagePath);
+    };
+
+    // Change background image when location changes
+    useEffect(() => {
+        // Only change the background if images are already preloaded
+        if (imagesPreloaded) {
+            selectRandomBackground();
+        }
+    }, [location.pathname, imagesPreloaded]);
+    
     return (
         <div 
             className="min-h-screen theme-transition text-[rgb(var(--color-text))] flex flex-col"
@@ -176,7 +192,7 @@ const MainLayout = () => {
                     backgroundColor: isDarkMode ? '#121212' : '#ffffff',
                     zIndex: -10,
                     opacity: imagesPreloaded ? 1 : 0,
-                    transition: 'opacity 0.5s ease-in-out',
+                    transition: 'opacity 0.5s ease-in-out, background-image 0.3s ease-in-out',
                 }}
             />
             
@@ -189,8 +205,8 @@ const MainLayout = () => {
                     right: 0,
                     bottom: 0,
                     background: isDarkMode 
-                        ? 'linear-gradient(to bottom, rgba(18, 18, 18, 0.92), rgba(18, 18, 18, 0.97))' // More subtle dark mode gradient
-                        : 'linear-gradient(to bottom, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.82))', // Keep light mode gradient
+                        ? 'linear-gradient(to bottom, rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.9))' // More subtle dark mode gradient
+                        : 'linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9))', // Keep light mode gradient
                     zIndex: -5,
                 }}
             />

@@ -66,13 +66,13 @@ const PartnersPage = () => {
             />
             
             <div className="main-content">
-                {/* Hero section using PageTitleSection */}
-                <PageTitleSection
+                {/* Hero section using PageTitleSection */}                <PageTitleSection
                     title="Our Partners"
                     description="Partners who make our work possible"
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
                     titleColor={partnerColor}
+                    staggerDelay={150}
                 />
                 
                 {/* Introduction section */}
@@ -135,6 +135,7 @@ const PartnersPage = () => {
                             onClick={handleContactPartnerClick}
                             color="#c13f3f"
                             icon="fas fa-handshake"
+                            iconColor="#ffffff"
                             size="lg"
                         />
                     </div>

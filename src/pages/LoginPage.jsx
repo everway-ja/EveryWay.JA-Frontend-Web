@@ -27,12 +27,12 @@ const LoginPage = () => {
             />
             
             <div className="main-content">
-                {/* Title section using PageTitleSection */}
-                <PageTitleSection
+                {/* Title section using PageTitleSection */}                <PageTitleSection
                     title="Login"
                     description="Access your EveryWay account"
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
+                    staggerDelay={150} // Animations will start at the same time in PageTitleSection
                 />
             </div>
         </div>

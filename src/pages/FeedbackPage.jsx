@@ -64,12 +64,12 @@ const FeedbackPage = () => {
             />
             
             <div className="main-content">
-                {/* Title section using PageTitleSection */}
-                <PageTitleSection
+                {/* Title section using PageTitleSection */}                <PageTitleSection
                     title="Feedback"
                     description="We value your thoughts and suggestions"
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
+                    staggerDelay={150}
                 />
                 
                 {/* Feedback form section using PageContainerSection */}

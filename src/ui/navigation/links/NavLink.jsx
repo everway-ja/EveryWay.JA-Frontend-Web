@@ -15,7 +15,7 @@
  * 
  * @module NavLink
  */
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '@contexts/ThemeContext';
 
@@ -57,6 +57,7 @@ const NavLink = ({
 }) => {
   const location = useLocation();
   const { isDarkMode } = useTheme();
+  const linkRef = useRef(null);
   
   // Determine if this link is active (for internal links)
   const isActive = to && (exact ? location.pathname === to : location.pathname.startsWith(to));
@@ -78,8 +79,21 @@ const NavLink = ({
    */
   const linkStyle = {
     color: textColor,
-    transition: 'color 0.3s ease, opacity 0.3s ease',
+    transition: 'color 0.2s ease, opacity 0.2s ease',
   };
+  
+  // Update link color when theme changes
+  useEffect(() => {
+    // Recalculate the color when isDarkMode changes
+    const newTextColor = isActive && useActiveColor 
+      ? (activeColor || defaultActiveColor) 
+      : (color || defaultColor);
+      
+    // Update the ref element if it exists
+    if (linkRef.current) {
+      linkRef.current.style.color = newTextColor;
+    }
+  }, [isDarkMode, isActive, color, activeColor, useActiveColor]);
   
   /**
    * Hover styles to be applied with JavaScript
@@ -142,6 +156,7 @@ const NavLink = ({
         onClick={handleClick}
         target={href.startsWith('http') ? '_blank' : undefined}
         rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        ref={linkRef}
       >
         <LinkContent />
       </a>
@@ -157,6 +172,7 @@ const NavLink = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
+      ref={linkRef}
     >
       <LinkContent />
     </Link>

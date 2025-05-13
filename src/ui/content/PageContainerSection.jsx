@@ -146,13 +146,19 @@ const PageContainerSection = ({
     if (inView) {
       setAnimationStarted(true);
     }
-  }, [inView]);
-
-  // Determine delays for each element
-  const titleDelay = animationDelay;
+  }, [inView]);  // Determine sequentially staggered delays for elements
+  // Elements will appear in sequence from bottom to top
+  // The sequence is: content -> description -> title (with icon)
+  let currentDelay = animationDelay;
+  
+  const contentDelay = currentDelay;
+  currentDelay += staggerDelay;
+  
+  const descriptionDelay = currentDelay;
+  currentDelay += staggerDelay;
+  
+  const titleDelay = currentDelay;
   const iconDelay = titleDelay; // Icon animates with title
-  const descriptionDelay = titleAnimation !== 'none' ? titleDelay + staggerDelay : titleDelay;
-  const contentDelay = descriptionAnimation !== 'none' && description ? descriptionDelay + staggerDelay : descriptionDelay;
 
   // Background class based on prop
   const bgClass = withBackground ? 'bg-[rgba(var(--color-overlay),0.03)]' : '';
@@ -165,25 +171,25 @@ const PageContainerSection = ({
       <div className="max-w-6xl mx-auto">
         {/* Section Title with optional icon */}
         <div className="flex items-center justify-center mb-6">
-          {/* Icon (if provided) */}
-          {hasIcon && (
-            <div 
-              className={`mr-3 ${getAnimationClass(titleAnimation, animationStarted)} transition-all ${iconStyle}`}
-              style={getTransitionStyle(titleAnimation, iconDelay)}
+          {/* Title and Icon should be in a group that animates together */}
+          <div className={`flex items-center justify-center ${getAnimationClass(titleAnimation, animationStarted)} transition-all`}
+              style={getTransitionStyle(titleAnimation, titleDelay)}>
+            {/* Icon (if provided) */}
+            {hasIcon && (
+              <div className={`mr-3 ${iconStyle}`}>
+                <i 
+                  className={`${icon} ${iconSize}`} 
+                  style={{ color: iconColor || titleColor || 'rgb(var(--color-text))' }}
+                ></i>
+              </div>
+            )}
+            
+            <h2 
+              className={`text-3xl md:text-5xl font-bold text-center ${titleColor} ${titleStyle}`}
             >
-              <i 
-                className={`${icon} ${iconSize}`} 
-                style={{ color: iconColor || titleColor || 'rgb(var(--color-text))' }}
-              ></i>
-            </div>
-          )}
-          
-          <h2 
-            className={`text-3xl md:text-5xl font-bold text-center ${titleColor} transition-all ${getAnimationClass(titleAnimation, animationStarted)} ${titleStyle}`}
-            style={getTransitionStyle(titleAnimation, titleDelay)}
-          >
-            {title}
-          </h2>
+              {title}
+            </h2>
+          </div>
         </div>
         
         {/* Section Description (if provided) */}

@@ -21,7 +21,6 @@ import RegistrationPage from '@pages/RegistrationPage'
 import CertificationsPage from '@pages/CertificationsPage'
 import PartnersPage from '@pages/PartnersPage'
 import FeedbackPage from '@pages/FeedbackPage'
-import AboutUsPage from '@pages/AboutUsPage'
 import { ThemeProvider } from '@contexts/ThemeContext'
 import ScrollToTop from '@ui/utils/ScrollToTop'
 
@@ -41,7 +40,6 @@ function App() {
                     <Route index element={<MainPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegistrationPage />} />
-                    <Route path="/about" element={<AboutUsPage />} />
                     <Route path="/certifications" element={<CertificationsPage />} />
                     <Route path="/partners" element={<PartnersPage />} />
                     <Route path="/feedback" element={<FeedbackPage />} />

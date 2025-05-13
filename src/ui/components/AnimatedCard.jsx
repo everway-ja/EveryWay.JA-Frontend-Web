@@ -161,7 +161,6 @@ const AnimatedCard = ({
         return { transform: 'none' };
     }
   };
-
   // Apply animations when element comes into view
   useEffect(() => {
     if (inView && !hasAnimated) {
@@ -169,18 +168,25 @@ const AnimatedCard = ({
       const cardTransition = `opacity ${animationDuration}ms ease-out, transform ${animationDuration}ms ease-out`;
       const cardDelay = animationDelay;
       
-      // Stagger the animations
-      const imgDelay = cardAnimation !== 'none' ? cardDelay + staggerDelay : cardDelay;
-      const iconDelay = imageAnimation !== 'none' ? imgDelay + staggerDelay : imgDelay;
-      const titleDelay = iconAnimation !== 'none' ? iconDelay + staggerDelay : iconDelay;
-      const descDelay = titleAnimation !== 'none' ? titleDelay + staggerDelay : titleDelay;
+      // Determine the sequence based on the layout (bottom to top)
+      // For a standard card, the order from bottom to top would be:
+      // 1. Description
+      // 2. Title
+      // 3. Image/Icon
+      // 4. Card container (if animating)
+      
+      // Stagger the animations in reverse order
+      const descDelay = cardDelay;
+      const titleDelay = descDelay + staggerDelay;
+      const mediaDelay = titleDelay + staggerDelay; // For either icon or image
+      const cardAnimDelay = mediaDelay + staggerDelay;
       
       // Set card animation
       if (cardAnimation !== 'none') {
         setCardAnimStyle({
           ...getAnimationValues(cardAnimation),
           transition: cardTransition,
-          transitionDelay: `${cardDelay}ms`,
+          transitionDelay: `${cardAnimDelay}ms`,
         });
       }
       
@@ -189,7 +195,7 @@ const AnimatedCard = ({
         setImageAnimStyle({
           ...getAnimationValues(imageAnimation),
           transition: cardTransition,
-          transitionDelay: `${imgDelay}ms`,
+          transitionDelay: `${mediaDelay}ms`,
         });
       }
       
@@ -198,7 +204,7 @@ const AnimatedCard = ({
         setIconAnimStyle({
           ...getAnimationValues(iconAnimation),
           transition: cardTransition,
-          transitionDelay: `${iconDelay}ms`,
+          transitionDelay: `${mediaDelay}ms`,
         });
       }
       

@@ -42,13 +42,13 @@ const CertificationsPage = () => {
             />
             
             <div className="main-content">
-                {/* Hero section using PageTitleSection */}
-                <PageTitleSection
+                {/* Hero section using PageTitleSection */}                <PageTitleSection
                     title="Get Our Certifications"
                     description="Apply for quality certifications for your services and products"
                     titleAnimation="bottom"
                     descriptionAnimation="bottom"
                     titleColor={certificationColor}
+                    staggerDelay={150}
                 />
                 
                 {/* Certification Benefits section */}

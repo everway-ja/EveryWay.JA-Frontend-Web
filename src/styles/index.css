@@ -9,6 +9,23 @@
     font-style: normal;
 }
 
+/* Leaflet map container styles */
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Fix for Leaflet popup z-index issues */
+.leaflet-popup-content-wrapper {
+    max-width: 200px;
+}
+
+.leaflet-popup-content {
+    margin: 10px;
+    text-align: center;
+}
+
 /* Apply base theme immediately to prevent flash */
 html {
     color: rgb(var(--color-text));
